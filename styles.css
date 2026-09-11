@@ -1115,51 +1115,10 @@ label {
   color: var(--primary-dark);
 }
 
-/* Contact Grid & Form Styling */
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.contact-card {
-  padding: 2rem 2.2rem;
-}
-
-.contact-card h2 {
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  margin: 0 0 1.5rem;
-}
-
-.form-status-msg {
-  padding: 0.85rem 1rem;
-  border-radius: 0.85rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  line-height: 1.5;
-  margin-bottom: 1.2rem;
-}
-
-.form-status-msg.error {
-  background: rgba(254, 242, 242, 0.95);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #b91c1c;
-}
-
-.form-status-msg.success {
-  background: rgba(240, 253, 244, 0.95);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #15803d;
-}
-
-.contact-submit-btn {
-  margin-top: 0.5rem;
-}
-
-.contact-sidebar {
+/* Contact Details Layout */
+.contact-details-wrap {
+  max-width: 36rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -1294,12 +1253,6 @@ label {
   color: var(--text);
 }
 
-@media (max-width: 860px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 640px) {
   .site-header .container {
     height: 3.5rem;
@@ -1354,8 +1307,7 @@ label {
     padding: 1.1rem 1rem 0.8rem;
   }
 
-  .legal-card,
-  .contact-card {
+  .legal-card {
     padding: 1.25rem 1.25rem;
   }
 
