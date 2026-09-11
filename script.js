@@ -10,18 +10,29 @@ document.addEventListener('DOMContentLoaded', function () {
   const resYears = document.getElementById('res-years');
   const resMonths = document.getElementById('res-months');
   const resDays = document.getElementById('res-days');
+  const resDaysHighlight = document.getElementById('res-days-highlight');
+  const resNextCountdownHighlight = document.getElementById('res-next-countdown-highlight');
   const resBornDay = document.getElementById('res-born-day');
   const resBornFull = document.getElementById('res-born-full');
   const resNextBday = document.getElementById('res-next-bday');
   const resNextDayname = document.getElementById('res-next-dayname');
-  const resCountdownDays = document.getElementById('res-countdown-days');
+  const resZodiac = document.getElementById('res-zodiac');
+  const resBirthstone = document.getElementById('res-birthstone');
   const resTotalMonths = document.getElementById('res-total-months');
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
+  const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
+
+  const copyBtn = document.getElementById('copy-results-btn');
+  const shareBtn = document.getElementById('share-results-btn');
+  const printBtn = document.getElementById('print-results-btn');
+
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
+
+  let currentResultSummary = '';
 
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
@@ -75,6 +86,78 @@ document.addEventListener('DOMContentLoaded', function () {
     return day;
   }
 
+  function getZodiacSign(month, day) {
+    // month is 0-indexed (0 = Jan)
+    const m = month + 1;
+    if ((m === 1 && day >= 20) || (m === 2 && day <= 18)) return { name: 'Aquarius', symbol: '♒' };
+    if ((m === 2 && day >= 19) || (m === 3 && day <= 20)) return { name: 'Pisces', symbol: '♓' };
+    if ((m === 3 && day >= 21) || (m === 4 && day <= 19)) return { name: 'Aries', symbol: '♈' };
+    if ((m === 4 && day >= 20) || (m === 5 && day <= 20)) return { name: 'Taurus', symbol: '♉' };
+    if ((m === 5 && day >= 21) || (m === 6 && day <= 20)) return { name: 'Gemini', symbol: '♊' };
+    if ((m === 6 && day >= 21) || (m === 7 && day <= 22)) return { name: 'Cancer', symbol: '♋' };
+    if ((m === 7 && day >= 23) || (m === 8 && day <= 22)) return { name: 'Leo', symbol: '♌' };
+    if ((m === 8 && day >= 23) || (m === 9 && day <= 22)) return { name: 'Virgo', symbol: '♍' };
+    if ((m === 9 && day >= 23) || (m === 10 && day <= 22)) return { name: 'Libra', symbol: '♎' };
+    if ((m === 10 && day >= 23) || (m === 11 && day <= 21)) return { name: 'Scorpio', symbol: '♏' };
+    if ((m === 11 && day >= 22) || (m === 12 && day <= 21)) return { name: 'Sagittarius', symbol: '♐' };
+    return { name: 'Capricorn', symbol: '♑' };
+  }
+
+  function getBirthstone(month) {
+    const stones = [
+      'Garnet 💎',
+      'Amethyst 💎',
+      'Aquamarine 💎',
+      'Diamond 💎',
+      'Emerald 💎',
+      'Pearl / Alexandrite 💎',
+      'Ruby 💎',
+      'Peridot 💎',
+      'Sapphire 💎',
+      'Opal / Tourmaline 💎',
+      'Topaz / Citrine 💎',
+      'Turquoise / Tanzanite 💎'
+    ];
+    return stones[month] || 'Garnet 💎';
+  }
+
+  function calculateMilestones(birthDate, targetDate) {
+    const milestoneAges = [
+      { age: 18, label: '18th Birthday (Adult Age)' },
+      { age: 21, label: '21st Birthday (Legal Majority)' },
+      { age: 30, label: '30th Birthday (3rd Decade)' },
+      { age: 50, label: '50th Birthday (Golden Jubilee)' },
+      { age: 65, label: '65th Birthday (Retirement)' }
+    ];
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return milestoneAges.map(item => {
+      const targetYear = birthDate.getFullYear() + item.age;
+      const day = clampBirthdayDay(targetYear, birthDate.getMonth(), birthDate.getDate());
+      const milestoneDate = new Date(targetYear, birthDate.getMonth(), day);
+      const formattedDate = `${monthNames[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
+
+      if (milestoneDate <= targetDate) {
+        return {
+          label: item.label,
+          dateText: formattedDate,
+          status: 'Reached ✓',
+          reached: true
+        };
+      } else {
+        const diffDays = Math.ceil((milestoneDate - targetDate) / (1000 * 60 * 60 * 24));
+        const diffYears = (diffDays / 365.25).toFixed(1);
+        return {
+          label: item.label,
+          dateText: formattedDate,
+          status: `In ~${diffYears} yrs`,
+          reached: false
+        };
+      }
+    });
+  }
+
   function calculateAge(birthDate, targetDate) {
     const birth = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
     const target = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
@@ -125,6 +208,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBirthdayText = `${monthNames[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
     const nextBirthdayDay = dayNames[nextBirthday.getDay()];
 
+    const zodiac = getZodiacSign(birth.getMonth(), birth.getDate());
+    const birthstone = getBirthstone(birth.getMonth());
+    const milestones = calculateMilestones(birth, target);
+
     return {
       years,
       months,
@@ -138,6 +225,9 @@ document.addEventListener('DOMContentLoaded', function () {
       nextBirthdayText,
       nextBirthdayDay,
       remainingDays,
+      zodiac,
+      birthstone,
+      milestones
     };
   }
 
@@ -170,15 +260,34 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resYears) resYears.textContent = result.years.toLocaleString();
       if (resMonths) resMonths.textContent = result.months.toLocaleString();
       if (resDays) resDays.textContent = result.days.toLocaleString();
+      if (resDaysHighlight) resDaysHighlight.textContent = `${result.totalDays.toLocaleString()} Days Lived`;
+      if (resNextCountdownHighlight) {
+        resNextCountdownHighlight.textContent = result.remainingDays === 0
+          ? 'Next birthday is TODAY! 🎉'
+          : `Next birthday in ${result.remainingDays.toLocaleString()} days`;
+      }
       if (resBornDay) resBornDay.textContent = result.bornDay;
       if (resBornFull) resBornFull.textContent = result.bornText;
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
       if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
-      if (resCountdownDays) resCountdownDays.textContent = result.remainingDays === 0 ? 'Today!' : result.remainingDays.toLocaleString();
+      if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
+      if (resBirthstone) resBirthstone.textContent = result.birthstone;
       if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
       if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
       if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
       if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
+
+      if (resMilestonesGrid) {
+        resMilestonesGrid.innerHTML = result.milestones.map(m => `
+          <div class="milestone-card ${m.reached ? 'reached' : 'upcoming'}">
+            <span class="milestone-label">${m.label}</span>
+            <div class="milestone-date">${m.dateText}</div>
+            <div class="milestone-status">${m.status}</div>
+          </div>
+        `).join('');
+      }
+
+      currentResultSummary = `I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!). Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculated on myagenow.com`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -197,8 +306,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const today = new Date();
-  if (targetDateInput) targetDateInput.value = toDateInputValue(today);
-  if (dobInput) dobInput.value = '2002-01-15';
+  const todayFormatted = toDateInputValue(today);
+
+  if (targetDateInput) {
+    targetDateInput.value = todayFormatted;
+    targetDateInput.setAttribute('max', '2100-12-31');
+    targetDateInput.setAttribute('min', '1900-01-01');
+  }
+
+  if (dobInput) {
+    dobInput.value = '';
+    dobInput.setAttribute('max', todayFormatted);
+    dobInput.setAttribute('min', '1900-01-01');
+  }
 
   const ageForm = document.getElementById('age-form');
   if (ageForm) {
@@ -210,17 +330,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
-      if (dobInput) dobInput.value = '2002-01-15';
+      if (dobInput) dobInput.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
       hideError();
-      performCalculation(false);
+      if (resultsSection) {
+        resultsSection.hidden = true;
+        resultsSection.classList.remove('is-visible');
+      }
     });
   }
 
   if (todayQuickBtn) {
     todayQuickBtn.addEventListener('click', function () {
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
-      performCalculation(false);
+      if (dobInput && dobInput.value) {
+        performCalculation(false);
+      }
     });
   }
 
@@ -231,14 +356,52 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
           input.showPicker();
         } catch (error) {
-          // Browsers that do not allow programmatic picker opening still use the native input control.
+          // Programmatic picker fallback
         }
       }
     });
     input.addEventListener('change', function () {
-      performCalculation(false);
+      if (dobInput && dobInput.value) {
+        performCalculation(false);
+      }
     });
   });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      if (!currentResultSummary) return;
+      navigator.clipboard.writeText(currentResultSummary).then(function () {
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = `✓ Copied!`;
+        setTimeout(function () {
+          copyBtn.innerHTML = originalText;
+        }, 2000);
+      }).catch(function () {
+        showError('Could not copy to clipboard.');
+      });
+    });
+  }
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      if (!currentResultSummary) return;
+      if (navigator.share) {
+        navigator.share({
+          title: 'My Age Calculation - myagenow',
+          text: currentResultSummary,
+          url: window.location.href
+        }).catch(function () {});
+      } else {
+        if (copyBtn) copyBtn.click();
+      }
+    });
+  }
+
+  if (printBtn) {
+    printBtn.addEventListener('click', function () {
+      window.print();
+    });
+  }
 
   if (menuButton && siteNav) {
     menuButton.addEventListener('click', function () {
