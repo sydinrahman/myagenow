@@ -97,7 +97,7 @@ button, input, select, textarea {
 .brand-name {
   font-size: 1.3rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 .site-nav {
@@ -133,12 +133,12 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.55rem 0.95rem;
+  padding: 0.55rem 0.9rem;
   border-radius: 999px;
   background: var(--primary-soft);
   border: 1px solid rgba(37, 99, 235, 0.12);
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
@@ -154,9 +154,9 @@ button, input, select, textarea {
 .hero h1 {
   margin: 1.25rem auto 0.8rem;
   font-size: clamp(2.25rem, 5vw, 3rem);
-  line-height: 1.15;
+  line-height: 1.05;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.06em;
 }
 
 .hero p {
@@ -217,7 +217,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
   padding: 0.4rem 0.55rem;
@@ -247,7 +247,7 @@ label {
   display: block;
   color: #334155;
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: 0.82rem;
   margin-bottom: 0.45rem;
 }
 
@@ -340,10 +340,10 @@ label {
   border: 1px solid var(--border);
   background: #fff;
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  padding: 0.35rem 0.6rem;
+  padding: 0.35rem 0.55rem;
   border-radius: 0.5rem;
 }
 
@@ -357,7 +357,7 @@ label {
   display: block;
   margin-top: 0.35rem;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 .error-box {
@@ -371,7 +371,7 @@ label {
   border-radius: 0.85rem;
   background: rgba(254, 242, 242, 0.9);
   color: #b91c1c;
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   font-weight: 600;
   animation: enter 180ms ease both;
 }
@@ -414,7 +414,7 @@ label {
   justify-content: center;
   gap: 0.5rem;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-align: center;
   line-height: 1.5;
 }
@@ -455,7 +455,7 @@ label {
   border: 1px solid rgba(34, 197, 94, 0.2);
   background: rgba(240, 253, 244, 0.95);
   color: var(--success);
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -463,10 +463,10 @@ label {
 
 .result-head h2 {
   margin: 0.75rem 0 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #64748b;
+  color: #94a3b8;
   font-weight: 800;
 }
 
@@ -489,7 +489,7 @@ label {
 .age-value {
   font-size: clamp(2.4rem, 4vw, 4.1rem);
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.08em;
   font-weight: 800;
 }
 
@@ -607,10 +607,10 @@ label {
 
 .milestones-title {
   margin: 0 0 0.85rem;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--muted);
   text-align: center;
 }
@@ -636,19 +636,19 @@ label {
 
 .milestone-label {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--muted);
 }
 
 .milestone-date {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   margin: 0.2rem 0;
 }
 
 .milestone-status {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--primary);
 }
@@ -659,10 +659,10 @@ label {
 
 .metric-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.09em;
   color: var(--muted);
   margin-bottom: 0.25rem;
 }
@@ -673,12 +673,12 @@ label {
   font-size: 1.1rem;
   font-weight: 800;
   line-height: 1.25;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.03em;
 }
 
 .metric-sub {
   margin-top: 0.18rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
@@ -720,7 +720,7 @@ label {
 
 .summary-label {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   color: var(--muted);
   font-weight: 700;
   margin-bottom: 0.35rem;
@@ -730,7 +730,7 @@ label {
   display: block;
   font-size: 1.15rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 .trust-section {
@@ -753,9 +753,9 @@ label {
 .trust-header h2 {
   margin: 0.25rem 0 0.35rem;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  line-height: 1.2;
+  line-height: 1.15;
   font-weight: 800;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.05em;
 }
 
 .trust-grid {
@@ -785,9 +785,9 @@ label {
 
 .trust-card p {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--text-soft);
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .how-it-works-section {
@@ -810,15 +810,16 @@ label {
 .how-it-works-header h2 {
   margin: 0.25rem 0 0.35rem;
   font-size: clamp(1.9rem, 3vw, 2.6rem);
-  line-height: 1.2;
+  line-height: 1.15;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
 }
 
 .how-it-works-header p {
   margin: 0;
   color: var(--text-soft);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .steps-grid {
@@ -857,7 +858,7 @@ label {
 .step-card p {
   margin: 0;
   color: var(--text-soft);
-  font-size: 0.85rem;
+  font-size: 0.76rem;
   line-height: 1.55;
 }
 
@@ -881,17 +882,17 @@ label {
 .faq-header h2 {
   margin: 0.2rem 0 0;
   font-size: clamp(1.9rem, 3vw, 2.8rem);
-  line-height: 1.2;
+  line-height: 1.15;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.06em;
 }
 
 .kicker {
   display: block;
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.21em;
   font-weight: 800;
 }
 
@@ -1010,9 +1011,9 @@ label {
 
 .legal-header h1 {
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-  line-height: 1.2;
+  line-height: 1.1;
   font-weight: 800;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.05em;
   margin: 0 0 0.8rem;
 }
 
@@ -1223,7 +1224,7 @@ label {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
@@ -1243,7 +1244,7 @@ label {
   display: inline-flex;
   align-items: center;
   gap: 1.2rem;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
