@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>myagenow – Calculate Your Exact Age</title>
+    <meta
+      name="description"
+      content="myagenow calculates your exact age in years, months, and days, including your birthday countdown and milestones."
+    />
+    <meta name="keywords" content="age calculator, exact age, birthday countdown, date of birth, age in years months days" />
+    <meta name="author" content="myagenow" />
+    <meta property="og:title" content="myagenow – Calculate Your Exact Age" />
+    <meta property="og:description" content="Use myagenow to find your exact age in years, months, and days and see your next birthday countdown." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#faq">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            ✦ Free • Private • Instant
+          </div>
+          <h1>Calculate Your Exact Age</h1>
+          <p>
+            Enter your date of birth to instantly find your exact age in years, months, and days.
+          </p>
+        </div>
+      </section>
+
+      <section class="calculator-wrap" aria-labelledby="age-calculator-title">
+        <div class="card calculator-card">
+          <div class="card-header">
+            <div class="card-title" id="age-calculator-title">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Calculate Your Age</span>
+            </div>
+            <button class="reset-button" id="reset-btn" type="button" aria-label="Reset calculator">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                <path d="M3 4v5h5"></path>
+              </svg>
+              Reset
+            </button>
+          </div>
+
+          <form id="age-form" novalidate>
+            <div class="form-group">
+              <label for="dob-input">Date of Birth <span class="required">*</span></label>
+              <div class="date-field">
+                <input id="dob-input" name="dob" type="date" aria-required="true" value="2002-01-15" />
+                <span class="field-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M8 2v4M16 2v4M3 10h18"></path>
+                  </svg>
+                </span>
+              </div>
+              <span class="form-note">Example: 15 / 01 / 2002</span>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="target-date-input">Age at Date</label>
+                <button class="inline-action" id="today-quick-select" type="button">Use Today</button>
+              </div>
+              <div class="date-field">
+                <input id="target-date-input" name="target-date" type="date" value="2026-09-08" />
+                <span class="field-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M8 2v4M16 2v4M3 10h18"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <div id="error-box" class="error-box hidden" role="alert" aria-live="polite">
+              <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span id="error-message">Please choose a valid birth date in the past.</span>
+            </div>
+
+            <button class="primary-btn" id="calculate-btn" type="submit">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <path d="M8 2v4M16 2v4M3 10h18"></path>
+              </svg>
+              <span>Calculate My Age</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+            <span>Private &amp; free — your date stays on your device</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="ad-box">
+        <div class="ad-placeholder" aria-label="Advertisement placeholder">
+          <div>
+            <div class="ad-lbl">Advertisement</div>
+            <div class="ad-copy">Responsive Ad Placement (Google AdSense Ready 728x90 / 320x100)</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="age-results" class="results-wrapper" aria-live="polite" tabindex="-1" hidden>
+        <div class="card results-card">
+          <div class="result-head">
+            <span class="status">✓ Calculation complete</span>
+            <h2>Your exact age</h2>
+            <div class="age-readout" aria-live="polite">
+              <div class="age-block">
+                <span id="res-years" class="age-value years">24</span>
+                <span class="age-label">Years</span>
+              </div>
+            </div>
+            <p class="age-secondary"><span id="res-months">7</span> Months <span aria-hidden="true">•</span> <span id="res-days">23</span> Days</p>
+          </div>
+
+          <div class="result-cards">
+            <div class="metric-card muted">
+              <span class="metric-label">Born On</span>
+              <div id="res-born-day" class="metric-value">Tuesday</div>
+              <div id="res-born-full" class="metric-sub">January 15, 2002</div>
+            </div>
+
+            <div class="metric-card primary">
+              <span class="metric-label">Next Birthday</span>
+              <div id="res-next-bday" class="metric-value">January 15, 2027</div>
+              <div id="res-next-dayname" class="metric-sub">Friday</div>
+            </div>
+
+            <div class="metric-card success">
+              <span class="metric-label">Days Until Birthday</span>
+              <div id="res-countdown-days" class="metric-value">130</div>
+              <div class="metric-sub">days to celebrate!</div>
+            </div>
+          </div>
+
+          <details class="summary">
+            <summary>More details <span aria-hidden="true">⌄</span></summary>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="summary-label">Total Months</span>
+                <span id="res-total-months" class="summary-value">295</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Total Weeks</span>
+                <span id="res-total-weeks" class="summary-value">1,285</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Total Days</span>
+                <span id="res-total-days" class="summary-value">9,001</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Approx. Hours</span>
+                <span id="res-total-hours" class="summary-value">216,024</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <div class="ad-box">
+        <div class="ad-placeholder" aria-label="Advertisement placeholder">
+          <div>
+            <div class="ad-lbl">Advertisement</div>
+            <div class="ad-copy">Responsive Ad Placement (Google AdSense 728x90 Banner)</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="how-it-works" class="how-it-works-section" aria-labelledby="how-it-works-title">
+        <div class="how-it-works-wrap">
+          <div class="how-it-works-header">
+            <span class="kicker">Simple 3-Step Process</span>
+            <h2 id="how-it-works-title">How It Works</h2>
+            <p>Accurate calendar math designed with leap year and calendar variations in mind.</p>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <h3>Enter Your Date of Birth</h3>
+              <p>Select the exact day, month, and year you were born in the date picker input above.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <h3>Click Calculate My Age</h3>
+              <p>Our client-side JavaScript engine calculates precise Gregorian calendar differences in milliseconds.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <h3>Get Instant Results</h3>
+              <p>View your exact age in years, months, and days, along with next birthday countdown and total life stats.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section" aria-labelledby="faq-title">
+        <div class="faq-wrap">
+          <div class="faq-header">
+            <span class="kicker">Frequently Asked Questions</span>
+            <h2 id="faq-title">Everything You Need to Know</h2>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>
+                <span>How does an age calculator work?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                It calculates the calendar difference between your date of birth and the target date (today by default), breaking the duration down into completed calendar years, months, and remainder days according to the Gregorian calendar system.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Is this age calculator completely free?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes, 100% free with no registration, subscription, or software downloads required.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Can I calculate my age at a future or custom date?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes! You can change the “Age at Date” field to any future or past date to see how old you will be or were at a specific milestone.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>How are leap years and February 29 handled?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                The algorithm dynamically evaluates whether a year has 365 or 366 days. For individuals born on February 29th, during non-leap years their next birthday is calculated based on February 28th.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Does the website store or share my birth date?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                No. All calculations run strictly client-side directly inside your web browser. No dates of birth or personal data are ever sent to, recorded, or stored on our servers.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+
+        <div class="footer-links" aria-label="Footer links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
