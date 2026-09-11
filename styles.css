@@ -97,11 +97,6 @@ button, input {
   font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: var(--text);
-}
-
-.brand-accent {
-  color: var(--primary);
 }
 
 .site-nav {
@@ -861,17 +856,6 @@ label {
   place-items: center;
   font-size: 0.7rem;
   font-weight: 800;
-}
-
-.footer-brand .mark svg {
-  width: 0.75rem;
-  height: 0.75rem;
-}
-
-.footer-brand-name {
-  font-weight: 800;
-  font-size: 0.88rem;
-  color: var(--text);
 }
 
 .footer-links {
