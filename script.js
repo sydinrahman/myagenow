@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const resNextBday = document.getElementById('res-next-bday');
   const resNextDayname = document.getElementById('res-next-dayname');
   const resZodiac = document.getElementById('res-zodiac');
-  const resBirthstone = document.getElementById('res-birthstone');
   const resTotalMonths = document.getElementById('res-total-months');
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
@@ -103,31 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
     return { name: 'Capricorn', symbol: '♑' };
   }
 
-  function getBirthstone(month) {
-    const stones = [
-      'Garnet 💎',
-      'Amethyst 💎',
-      'Aquamarine 💎',
-      'Diamond 💎',
-      'Emerald 💎',
-      'Pearl / Alexandrite 💎',
-      'Ruby 💎',
-      'Peridot 💎',
-      'Sapphire 💎',
-      'Opal / Tourmaline 💎',
-      'Topaz / Citrine 💎',
-      'Turquoise / Tanzanite 💎'
-    ];
-    return stones[month] || 'Garnet 💎';
-  }
-
   function calculateMilestones(birthDate, targetDate) {
     const milestoneAges = [
       { age: 18, label: '18th Birthday (Adult Age)' },
       { age: 21, label: '21st Birthday (Legal Majority)' },
       { age: 30, label: '30th Birthday (3rd Decade)' },
-      { age: 50, label: '50th Birthday (Golden Jubilee)' },
-      { age: 65, label: '65th Birthday (Retirement)' }
+      { age: 50, label: '50th Birthday (Golden Jubilee)' }
     ];
 
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -209,7 +189,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextBirthdayDay = dayNames[nextBirthday.getDay()];
 
     const zodiac = getZodiacSign(birth.getMonth(), birth.getDate());
-    const birthstone = getBirthstone(birth.getMonth());
     const milestones = calculateMilestones(birth, target);
 
     return {
@@ -226,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function () {
       nextBirthdayDay,
       remainingDays,
       zodiac,
-      birthstone,
       milestones
     };
   }
@@ -271,7 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
       if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
       if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
-      if (resBirthstone) resBirthstone.textContent = result.birthstone;
       if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
       if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
       if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
