@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  // Cached DOM element references
   const dobInput = document.getElementById('dob-input');
   const targetDateInput = document.getElementById('target-date-input');
   const calculateBtn = document.getElementById('calculate-btn');
@@ -35,39 +34,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let currentResultSummary = '';
 
-  // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
-  const MS_PER_DAY = 86400000; // 1000 * 60 * 60 * 24
-  const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  const MILESTONE_AGES = [
-    { age: 18, label: '18th Birthday (Adult Age)' },
-    { age: 21, label: '21st Birthday (Legal Majority)' },
-    { age: 30, label: '30th Birthday (3rd Decade)' },
-    { age: 50, label: '50th Birthday (Golden Jubilee)' }
-  ];
-
-  // ⚡ Optimization: Fast string parsing for ISO YYYY-MM-DD to reduce RegEx overhead & string splits
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
 
     const trimmed = value.trim();
-    if (trimmed.length === 10 && trimmed[4] === '-' && trimmed[7] === '-') {
-      const year = Number(trimmed.slice(0, 4));
-      const month = Number(trimmed.slice(5, 7));
-      const day = Number(trimmed.slice(8, 10));
+    if (!trimmed) return null;
 
-      if (year >= 1 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-        const parsed = new Date(year, month - 1, day);
-        if (!Number.isNaN(parsed.getTime())) return parsed;
-      }
+    const isoMatch = trimmed.match(/^\d{4}-\d{2}-\d{2}$/);
+    if (isoMatch) {
+      const [year, month, day] = trimmed.split('-').map(Number);
+      const parsed = new Date(year, month - 1, day);
+      if (!Number.isNaN(parsed.getTime())) return parsed;
+      return null;
     }
 
     return null;
   }
 
-  // ⚡ Optimization: Direct date component formatting to avoid redundant Date wrapping allocations
   function formatDateForInput(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -75,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function toDateInputValue(date) {
-    return formatDateForInput(date);
+    return formatDateForInput(new Date(date));
   }
 
   function showError(message) {
@@ -120,17 +103,21 @@ document.addEventListener('DOMContentLoaded', function () {
     return { name: 'Capricorn', symbol: '♑' };
   }
 
-  // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays
   function calculateMilestones(birthDate, targetDate) {
-    const birthYear = birthDate.getFullYear();
-    const birthMonth = birthDate.getMonth();
-    const birthDay = birthDate.getDate();
+    const milestoneAges = [
+      { age: 18, label: '18th Birthday (Adult Age)' },
+      { age: 21, label: '21st Birthday (Legal Majority)' },
+      { age: 30, label: '30th Birthday (3rd Decade)' },
+      { age: 50, label: '50th Birthday (Golden Jubilee)' }
+    ];
 
-    return MILESTONE_AGES.map(item => {
-      const targetYear = birthYear + item.age;
-      const day = clampBirthdayDay(targetYear, birthMonth, birthDay);
-      const milestoneDate = new Date(targetYear, birthMonth, day);
-      const formattedDate = `${MONTH_NAMES_SHORT[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return milestoneAges.map(item => {
+      const targetYear = birthDate.getFullYear() + item.age;
+      const day = clampBirthdayDay(targetYear, birthDate.getMonth(), birthDate.getDate());
+      const milestoneDate = new Date(targetYear, birthDate.getMonth(), day);
+      const formattedDate = `${monthNames[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
 
       if (milestoneDate <= targetDate) {
         return {
@@ -140,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
           reached: true
         };
       } else {
-        const diffDays = Math.ceil((milestoneDate - targetDate) / MS_PER_DAY);
+        const diffDays = Math.ceil((milestoneDate - targetDate) / (1000 * 60 * 60 * 24));
         const diffYears = (diffDays / 365.25).toFixed(1);
         return {
           label: item.label,
@@ -152,22 +139,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ⚡ Optimization: Uses input Date objects directly without re-instantiating duplicate Date objects
   function calculateAge(birthDate, targetDate) {
-    const birthYear = birthDate.getFullYear();
-    const birthMonth = birthDate.getMonth();
-    const birthDay = birthDate.getDate();
+    const birth = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    const target = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
 
-    const targetYear = targetDate.getFullYear();
-    const targetMonth = targetDate.getMonth();
-    const targetDay = targetDate.getDate();
-
-    let years = targetYear - birthYear;
-    let months = targetMonth - birthMonth;
-    let days = targetDay - birthDay;
+    let years = target.getFullYear() - birth.getFullYear();
+    let months = target.getMonth() - birth.getMonth();
+    let days = target.getDate() - birth.getDate();
 
     if (days < 0) {
-      const priorMonthDays = getDaysInMonth(targetYear, targetMonth - 1);
+      const priorMonth = new Date(target.getFullYear(), target.getMonth() - 1, 1);
+      const priorMonthDays = getDaysInMonth(priorMonth.getFullYear(), priorMonth.getMonth());
       days += priorMonthDays;
       months -= 1;
     }
@@ -177,35 +159,38 @@ document.addEventListener('DOMContentLoaded', function () {
       years -= 1;
     }
 
-    if (birthDate > targetDate) {
+    if (birth > target) {
       throw new Error('Birth date cannot be after the calculation date.');
     }
 
-    const totalDays = Math.floor((targetDate - birthDate) / MS_PER_DAY);
+    const totalDays = Math.floor((target - birth) / (1000 * 60 * 60 * 24));
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
     const approxHours = totalDays * 24;
 
-    const bornDay = DAY_NAMES[birthDate.getDay()];
-    const bornText = `${MONTH_NAMES[birthMonth]} ${birthDay}, ${birthYear}`;
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    let birthdayYear = targetYear;
-    let birthdayMonth = birthMonth;
-    let birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birthDay);
+    const bornDay = dayNames[birth.getDay()];
+    const bornText = `${monthNames[birth.getMonth()]} ${birth.getDate()}, ${birth.getFullYear()}`;
+
+    let birthdayYear = target.getFullYear();
+    let birthdayMonth = birth.getMonth();
+    let birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birth.getDate());
 
     let nextBirthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
-    if (nextBirthday < targetDate) {
+    if (nextBirthday < target) {
       birthdayYear += 1;
-      birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birthDay);
+      birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birth.getDate());
       nextBirthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
     }
 
-    const remainingDays = Math.round((nextBirthday - targetDate) / MS_PER_DAY);
-    const nextBirthdayText = `${MONTH_NAMES[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
-    const nextBirthdayDay = DAY_NAMES[nextBirthday.getDay()];
+    const remainingDays = Math.round((nextBirthday - target) / (1000 * 60 * 60 * 24));
+    const nextBirthdayText = `${monthNames[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
+    const nextBirthdayDay = dayNames[nextBirthday.getDay()];
 
-    const zodiac = getZodiacSign(birthMonth, birthDay);
-    const milestones = calculateMilestones(birthDate, targetDate);
+    const zodiac = getZodiacSign(birth.getMonth(), birth.getDate());
+    const milestones = calculateMilestones(birth, target);
 
     return {
       years,
