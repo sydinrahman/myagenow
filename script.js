@@ -277,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (shouldScrollToResults && resultsSection) {
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.focus();
       }
     } catch (error) {
       showError(error.message || 'Please choose a valid birth date in the past.');
