@@ -1,0 +1,3 @@
+## 2026-09-12 - Pre-allocating Lookup Arrays and Fast String Parsing in Vanilla JS Date Calculators
+**Learning:** In client-side vanilla JavaScript date calculators where calculations trigger on form inputs or date pickers, avoiding string splitting/regex matching in ISO date parsing and pre-allocating static array lookups (e.g., month names, day names, milestone definitions) prevents avoidable heap allocations and garbage collection pauses during user interaction.
+**Action:** Always extract static lookup arrays and numeric conversion constants to top-level closure scopes and parse known ISO formatted strings with direct string slicing (`slice`) instead of regex or array `split`.
