@@ -271,13 +271,31 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
 
       if (resMilestonesGrid) {
-        resMilestonesGrid.innerHTML = result.milestones.map(m => `
-          <div class="milestone-card ${m.reached ? 'reached' : 'upcoming'}">
-            <span class="milestone-label">${m.label}</span>
-            <div class="milestone-date">${m.dateText}</div>
-            <div class="milestone-status">${m.status}</div>
-          </div>
-        `).join('');
+        // Clear existing milestones safely without innerHTML
+        resMilestonesGrid.textContent = '';
+        // Security enhancement: Use document.createElement and textContent to prevent DOM-based XSS injection
+        result.milestones.forEach(m => {
+          const card = document.createElement('div');
+          card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
+
+          const label = document.createElement('span');
+          label.className = 'milestone-label';
+          label.textContent = m.label;
+
+          const date = document.createElement('div');
+          date.className = 'milestone-date';
+          date.textContent = m.dateText;
+
+          const status = document.createElement('div');
+          status.className = 'milestone-status';
+          status.textContent = m.status;
+
+          card.appendChild(label);
+          card.appendChild(date);
+          card.appendChild(status);
+
+          resMilestonesGrid.appendChild(card);
+        });
       }
 
       currentResultSummary = `I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!). Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculated on myagenow.com`;
