@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Cached DOM element references
   const dobInput = document.getElementById('dob-input');
   const targetDateInput = document.getElementById('target-date-input');
-  const toggleCustomDate = document.getElementById('toggle-custom-date');
-  const customTargetGroup = document.getElementById('custom-target-date-group');
   const calculateBtn = document.getElementById('calculate-btn');
   const resetBtn = document.getElementById('reset-btn');
   const todayQuickBtn = document.getElementById('today-quick-select');
@@ -25,19 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
-  const dayMilestoneBadge = document.getElementById('day-milestone-badge');
-  const dayMilestoneProgressbar = document.getElementById('day-milestone-progressbar');
-  const dayMilestoneBarfill = document.getElementById('day-milestone-barfill');
-  const dayMilestoneSub = document.getElementById('day-milestone-sub');
   const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
 
   const copyBtn = document.getElementById('copy-results-btn');
   const shareBtn = document.getElementById('share-results-btn');
-  const downloadCardBtn = document.getElementById('download-card-btn');
   const printBtn = document.getElementById('print-results-btn');
-
-  let currentAgeResult = null;
 
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
@@ -224,29 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const zodiac = getZodiacSign(birthMonth, birthDay);
     const milestones = calculateMilestones(birthDate, targetDate);
 
-    // Day-Count Milestone calculation (e.g., 5,000, 10,000, 15,000, 20,000, 25,000, 30,000, 40,000 days)
-    const DAY_MILESTONE_INTERVALS = [1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000];
-    let nextDayMilestone = 1000;
-    let prevDayMilestone = 0;
-
-    for (let i = 0; i < DAY_MILESTONE_INTERVALS.length; i++) {
-      if (totalDays < DAY_MILESTONE_INTERVALS[i]) {
-        nextDayMilestone = DAY_MILESTONE_INTERVALS[i];
-        prevDayMilestone = i > 0 ? DAY_MILESTONE_INTERVALS[i - 1] : 0;
-        break;
-      }
-      if (i === DAY_MILESTONE_INTERVALS.length - 1) {
-        prevDayMilestone = DAY_MILESTONE_INTERVALS[i];
-        nextDayMilestone = totalDays + 10000;
-      }
-    }
-
-    const daysProgressInInterval = totalDays - prevDayMilestone;
-    const intervalRange = nextDayMilestone - prevDayMilestone;
-    const progressPercent = Math.min(100, Math.max(0, Math.round((daysProgressInInterval / intervalRange) * 100)));
-    const overallPercentToTarget = Math.min(100, Math.max(0, Math.round((totalDays / nextDayMilestone) * 100)));
-    const daysUntilNextDayMilestone = nextDayMilestone - totalDays;
-
     return {
       years,
       months,
@@ -261,12 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
       nextBirthdayDay,
       remainingDays,
       zodiac,
-      milestones,
-      nextDayMilestone,
-      prevDayMilestone,
-      progressPercent,
-      overallPercentToTarget,
-      daysUntilNextDayMilestone
+      milestones
     };
   }
 
@@ -295,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     try {
       const result = calculateAge(dobDate, targetDate);
-      currentAgeResult = result;
 
       if (resYears) resYears.textContent = result.years.toLocaleString();
       if (resMonths) resMonths.textContent = result.months.toLocaleString();
@@ -315,23 +277,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
       if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
       if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
-
-      if (dayMilestoneBadge) {
-        dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${result.nextDayMilestone.toLocaleString()} Days`;
-      }
-      if (dayMilestoneProgressbar) {
-        dayMilestoneProgressbar.setAttribute('aria-valuenow', String(result.overallPercentToTarget));
-      }
-      if (dayMilestoneBarfill) {
-        dayMilestoneBarfill.style.width = `${result.overallPercentToTarget}%`;
-      }
-      if (dayMilestoneSub) {
-        if (result.daysUntilNextDayMilestone === 0) {
-          dayMilestoneSub.innerHTML = `🎉 Congratulations! You are celebrating your <strong>${result.nextDayMilestone.toLocaleString()}th day lived</strong> today!`;
-        } else {
-          dayMilestoneSub.innerHTML = `You are <strong>${result.daysUntilNextDayMilestone.toLocaleString()} days</strong> away from reaching your <strong>${result.nextDayMilestone.toLocaleString()}th day lived</strong>!`;
-        }
-      }
 
       if (resMilestonesGrid) {
         // Clear existing milestones safely without innerHTML
@@ -377,17 +322,6 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         resultsSection.focus();
       }
-
-      // Sync URL query parameters
-      const params = new URLSearchParams(window.location.search);
-      params.set('dob', dobValue);
-      if (toggleCustomDate && toggleCustomDate.checked && targetDateInput.value) {
-        params.set('target', targetDateInput.value);
-      } else {
-        params.delete('target');
-      }
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
-      window.history.replaceState({}, '', newUrl);
     } catch (error) {
       showError(error.message || 'Please choose a valid birth date in the past.');
     }
@@ -395,23 +329,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const today = new Date();
   const todayFormatted = toDateInputValue(today);
-
-  if (toggleCustomDate && customTargetGroup) {
-    toggleCustomDate.addEventListener('change', function () {
-      if (toggleCustomDate.checked) {
-        customTargetGroup.classList.remove('hidden');
-        if (!targetDateInput.value) {
-          targetDateInput.value = todayFormatted;
-        }
-      } else {
-        customTargetGroup.classList.add('hidden');
-        targetDateInput.value = todayFormatted;
-        if (dobInput && dobInput.value) {
-          performCalculation(false);
-        }
-      }
-    });
-  }
 
   if (targetDateInput) {
     targetDateInput.value = todayFormatted;
@@ -423,21 +340,6 @@ document.addEventListener('DOMContentLoaded', function () {
     dobInput.value = '';
     dobInput.setAttribute('max', todayFormatted);
     dobInput.setAttribute('min', '1900-01-01');
-  }
-
-  // Restore URL parameters if present (e.g., ?dob=2000-05-15&target=2026-09-08)
-  const urlParams = new URLSearchParams(window.location.search);
-  const paramDob = urlParams.get('dob');
-  const paramTarget = urlParams.get('target');
-
-  if (paramDob && parseDateInput(paramDob)) {
-    if (dobInput) dobInput.value = paramDob;
-    if (paramTarget && parseDateInput(paramTarget)) {
-      if (targetDateInput) targetDateInput.value = paramTarget;
-      if (toggleCustomDate) toggleCustomDate.checked = true;
-      if (customTargetGroup) customTargetGroup.classList.remove('hidden');
-    }
-    performCalculation(false);
   }
 
   const ageForm = document.getElementById('age-form');
@@ -452,19 +354,11 @@ document.addEventListener('DOMContentLoaded', function () {
     resetBtn.addEventListener('click', function () {
       if (dobInput) dobInput.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
-      if (toggleCustomDate) toggleCustomDate.checked = false;
-      if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
       if (resultsSection) {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
       }
-      const params = new URLSearchParams(window.location.search);
-      params.delete('dob');
-      params.delete('target');
-      const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-      window.history.replaceState({}, '', cleanUrl);
-      if (dobInput) dobInput.focus();
     });
   }
 
@@ -523,120 +417,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (copyBtn) copyBtn.click();
       }
     });
-  }
-
-  if (downloadCardBtn) {
-    downloadCardBtn.addEventListener('click', function () {
-      if (!currentAgeResult) return;
-      generateShareableImageCard(currentAgeResult);
-    });
-  }
-
-  function generateShareableImageCard(res) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1200;
-    canvas.height = 630;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Background gradient
-    const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
-    gradient.addColorStop(0, '#1e293b');
-    gradient.addColorStop(1, '#0f172a');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 1200, 630);
-
-    // Decorative inner border box
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#2563eb';
-    ctx.strokeRect(30, 30, 1140, 570);
-
-    // Header - Brand Name
-    ctx.fillStyle = '#2563eb';
-    ctx.beginPath();
-    ctx.arc(90, 85, 24, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('M', 90, 93);
-
-    ctx.font = '800 32px "Plus Jakarta Sans", sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText('myagenow', 125, 94);
-
-    ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.textAlign = 'right';
-    ctx.fillText('myagenow.com', 1110, 94);
-
-    // Main Age Readout
-    ctx.textAlign = 'center';
-    ctx.font = '800 90px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#60a5fa';
-    const mainAgeStr = `${res.years} Years`;
-    ctx.fillText(mainAgeStr, 600, 240);
-
-    ctx.font = '700 36px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#e2e8f0';
-    ctx.fillText(`${res.months} Months • ${res.days} Days`, 600, 300);
-
-    // Stat Boxes Layout (3 boxes)
-    const boxY = 360;
-    const boxW = 340;
-    const boxH = 140;
-
-    // Box 1: Total Days Lived
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
-    ctx.lineWidth = 2;
-
-    // Box 1
-    ctx.fillRect(90, boxY, boxW, boxH);
-    ctx.strokeRect(90, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText('TOTAL DAYS LIVED', 90 + boxW / 2, boxY + 40);
-    ctx.font = '800 36px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(res.totalDays.toLocaleString(), 90 + boxW / 2, boxY + 95);
-
-    // Box 2: Zodiac
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.fillRect(430, boxY, boxW, boxH);
-    ctx.strokeRect(430, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText('ZODIAC SIGN', 430 + boxW / 2, boxY + 40);
-    ctx.font = '800 32px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#fde047';
-    ctx.fillText(`${res.zodiac.name} ${res.zodiac.symbol}`, 430 + boxW / 2, boxY + 95);
-
-    // Box 3: Born On
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.fillRect(770, boxY, boxW, boxH);
-    ctx.strokeRect(770, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText('BORN ON', 770 + boxW / 2, boxY + 40);
-    ctx.font = '800 24px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${res.bornDay}`, 770 + boxW / 2, boxY + 75);
-    ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#cbd5e1';
-    ctx.fillText(res.bornText, 770 + boxW / 2, boxY + 105);
-
-    // Footer note
-    ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#64748b';
-    ctx.fillText('Exact & Private Age Calculation — myagenow.com', 600, 560);
-
-    // Download trigger
-    const link = document.createElement('a');
-    link.download = `myagenow-age-card-${res.years}y${res.months}m${res.days}d.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
   }
 
   if (printBtn) {
