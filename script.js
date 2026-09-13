@@ -444,7 +444,22 @@ document.addEventListener('DOMContentLoaded', function () {
   if (ageForm) {
     ageForm.addEventListener('submit', function (event) {
       event.preventDefault();
-      performCalculation(true);
+
+      if (calculateBtn) {
+        const originalContent = calculateBtn.innerHTML;
+        calculateBtn.disabled = true;
+        calculateBtn.classList.add('is-loading');
+        calculateBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Calculating...';
+
+        setTimeout(function () {
+          calculateBtn.disabled = false;
+          calculateBtn.classList.remove('is-loading');
+          calculateBtn.innerHTML = originalContent;
+          performCalculation(true);
+        }, 800);
+      } else {
+        performCalculation(true);
+      }
     });
   }
 

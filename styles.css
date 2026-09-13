@@ -432,6 +432,25 @@ label {
   transform: translateY(1px);
 }
 
+.primary-btn.is-loading {
+  opacity: 0.85;
+  cursor: wait;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .privacy-note {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -913,13 +932,21 @@ label {
 
 .tool-status {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--primary);
   background: var(--primary-soft);
-  padding: 0.25rem 0.6rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
+}
+
+.tool-status.active-link:hover,
+.tool-status.active-link:focus-visible {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary-dark);
 }
 
 .trust-section {
