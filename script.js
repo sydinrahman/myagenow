@@ -451,7 +451,35 @@ document.addEventListener('DOMContentLoaded', function () {
   if (ageForm) {
     ageForm.addEventListener('submit', function (event) {
       event.preventDefault();
-      performCalculation(true);
+
+      if (!dobInput || !dobInput.value) {
+        showError('Please enter your date of birth.');
+        return;
+      }
+
+      if (calculateBtn && calculateBtn.classList.contains('loading')) {
+        return; // Prevent multi-clicks while loading
+      }
+
+      // Add loading state to Calculate My Age button
+      if (calculateBtn) {
+        calculateBtn.classList.add('loading');
+        calculateBtn.disabled = true;
+        const originalBtnContent = calculateBtn.innerHTML;
+        calculateBtn.innerHTML = `
+          <span class="btn-spinner" aria-hidden="true"></span>
+          <span>Calculating...</span>
+        `;
+
+        setTimeout(function () {
+          performCalculation(true);
+          calculateBtn.classList.remove('loading');
+          calculateBtn.disabled = false;
+          calculateBtn.innerHTML = originalBtnContent;
+        }, 1500);
+      } else {
+        performCalculation(true);
+      }
     });
   }
 
