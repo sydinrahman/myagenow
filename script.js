@@ -93,6 +93,13 @@ document.addEventListener('DOMContentLoaded', function () {
     return null;
   }
 
+  // Pure UTC day calculation helper to avoid DST shifts or midnight boundary issues
+  function getUtcDaysDiff(dateA, dateB) {
+    const utcA = Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate());
+    const utcB = Date.UTC(dateB.getFullYear(), dateB.getMonth(), dateB.getDate());
+    return Math.floor((utcB - utcA) / MS_PER_DAY);
+  }
+
   // ⚡ Optimization: Direct date component formatting to avoid redundant Date wrapping allocations
   function formatDateForInput(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -157,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
           reached: true
         };
       } else {
-        const diffDays = Math.ceil((milestoneDate - targetDate) / MS_PER_DAY);
+        const diffDays = getUtcDaysDiff(targetDate, milestoneDate);
         const diffYears = (diffDays / 365.25).toFixed(1);
         return {
           label: item.label,
@@ -198,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
       throw new Error('Birth date cannot be after the calculation date.');
     }
 
-    const totalDays = Math.floor((targetDate - birthDate) / MS_PER_DAY);
+    const totalDays = getUtcDaysDiff(birthDate, targetDate);
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
     const approxHours = totalDays * 24;
@@ -217,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
       nextBirthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
     }
 
-    const remainingDays = Math.round((nextBirthday - targetDate) / MS_PER_DAY);
+    const remainingDays = getUtcDaysDiff(targetDate, nextBirthday);
     const nextBirthdayText = `${MONTH_NAMES[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
     const nextBirthdayDay = DAY_NAMES[nextBirthday.getDay()];
 
@@ -363,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resMilestonesGrid.appendChild(fragment);
       }
 
-      currentResultSummary = `I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!). Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculated on myagenow.com`;
+      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -541,7 +548,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Background gradient
     const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
-    gradient.addColorStop(0, '#1e293b');
+    gradient.addColorStop(0, '#0f172a');
+    gradient.addColorStop(0.5, '#1e293b');
     gradient.addColorStop(1, '#0f172a');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 1200, 630);
@@ -558,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ctx.fill();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
+    ctx.font = '800 24px "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('M', 90, 93);
 
@@ -573,59 +581,65 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Main Age Readout
     ctx.textAlign = 'center';
-    ctx.font = '800 90px "Plus Jakarta Sans", sans-serif';
+    ctx.font = '800 92px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#60a5fa';
     const mainAgeStr = `${res.years} Years`;
-    ctx.fillText(mainAgeStr, 600, 240);
+    ctx.fillText(mainAgeStr, 600, 235);
 
     ctx.font = '700 36px "Plus Jakarta Sans", sans-serif';
-    ctx.fillStyle = '#e2e8f0';
-    ctx.fillText(`${res.months} Months • ${res.days} Days`, 600, 300);
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillText(`${res.months} Months • ${res.days} Days`, 600, 295);
 
     // Stat Boxes Layout (3 boxes)
-    const boxY = 360;
+    const boxY = 350;
     const boxW = 340;
-    const boxH = 140;
+    const boxH = 150;
+
+    // Helper for rounded rect box
+    function drawRoundedRect(x, y, w, h, radius, fillStyle, strokeStyle) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + w, y, x + w, y + h, radius);
+      ctx.arcTo(x + w, y + h, x, y + h, radius);
+      ctx.arcTo(x, y + h, x, y, radius);
+      ctx.arcTo(x, y, x + w, y, radius);
+      ctx.closePath();
+      ctx.fillStyle = fillStyle;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = strokeStyle;
+      ctx.stroke();
+    }
 
     // Box 1: Total Days Lived
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
-    ctx.lineWidth = 2;
-
-    // Box 1
-    ctx.fillRect(90, boxY, boxW, boxH);
-    ctx.strokeRect(90, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+    drawRoundedRect(90, boxY, boxW, boxH, 16, 'rgba(30, 41, 59, 0.85)', 'rgba(59, 130, 246, 0.4)');
+    ctx.font = '800 16px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#94a3b8';
-    ctx.fillText('TOTAL DAYS LIVED', 90 + boxW / 2, boxY + 40);
-    ctx.font = '800 36px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('TOTAL DAYS LIVED', 90 + boxW / 2, boxY + 42);
+    ctx.font = '800 38px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(res.totalDays.toLocaleString(), 90 + boxW / 2, boxY + 95);
+    ctx.fillText(res.totalDays.toLocaleString(), 90 + boxW / 2, boxY + 100);
 
     // Box 2: Zodiac
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.fillRect(430, boxY, boxW, boxH);
-    ctx.strokeRect(430, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+    drawRoundedRect(430, boxY, boxW, boxH, 16, 'rgba(30, 41, 59, 0.85)', 'rgba(234, 179, 8, 0.4)');
+    ctx.font = '800 16px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#94a3b8';
-    ctx.fillText('ZODIAC SIGN', 430 + boxW / 2, boxY + 40);
-    ctx.font = '800 32px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('ZODIAC SIGN', 430 + boxW / 2, boxY + 42);
+    ctx.font = '800 34px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#fde047';
-    ctx.fillText(`${res.zodiac.name} ${res.zodiac.symbol}`, 430 + boxW / 2, boxY + 95);
+    ctx.fillText(`${res.zodiac.name} ${res.zodiac.symbol}`, 430 + boxW / 2, boxY + 100);
 
     // Box 3: Born On
-    ctx.fillStyle = 'rgba(30, 41, 59, 0.8)';
-    ctx.fillRect(770, boxY, boxW, boxH);
-    ctx.strokeRect(770, boxY, boxW, boxH);
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+    drawRoundedRect(770, boxY, boxW, boxH, 16, 'rgba(30, 41, 59, 0.85)', 'rgba(148, 163, 184, 0.3)');
+    ctx.font = '800 16px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#94a3b8';
-    ctx.fillText('BORN ON', 770 + boxW / 2, boxY + 40);
+    ctx.fillText('BORN ON', 770 + boxW / 2, boxY + 42);
     ctx.font = '800 24px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${res.bornDay}`, 770 + boxW / 2, boxY + 75);
+    ctx.fillText(`${res.bornDay}`, 770 + boxW / 2, boxY + 80);
     ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#cbd5e1';
-    ctx.fillText(res.bornText, 770 + boxW / 2, boxY + 105);
+    ctx.fillText(res.bornText, 770 + boxW / 2, boxY + 112);
 
     // Footer note
     ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
