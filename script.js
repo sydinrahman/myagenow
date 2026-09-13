@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const resultsSection = document.getElementById('age-results');
 
   const copyBtn = document.getElementById('copy-results-btn');
-  const copyStatus = document.getElementById('copy-status');
   const shareBtn = document.getElementById('share-results-btn');
   const printBtn = document.getElementById('print-results-btn');
 
@@ -396,10 +395,8 @@ document.addEventListener('DOMContentLoaded', function () {
       navigator.clipboard.writeText(currentResultSummary).then(function () {
         const originalText = copyBtn.innerHTML;
         copyBtn.innerHTML = `✓ Copied!`;
-        if (copyStatus) copyStatus.textContent = 'Age results copied to clipboard';
         setTimeout(function () {
           copyBtn.innerHTML = originalText;
-          if (copyStatus) copyStatus.textContent = '';
         }, 2000);
       }).catch(function () {
         showError('Could not copy to clipboard.');
