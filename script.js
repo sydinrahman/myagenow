@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+  // Cached DOM element references
   const dobInput = document.getElementById('dob-input');
   const targetDateInput = document.getElementById('target-date-input');
   const calculateBtn = document.getElementById('calculate-btn');
@@ -10,36 +12,79 @@ document.addEventListener('DOMContentLoaded', function () {
   const resYears = document.getElementById('res-years');
   const resMonths = document.getElementById('res-months');
   const resDays = document.getElementById('res-days');
+  const resDaysHighlight = document.getElementById('res-days-highlight');
+  const resNextCountdownHighlight = document.getElementById('res-next-countdown-highlight');
   const resBornDay = document.getElementById('res-born-day');
   const resBornFull = document.getElementById('res-born-full');
   const resNextBday = document.getElementById('res-next-bday');
   const resNextDayname = document.getElementById('res-next-dayname');
-  const resCountdownDays = document.getElementById('res-countdown-days');
+  const resZodiac = document.getElementById('res-zodiac');
   const resTotalMonths = document.getElementById('res-total-months');
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
+  const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
+
+  const copyBtn = document.getElementById('copy-results-btn');
+  const shareBtn = document.getElementById('share-results-btn');
+  const printBtn = document.getElementById('print-results-btn');
+
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
 
+  let currentResultSummary = '';
+
+  // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
+  const MS_PER_DAY = 86400000; // 1000 * 60 * 60 * 24
+  const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const MILESTONE_AGES = [
+    { age: 18, label: '18th Birthday (Adult Age)' },
+    { age: 21, label: '21st Birthday (Legal Majority)' },
+    { age: 30, label: '30th Birthday (3rd Decade)' },
+    { age: 50, label: '50th Birthday (Golden Jubilee)' }
+  ];
+
+  // ⚡ Optimization: Pre-allocated static Zodiac sign lookups and cutoff thresholds to eliminate repeated object allocations and multi-branch checking
+  const ZODIAC_CUTOFFS = [20, 19, 21, 20, 21, 21, 23, 23, 23, 23, 22, 22];
+  const ZODIAC_SIGNS = [
+    { before: { name: 'Capricorn', symbol: '♑' }, after: { name: 'Aquarius', symbol: '♒' } },
+    { before: { name: 'Aquarius', symbol: '♒' }, after: { name: 'Pisces', symbol: '♓' } },
+    { before: { name: 'Pisces', symbol: '♓' }, after: { name: 'Aries', symbol: '♈' } },
+    { before: { name: 'Aries', symbol: '♈' }, after: { name: 'Taurus', symbol: '♉' } },
+    { before: { name: 'Taurus', symbol: '♉' }, after: { name: 'Gemini', symbol: '♊' } },
+    { before: { name: 'Gemini', symbol: '♊' }, after: { name: 'Cancer', symbol: '♋' } },
+    { before: { name: 'Cancer', symbol: '♋' }, after: { name: 'Leo', symbol: '♌' } },
+    { before: { name: 'Leo', symbol: '♌' }, after: { name: 'Virgo', symbol: '♍' } },
+    { before: { name: 'Virgo', symbol: '♍' }, after: { name: 'Libra', symbol: '♎' } },
+    { before: { name: 'Libra', symbol: '♎' }, after: { name: 'Scorpio', symbol: '♏' } },
+    { before: { name: 'Scorpio', symbol: '♏' }, after: { name: 'Sagittarius', symbol: '♐' } },
+    { before: { name: 'Sagittarius', symbol: '♐' }, after: { name: 'Capricorn', symbol: '♑' } }
+  ];
+
+  // ⚡ Optimization: Fast string parsing for ISO YYYY-MM-DD to reduce RegEx overhead & string splits
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
 
     const trimmed = value.trim();
-    if (!trimmed) return null;
+    if (trimmed.length === 10 && trimmed[4] === '-' && trimmed[7] === '-') {
+      const year = Number(trimmed.slice(0, 4));
+      const month = Number(trimmed.slice(5, 7));
+      const day = Number(trimmed.slice(8, 10));
 
-    const isoMatch = trimmed.match(/^\d{4}-\d{2}-\d{2}$/);
-    if (isoMatch) {
-      const [year, month, day] = trimmed.split('-').map(Number);
-      const parsed = new Date(year, month - 1, day);
-      if (!Number.isNaN(parsed.getTime())) return parsed;
-      return null;
+      if (year >= 1 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const parsed = new Date(year, month - 1, day);
+        if (!Number.isNaN(parsed.getTime())) return parsed;
+      }
     }
 
     return null;
   }
 
+  // ⚡ Optimization: Direct date component formatting to avoid redundant Date wrapping allocations
   function formatDateForInput(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -47,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function toDateInputValue(date) {
-    return formatDateForInput(new Date(date));
+    return formatDateForInput(date);
   }
 
   function showError(message) {
@@ -75,17 +120,62 @@ document.addEventListener('DOMContentLoaded', function () {
     return day;
   }
 
-  function calculateAge(birthDate, targetDate) {
-    const birth = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-    const target = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  // ⚡ Optimization: O(1) array lookup with zero runtime allocations
+  function getZodiacSign(month, day) {
+    // month is 0-indexed (0 = Jan)
+    const entry = ZODIAC_SIGNS[month];
+    if (!entry) return { name: 'Capricorn', symbol: '♑' };
+    return day < ZODIAC_CUTOFFS[month] ? entry.before : entry.after;
+  }
 
-    let years = target.getFullYear() - birth.getFullYear();
-    let months = target.getMonth() - birth.getMonth();
-    let days = target.getDate() - birth.getDate();
+  // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays
+  function calculateMilestones(birthDate, targetDate) {
+    const birthYear = birthDate.getFullYear();
+    const birthMonth = birthDate.getMonth();
+    const birthDay = birthDate.getDate();
+
+    return MILESTONE_AGES.map(item => {
+      const targetYear = birthYear + item.age;
+      const day = clampBirthdayDay(targetYear, birthMonth, birthDay);
+      const milestoneDate = new Date(targetYear, birthMonth, day);
+      const formattedDate = `${MONTH_NAMES_SHORT[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
+
+      if (milestoneDate <= targetDate) {
+        return {
+          label: item.label,
+          dateText: formattedDate,
+          status: 'Reached ✓',
+          reached: true
+        };
+      } else {
+        const diffDays = Math.ceil((milestoneDate - targetDate) / MS_PER_DAY);
+        const diffYears = (diffDays / 365.25).toFixed(1);
+        return {
+          label: item.label,
+          dateText: formattedDate,
+          status: `In ~${diffYears} yrs`,
+          reached: false
+        };
+      }
+    });
+  }
+
+  // ⚡ Optimization: Uses input Date objects directly without re-instantiating duplicate Date objects
+  function calculateAge(birthDate, targetDate) {
+    const birthYear = birthDate.getFullYear();
+    const birthMonth = birthDate.getMonth();
+    const birthDay = birthDate.getDate();
+
+    const targetYear = targetDate.getFullYear();
+    const targetMonth = targetDate.getMonth();
+    const targetDay = targetDate.getDate();
+
+    let years = targetYear - birthYear;
+    let months = targetMonth - birthMonth;
+    let days = targetDay - birthDay;
 
     if (days < 0) {
-      const priorMonth = new Date(target.getFullYear(), target.getMonth() - 1, 1);
-      const priorMonthDays = getDaysInMonth(priorMonth.getFullYear(), priorMonth.getMonth());
+      const priorMonthDays = getDaysInMonth(targetYear, targetMonth - 1);
       days += priorMonthDays;
       months -= 1;
     }
@@ -95,35 +185,35 @@ document.addEventListener('DOMContentLoaded', function () {
       years -= 1;
     }
 
-    if (birth > target) {
+    if (birthDate > targetDate) {
       throw new Error('Birth date cannot be after the calculation date.');
     }
 
-    const totalDays = Math.floor((target - birth) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor((targetDate - birthDate) / MS_PER_DAY);
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
     const approxHours = totalDays * 24;
 
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const bornDay = DAY_NAMES[birthDate.getDay()];
+    const bornText = `${MONTH_NAMES[birthMonth]} ${birthDay}, ${birthYear}`;
 
-    const bornDay = dayNames[birth.getDay()];
-    const bornText = `${monthNames[birth.getMonth()]} ${birth.getDate()}, ${birth.getFullYear()}`;
-
-    let birthdayYear = target.getFullYear();
-    let birthdayMonth = birth.getMonth();
-    let birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birth.getDate());
+    let birthdayYear = targetYear;
+    let birthdayMonth = birthMonth;
+    let birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birthDay);
 
     let nextBirthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
-    if (nextBirthday < target) {
+    if (nextBirthday < targetDate) {
       birthdayYear += 1;
-      birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birth.getDate());
+      birthdayDay = clampBirthdayDay(birthdayYear, birthdayMonth, birthDay);
       nextBirthday = new Date(birthdayYear, birthdayMonth, birthdayDay);
     }
 
-    const remainingDays = Math.round((nextBirthday - target) / (1000 * 60 * 60 * 24));
-    const nextBirthdayText = `${monthNames[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
-    const nextBirthdayDay = dayNames[nextBirthday.getDay()];
+    const remainingDays = Math.round((nextBirthday - targetDate) / MS_PER_DAY);
+    const nextBirthdayText = `${MONTH_NAMES[nextBirthday.getMonth()]} ${nextBirthday.getDate()}, ${nextBirthday.getFullYear()}`;
+    const nextBirthdayDay = DAY_NAMES[nextBirthday.getDay()];
+
+    const zodiac = getZodiacSign(birthMonth, birthDay);
+    const milestones = calculateMilestones(birthDate, targetDate);
 
     return {
       years,
@@ -138,6 +228,8 @@ document.addEventListener('DOMContentLoaded', function () {
       nextBirthdayText,
       nextBirthdayDay,
       remainingDays,
+      zodiac,
+      milestones
     };
   }
 
@@ -170,15 +262,53 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resYears) resYears.textContent = result.years.toLocaleString();
       if (resMonths) resMonths.textContent = result.months.toLocaleString();
       if (resDays) resDays.textContent = result.days.toLocaleString();
+      if (resDaysHighlight) resDaysHighlight.textContent = `${result.totalDays.toLocaleString()} Days Lived`;
+      if (resNextCountdownHighlight) {
+        resNextCountdownHighlight.textContent = result.remainingDays === 0
+          ? 'Next birthday is TODAY! 🎉'
+          : `Next birthday in ${result.remainingDays.toLocaleString()} days`;
+      }
       if (resBornDay) resBornDay.textContent = result.bornDay;
       if (resBornFull) resBornFull.textContent = result.bornText;
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
       if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
-      if (resCountdownDays) resCountdownDays.textContent = result.remainingDays === 0 ? 'Today!' : result.remainingDays.toLocaleString();
+      if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
       if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
       if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
       if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
       if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
+
+      if (resMilestonesGrid) {
+        // Clear existing milestones safely without innerHTML
+        resMilestonesGrid.textContent = '';
+        // ⚡ Optimization: Batch milestone card insertions into a single DocumentFragment to minimize DOM reflows
+        const fragment = document.createDocumentFragment();
+        result.milestones.forEach(m => {
+          const card = document.createElement('div');
+          card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
+
+          const label = document.createElement('span');
+          label.className = 'milestone-label';
+          label.textContent = m.label;
+
+          const date = document.createElement('div');
+          date.className = 'milestone-date';
+          date.textContent = m.dateText;
+
+          const status = document.createElement('div');
+          status.className = 'milestone-status';
+          status.textContent = m.status;
+
+          card.appendChild(label);
+          card.appendChild(date);
+          card.appendChild(status);
+
+          fragment.appendChild(card);
+        });
+        resMilestonesGrid.appendChild(fragment);
+      }
+
+      currentResultSummary = `I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!). Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculated on myagenow.com`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -190,6 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (shouldScrollToResults && resultsSection) {
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.focus();
       }
     } catch (error) {
       showError(error.message || 'Please choose a valid birth date in the past.');
@@ -197,8 +328,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const today = new Date();
-  if (targetDateInput) targetDateInput.value = toDateInputValue(today);
-  if (dobInput) dobInput.value = '2002-01-15';
+  const todayFormatted = toDateInputValue(today);
+
+  if (targetDateInput) {
+    targetDateInput.value = todayFormatted;
+    targetDateInput.setAttribute('max', '2100-12-31');
+    targetDateInput.setAttribute('min', '1900-01-01');
+  }
+
+  if (dobInput) {
+    dobInput.value = '';
+    dobInput.setAttribute('max', todayFormatted);
+    dobInput.setAttribute('min', '1900-01-01');
+  }
 
   const ageForm = document.getElementById('age-form');
   if (ageForm) {
@@ -210,17 +352,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
-      if (dobInput) dobInput.value = '2002-01-15';
+      if (dobInput) dobInput.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
       hideError();
-      performCalculation(false);
+      if (resultsSection) {
+        resultsSection.hidden = true;
+        resultsSection.classList.remove('is-visible');
+      }
     });
   }
 
   if (todayQuickBtn) {
     todayQuickBtn.addEventListener('click', function () {
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
-      performCalculation(false);
+      if (dobInput && dobInput.value) {
+        performCalculation(false);
+      }
     });
   }
 
@@ -231,14 +378,52 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
           input.showPicker();
         } catch (error) {
-          // Browsers that do not allow programmatic picker opening still use the native input control.
+          // Programmatic picker fallback
         }
       }
     });
     input.addEventListener('change', function () {
-      performCalculation(false);
+      if (dobInput && dobInput.value) {
+        performCalculation(false);
+      }
     });
   });
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      if (!currentResultSummary) return;
+      navigator.clipboard.writeText(currentResultSummary).then(function () {
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = `✓ Copied!`;
+        setTimeout(function () {
+          copyBtn.innerHTML = originalText;
+        }, 2000);
+      }).catch(function () {
+        showError('Could not copy to clipboard.');
+      });
+    });
+  }
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      if (!currentResultSummary) return;
+      if (navigator.share) {
+        navigator.share({
+          title: 'My Age Calculation - myagenow',
+          text: currentResultSummary,
+          url: window.location.href
+        }).catch(function () {});
+      } else {
+        if (copyBtn) copyBtn.click();
+      }
+    });
+  }
+
+  if (printBtn) {
+    printBtn.addEventListener('click', function () {
+      window.print();
+    });
+  }
 
   if (menuButton && siteNav) {
     menuButton.addEventListener('click', function () {
