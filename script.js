@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
     { age: 50, label: '50th Birthday (Golden Jubilee)' }
   ];
 
-  // ⚡ Optimization: Fast string parsing for ISO YYYY-MM-DD to reduce RegEx overhead & string splits
+  // ⚡ Security & Optimization: Fast ISO YYYY-MM-DD parsing with length and strict year boundary limits (1900-2100)
   function parseDateInput(value) {
-    if (!value || typeof value !== 'string') return null;
+    if (!value || typeof value !== 'string' || value.length > 20) return null;
 
     const trimmed = value.trim();
     if (trimmed.length === 10 && trimmed[4] === '-' && trimmed[7] === '-') {
@@ -58,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const month = Number(trimmed.slice(5, 7));
       const day = Number(trimmed.slice(8, 10));
 
-      if (year >= 1 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      // Security boundary check: Restrict year to supported application range (1900-2100)
+      if (year >= 1900 && year <= 2100 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
         const parsed = new Date(year, month - 1, day);
         if (!Number.isNaN(parsed.getTime())) return parsed;
       }
