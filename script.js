@@ -48,6 +48,23 @@ document.addEventListener('DOMContentLoaded', function () {
     { age: 50, label: '50th Birthday (Golden Jubilee)' }
   ];
 
+  // ⚡ Optimization: Pre-allocated static Zodiac sign lookups and cutoff thresholds to eliminate repeated object allocations and multi-branch checking
+  const ZODIAC_CUTOFFS = [20, 19, 21, 20, 21, 21, 23, 23, 23, 23, 22, 22];
+  const ZODIAC_SIGNS = [
+    { before: { name: 'Capricorn', symbol: '♑' }, after: { name: 'Aquarius', symbol: '♒' } },
+    { before: { name: 'Aquarius', symbol: '♒' }, after: { name: 'Pisces', symbol: '♓' } },
+    { before: { name: 'Pisces', symbol: '♓' }, after: { name: 'Aries', symbol: '♈' } },
+    { before: { name: 'Aries', symbol: '♈' }, after: { name: 'Taurus', symbol: '♉' } },
+    { before: { name: 'Taurus', symbol: '♉' }, after: { name: 'Gemini', symbol: '♊' } },
+    { before: { name: 'Gemini', symbol: '♊' }, after: { name: 'Cancer', symbol: '♋' } },
+    { before: { name: 'Cancer', symbol: '♋' }, after: { name: 'Leo', symbol: '♌' } },
+    { before: { name: 'Leo', symbol: '♌' }, after: { name: 'Virgo', symbol: '♍' } },
+    { before: { name: 'Virgo', symbol: '♍' }, after: { name: 'Libra', symbol: '♎' } },
+    { before: { name: 'Libra', symbol: '♎' }, after: { name: 'Scorpio', symbol: '♏' } },
+    { before: { name: 'Scorpio', symbol: '♏' }, after: { name: 'Sagittarius', symbol: '♐' } },
+    { before: { name: 'Sagittarius', symbol: '♐' }, after: { name: 'Capricorn', symbol: '♑' } }
+  ];
+
   // ⚡ Optimization: Fast string parsing for ISO YYYY-MM-DD to reduce RegEx overhead & string splits
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
@@ -103,21 +120,12 @@ document.addEventListener('DOMContentLoaded', function () {
     return day;
   }
 
+  // ⚡ Optimization: O(1) array lookup with zero runtime allocations
   function getZodiacSign(month, day) {
     // month is 0-indexed (0 = Jan)
-    const m = month + 1;
-    if ((m === 1 && day >= 20) || (m === 2 && day <= 18)) return { name: 'Aquarius', symbol: '♒' };
-    if ((m === 2 && day >= 19) || (m === 3 && day <= 20)) return { name: 'Pisces', symbol: '♓' };
-    if ((m === 3 && day >= 21) || (m === 4 && day <= 19)) return { name: 'Aries', symbol: '♈' };
-    if ((m === 4 && day >= 20) || (m === 5 && day <= 20)) return { name: 'Taurus', symbol: '♉' };
-    if ((m === 5 && day >= 21) || (m === 6 && day <= 20)) return { name: 'Gemini', symbol: '♊' };
-    if ((m === 6 && day >= 21) || (m === 7 && day <= 22)) return { name: 'Cancer', symbol: '♋' };
-    if ((m === 7 && day >= 23) || (m === 8 && day <= 22)) return { name: 'Leo', symbol: '♌' };
-    if ((m === 8 && day >= 23) || (m === 9 && day <= 22)) return { name: 'Virgo', symbol: '♍' };
-    if ((m === 9 && day >= 23) || (m === 10 && day <= 22)) return { name: 'Libra', symbol: '♎' };
-    if ((m === 10 && day >= 23) || (m === 11 && day <= 21)) return { name: 'Scorpio', symbol: '♏' };
-    if ((m === 11 && day >= 22) || (m === 12 && day <= 21)) return { name: 'Sagittarius', symbol: '♐' };
-    return { name: 'Capricorn', symbol: '♑' };
+    const entry = ZODIAC_SIGNS[month];
+    if (!entry) return { name: 'Capricorn', symbol: '♑' };
+    return day < ZODIAC_CUTOFFS[month] ? entry.before : entry.after;
   }
 
   // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays
@@ -273,7 +281,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resMilestonesGrid) {
         // Clear existing milestones safely without innerHTML
         resMilestonesGrid.textContent = '';
-        // Security enhancement: Use document.createElement and textContent to prevent DOM-based XSS injection
+        // ⚡ Optimization: Batch milestone card insertions into a single DocumentFragment to minimize DOM reflows
+        const fragment = document.createDocumentFragment();
         result.milestones.forEach(m => {
           const card = document.createElement('div');
           card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
@@ -294,8 +303,9 @@ document.addEventListener('DOMContentLoaded', function () {
           card.appendChild(date);
           card.appendChild(status);
 
-          resMilestonesGrid.appendChild(card);
+          fragment.appendChild(card);
         });
+        resMilestonesGrid.appendChild(fragment);
       }
 
       currentResultSummary = `I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!). Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculated on myagenow.com`;
