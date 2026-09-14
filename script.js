@@ -335,29 +335,10 @@ document.addEventListener('DOMContentLoaded', function () {
         dayMilestoneBarfill.style.width = `${result.overallPercentToTarget}%`;
       }
       if (dayMilestoneSub) {
-        // 🔒 Security: Safely construct DOM elements without innerHTML to avoid XSS risks
-        dayMilestoneSub.textContent = '';
         if (result.daysUntilNextDayMilestone === 0) {
-          const t1 = document.createTextNode('🎉 Congratulations! You are celebrating your ');
-          const s1 = document.createElement('strong');
-          s1.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
-          const t2 = document.createTextNode(' today!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
+          dayMilestoneSub.innerHTML = `🎉 Congratulations! You are celebrating your <strong>${result.nextDayMilestone.toLocaleString()}th day lived</strong> today!`;
         } else {
-          const t1 = document.createTextNode('You are ');
-          const s1 = document.createElement('strong');
-          s1.textContent = `${result.daysUntilNextDayMilestone.toLocaleString()} days`;
-          const t2 = document.createTextNode(' away from reaching your ');
-          const s2 = document.createElement('strong');
-          s2.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
-          const t3 = document.createTextNode('!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
-          dayMilestoneSub.appendChild(s2);
-          dayMilestoneSub.appendChild(t3);
+          dayMilestoneSub.innerHTML = `You are <strong>${result.daysUntilNextDayMilestone.toLocaleString()} days</strong> away from reaching your <strong>${result.nextDayMilestone.toLocaleString()}th day lived</strong>!`;
         }
       }
 
