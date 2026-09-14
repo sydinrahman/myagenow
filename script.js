@@ -57,8 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
     { age: 50, label: '50th Birthday (Golden Jubilee)' }
   ];
 
-  const DAY_MILESTONE_INTERVALS = [1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000];
-
   // ⚡ Optimization: Pre-allocated static Zodiac sign lookups and cutoff thresholds to eliminate repeated object allocations and multi-branch checking
   const ZODIAC_CUTOFFS = [20, 19, 21, 20, 21, 21, 23, 23, 23, 23, 22, 22];
   const ZODIAC_SIGNS = [
@@ -234,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const milestones = calculateMilestones(birthDate, targetDate);
 
     // Day-Count Milestone calculation (e.g., 5,000, 10,000, 15,000, 20,000, 25,000, 30,000, 40,000 days)
-    // ⚡ Optimization: Reuses top-level DAY_MILESTONE_INTERVALS lookup array to prevent garbage collection allocations on every calculation run
+    const DAY_MILESTONE_INTERVALS = [1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000];
     let nextDayMilestone = 1000;
     let prevDayMilestone = 0;
 
