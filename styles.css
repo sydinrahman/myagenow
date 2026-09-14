@@ -829,8 +829,13 @@ label {
 
 .summary summary:focus-visible,
 .faq-item summary:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.faq-item summary {
+  border-radius: 1.1rem;
 }
 .summary summary::-webkit-details-marker { display: none; }
 .summary summary span { color: var(--primary); transition: transform 180ms ease; }
