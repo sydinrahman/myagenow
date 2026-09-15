@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let currentResultSummary = '';
 
-  // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
+  // ⚡ Optimization: Pre-allocated lookup arrays & static Intl.NumberFormat to prevent repeated array/object allocations and costly locale resolutions
+  const NUMBER_FORMATTER = new Intl.NumberFormat();
   const MS_PER_DAY = 86400000; // 1000 * 60 * 60 * 24
   const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -306,27 +307,28 @@ document.addEventListener('DOMContentLoaded', function () {
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
 
-      if (resYears) resYears.textContent = result.years.toLocaleString();
-      if (resMonths) resMonths.textContent = result.months.toLocaleString();
-      if (resDays) resDays.textContent = result.days.toLocaleString();
-      if (resDaysHighlight) resDaysHighlight.textContent = `${result.totalDays.toLocaleString()} Days Lived`;
+      // ⚡ Optimization: Use pre-allocated NUMBER_FORMATTER.format() instead of Number.prototype.toLocaleString() to eliminate repeated locale resolutions
+      if (resYears) resYears.textContent = NUMBER_FORMATTER.format(result.years);
+      if (resMonths) resMonths.textContent = NUMBER_FORMATTER.format(result.months);
+      if (resDays) resDays.textContent = NUMBER_FORMATTER.format(result.days);
+      if (resDaysHighlight) resDaysHighlight.textContent = `${NUMBER_FORMATTER.format(result.totalDays)} Days Lived`;
       if (resNextCountdownHighlight) {
         resNextCountdownHighlight.textContent = result.remainingDays === 0
           ? 'Next birthday is TODAY! 🎉'
-          : `Next birthday in ${result.remainingDays.toLocaleString()} days`;
+          : `Next birthday in ${NUMBER_FORMATTER.format(result.remainingDays)} days`;
       }
       if (resBornDay) resBornDay.textContent = result.bornDay;
       if (resBornFull) resBornFull.textContent = result.bornText;
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
       if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
       if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
-      if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
-      if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
-      if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
-      if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
+      if (resTotalMonths) resTotalMonths.textContent = NUMBER_FORMATTER.format(result.totalMonths);
+      if (resTotalWeeks) resTotalWeeks.textContent = NUMBER_FORMATTER.format(result.totalWeeks);
+      if (resTotalDays) resTotalDays.textContent = NUMBER_FORMATTER.format(result.totalDays);
+      if (resTotalHours) resTotalHours.textContent = NUMBER_FORMATTER.format(result.approxHours);
 
       if (dayMilestoneBadge) {
-        dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${result.nextDayMilestone.toLocaleString()} Days`;
+        dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${NUMBER_FORMATTER.format(result.nextDayMilestone)} Days`;
       }
       if (dayMilestoneProgressbar) {
         dayMilestoneProgressbar.setAttribute('aria-valuenow', String(result.overallPercentToTarget));
@@ -340,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (result.daysUntilNextDayMilestone === 0) {
           const t1 = document.createTextNode('🎉 Congratulations! You are celebrating your ');
           const s1 = document.createElement('strong');
-          s1.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
+          s1.textContent = `${NUMBER_FORMATTER.format(result.nextDayMilestone)}th day lived`;
           const t2 = document.createTextNode(' today!');
           dayMilestoneSub.appendChild(t1);
           dayMilestoneSub.appendChild(s1);
@@ -348,10 +350,10 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           const t1 = document.createTextNode('You are ');
           const s1 = document.createElement('strong');
-          s1.textContent = `${result.daysUntilNextDayMilestone.toLocaleString()} days`;
+          s1.textContent = `${NUMBER_FORMATTER.format(result.daysUntilNextDayMilestone)} days`;
           const t2 = document.createTextNode(' away from reaching your ');
           const s2 = document.createElement('strong');
-          s2.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
+          s2.textContent = `${NUMBER_FORMATTER.format(result.nextDayMilestone)}th day lived`;
           const t3 = document.createTextNode('!');
           dayMilestoneSub.appendChild(t1);
           dayMilestoneSub.appendChild(s1);
@@ -391,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resMilestonesGrid.appendChild(fragment);
       }
 
-      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
+      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${NUMBER_FORMATTER.format(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -667,7 +669,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ctx.fillText('TOTAL DAYS LIVED', 90 + boxW / 2, boxY + 42);
     ctx.font = '800 38px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(res.totalDays.toLocaleString(), 90 + boxW / 2, boxY + 100);
+    ctx.fillText(NUMBER_FORMATTER.format(res.totalDays), 90 + boxW / 2, boxY + 100);
 
     // Box 2: Zodiac
     drawRoundedRect(430, boxY, boxW, boxH, 16, 'rgba(30, 41, 59, 0.85)', 'rgba(234, 179, 8, 0.4)');
