@@ -426,7 +426,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (toggleCustomDate && customTargetGroup) {
     toggleCustomDate.addEventListener('change', function () {
-      if (toggleCustomDate.checked) {
+      const isChecked = toggleCustomDate.checked;
+      toggleCustomDate.setAttribute('aria-expanded', String(isChecked));
+      if (isChecked) {
         customTargetGroup.classList.remove('hidden');
         if (!targetDateInput.value) {
           targetDateInput.value = todayFormatted;
@@ -462,7 +464,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dobInput) dobInput.value = paramDob;
     if (paramTarget && parseDateInput(paramTarget)) {
       if (targetDateInput) targetDateInput.value = paramTarget;
-      if (toggleCustomDate) toggleCustomDate.checked = true;
+      if (toggleCustomDate) {
+        toggleCustomDate.checked = true;
+        toggleCustomDate.setAttribute('aria-expanded', 'true');
+      }
       if (customTargetGroup) customTargetGroup.classList.remove('hidden');
     }
     performCalculation(false);
@@ -508,7 +513,10 @@ document.addEventListener('DOMContentLoaded', function () {
     resetBtn.addEventListener('click', function () {
       if (dobInput) dobInput.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
-      if (toggleCustomDate) toggleCustomDate.checked = false;
+      if (toggleCustomDate) {
+        toggleCustomDate.checked = false;
+        toggleCustomDate.setAttribute('aria-expanded', 'false');
+      }
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
       if (resultsSection) {
@@ -556,9 +564,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!currentResultSummary) return;
       navigator.clipboard.writeText(currentResultSummary).then(function () {
         const originalText = copyBtn.innerHTML;
+        const originalAriaLabel = copyBtn.getAttribute('aria-label') || 'Copy results to clipboard';
         copyBtn.innerHTML = `✓ Copied!`;
+        copyBtn.setAttribute('aria-label', 'Copied results to clipboard!');
         setTimeout(function () {
           copyBtn.innerHTML = originalText;
+          copyBtn.setAttribute('aria-label', originalAriaLabel);
         }, 2000);
       }).catch(function () {
         showError('Could not copy to clipboard.');
