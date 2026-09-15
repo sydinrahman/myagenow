@@ -1,0 +1,3 @@
+## 2026-09-15 - Dynamic ARIA State Updates for Async Actions & Expandable Controls
+**Learning:** For static sites with vanilla JS, dynamic UI feedback like copying to clipboard or toggling hidden form sections needs both visual text changes AND explicit ARIA attribute updates (`aria-label`, `aria-expanded`) so screen reader users receive immediate feedback matching the visual cues.
+**Action:** When creating interactive toggle controls or action buttons with temporary feedback states, always update `aria-expanded` and temporary `aria-label` screen reader announcements alongside DOM text updates.
