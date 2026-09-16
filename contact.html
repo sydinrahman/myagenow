@@ -3,8 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact | myagenow</title>
-    <meta name="description" content="Contact the myagenow team for support or feedback." />
+    <title>Contact Us | myagenow</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="description" content="Get in touch with the myagenow team for feedback, support, bug reports, or feature suggestions." />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Contact Us | myagenow" />
+    <meta property="og:description" content="Get in touch with the myagenow team for feedback, support, bug reports, or feature suggestions." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myagenow.com/contact.html" />
+    <meta property="og:image" content="https://myagenow.com/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact Us | myagenow" />
+    <meta name="twitter:description" content="Get in touch with the myagenow team for feedback, support, bug reports, or feature suggestions." />
+    <meta name="twitter:image" content="https://myagenow.com/og-image.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,19 +28,16 @@
     <header class="site-header">
       <div class="container">
         <a href="index.html" class="brand" aria-label="myagenow home">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </span>
-          <span class="brand-name">my<span class="brand-accent">age</span>now</span>
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
         </a>
 
         <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
           <span></span><span></span><span></span>
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="index.html#features">Features</a>
+          <a href="index.html#trust">Why Us</a>
           <a href="index.html#how-it-works">How It Works</a>
           <a href="index.html#faq">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -36,37 +46,67 @@
     </header>
 
     <main class="page-shell">
-      <div class="card">
-        <h1>Contact</h1>
-        <p>
-          We value feedback, questions, and suggestions. If you’d like to reach out about a bug, usability issue, or improvement idea, use the contact details below.
-        </p>
+      <div class="legal-container">
+        <header class="legal-header text-center">
+          <div class="badge-pill">
+            <span class="dot" aria-hidden="true"></span>
+            We're Here to Help
+          </div>
+          <h1>Get in Touch</h1>
+          <p class="subtitle">
+          Have a question, feedback, bug report, or feature request? Get in touch with us directly via email.
+          </p>
+        </header>
 
-        <ul>
-          <li>Email: <a href="mailto:hello@myagenow.net">hello@myagenow.net</a></li>
-          <li>Support hours: Monday to Friday, 9:00 a.m. to 5:00 p.m. UTC</li>
-          <li>Typical response time: within 1–2 business days</li>
-        </ul>
+      <div class="contact-details-wrap">
+        <div class="card sidebar-card">
+          <h3>Direct Support</h3>
+          <div class="support-item">
+            <span class="support-icon" aria-hidden="true">✉️</span>
+            <div>
+              <strong>Email Us</strong>
+              <p><a href="mailto:hello@myagenow.net">hello@myagenow.net</a></p>
+              </div>
+          </div>
 
-        <p>
-          This site is intentionally simple and privacy focused. We do not require accounts or personal data to use the calculator.
-        </p>
+          <div class="support-item">
+            <span class="support-icon" aria-hidden="true">⏰</span>
+            <div>
+              <strong>Support Hours</strong>
+              <p>Monday – Friday, 9:00 a.m. – 5:00 p.m. UTC</p>
+              </div>
+          </div>
+
+          <div class="support-item">
+            <span class="support-icon" aria-hidden="true">⚡</span>
+            <div>
+              <strong>Response Time</strong>
+              <p>Usually within 1–2 business days</p>
+              </div>
+          </div>
+          </div>
+
+        <div class="card sidebar-card highlight-card">
+          <h3>Quick Help &amp; Privacy</h3>
+          <p>Looking for quick answers about how we protect your data or calculate exact dates?</p>
+          <ul class="quick-links-list">
+            <li><a href="index.html#faq">Read Frequently Asked Questions</a></li>
+            <li><a href="privacy.html">Review Privacy Policy</a></li>
+            <li><a href="terms.html">Read Terms of Service</a></li>
+          </ul>
+        </div>
+        </div>
       </div>
     </main>
 
     <footer class="site-footer">
       <div class="container">
         <div class="footer-brand">
-          <span class="mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </span>
-          <span class="footer-brand-name">my<span class="brand-accent">age</span>now</span>
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
           <span>• © 2026. All rights reserved.</span>
         </div>
-        <div class="footer-links">
+        <div class="footer-links" aria-label="Footer links">
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms</a>
           <a href="contact.html">Contact</a>
