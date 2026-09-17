@@ -497,25 +497,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return; // Prevent multi-clicks while loading
       }
 
-      // Add loading state to Calculate My Age button
-      if (calculateBtn) {
-        calculateBtn.classList.add('loading');
-        calculateBtn.disabled = true;
-        const originalBtnContent = calculateBtn.innerHTML;
-        calculateBtn.innerHTML = `
-          <span class="btn-spinner" aria-hidden="true"></span>
-          <span>Calculating...</span>
-        `;
-
-        setTimeout(function () {
-          performCalculation(true);
-          calculateBtn.classList.remove('loading');
-          calculateBtn.disabled = false;
-          calculateBtn.innerHTML = originalBtnContent;
-        }, 1500);
-      } else {
-        performCalculation(true);
-      }
+      // ⚡ Optimization: Perform age calculation immediately on form submission without artificial 1500ms delay
+      performCalculation(true);
     });
   }
 
