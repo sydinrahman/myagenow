@@ -231,6 +231,11 @@ button, input, select, textarea {
   background: #f8fafc;
 }
 
+.reset-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .form-group {
   margin-bottom: 1.2rem;
 }
@@ -380,6 +385,11 @@ label {
 .inline-action:focus-visible {
   border-color: var(--primary);
   background: var(--primary-soft);
+}
+
+.inline-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-note {
