@@ -639,8 +639,20 @@ label {
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
-.action-btn:hover,
+.action-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-soft);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
 .action-btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
   border-color: var(--primary);
   color: var(--primary);
   background: var(--primary-soft);
@@ -652,8 +664,14 @@ label {
   border-color: var(--primary-dark);
 }
 
-.action-btn.primary-action:hover,
+.action-btn.primary-action:hover {
+  background: var(--primary-dark);
+  color: #ffffff;
+}
+
 .action-btn.primary-action:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
   background: var(--primary-dark);
   color: #ffffff;
 }
