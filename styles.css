@@ -225,10 +225,16 @@ button, input, select, textarea {
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.reset-button:hover,
+.reset-button:hover {
+  color: #dc2626;
+  background: #f8fafc;
+}
+
 .reset-button:focus-visible {
   color: #dc2626;
   background: #f8fafc;
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
 }
 
 .form-group {
@@ -376,10 +382,16 @@ label {
   border-radius: 0.5rem;
 }
 
-.inline-action:hover,
+.inline-action:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
 .inline-action:focus-visible {
   border-color: var(--primary);
   background: var(--primary-soft);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-note {
