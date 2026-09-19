@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const month = Number(trimmed.slice(5, 7));
       const day = Number(trimmed.slice(8, 10));
 
-      if (year >= 1 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      if (year >= 1900 && year <= 2100 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
         const parsed = new Date(year, month - 1, day);
         if (
           !Number.isNaN(parsed.getTime()) &&
