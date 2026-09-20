@@ -231,6 +231,11 @@ button, input, select, textarea {
   background: #f8fafc;
 }
 
+.reset-button:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
 .form-group {
   margin-bottom: 1.2rem;
 }
@@ -382,6 +387,11 @@ label {
   background: var(--primary-soft);
 }
 
+.inline-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .form-note {
   display: block;
   margin-top: 0.35rem;
@@ -428,6 +438,11 @@ label {
   background: var(--primary-dark);
   transform: translateY(-1px);
   box-shadow: 0 16px 32px rgba(37, 99, 235, 0.32);
+}
+
+.primary-btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .primary-btn:active {
@@ -1512,6 +1527,10 @@ label {
     align-content: center;
     gap: 0.22rem;
     cursor: pointer;
+  }
+  .menu-button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
   }
   .menu-button span { display: block; width: 100%; height: 2px; background: var(--text); border-radius: 2px; }
   .site-nav {
