@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let currentAgeResult = null;
 
+  // ⚡ Optimization: Memoization cache for performCalculation to eliminate redundant calculations and DOM reflows
+  let lastCalculatedDob = null;
+  let lastCalculatedTarget = null;
+
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
 
@@ -304,6 +308,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const dobValue = dobInput.value;
     const targetValue = targetDateInput && targetDateInput.value ? targetDateInput.value : toDateInputValue(new Date());
+
+    // ⚡ Optimization: Return early if calculation inputs haven't changed to avoid duplicate math and DOM mutations
+    if (dobValue === lastCalculatedDob && targetValue === lastCalculatedTarget && currentAgeResult) {
+      if (shouldScrollToResults && resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.focus({ preventScroll: true });
+      }
+      return;
+    }
+
     const dobDate = parseDateInput(dobValue);
     const targetDate = parseDateInput(targetValue);
 
@@ -320,6 +334,8 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
+      lastCalculatedDob = dobValue;
+      lastCalculatedTarget = targetValue;
 
       if (resYears) resYears.textContent = result.years.toLocaleString();
       if (resMonths) resMonths.textContent = result.months.toLocaleString();
@@ -509,6 +525,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (toggleCustomDate) toggleCustomDate.checked = false;
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
+      lastCalculatedDob = null;
+      lastCalculatedTarget = null;
+      currentAgeResult = null;
       if (resultsSection) {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
