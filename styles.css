@@ -231,6 +231,11 @@ button, input, select, textarea {
   background: #f8fafc;
 }
 
+.reset-button:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
 .form-group {
   margin-bottom: 1.2rem;
 }
@@ -380,6 +385,11 @@ label {
 .inline-action:focus-visible {
   border-color: var(--primary);
   background: var(--primary-soft);
+}
+
+.inline-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-note {
@@ -847,8 +857,9 @@ label {
 
 .summary summary:focus-visible,
 .faq-item summary:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 .summary summary::-webkit-details-marker { display: none; }
 .summary summary span { color: var(--primary); transition: transform 180ms ease; }
