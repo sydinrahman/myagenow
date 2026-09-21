@@ -161,17 +161,18 @@ document.addEventListener('DOMContentLoaded', function () {
     return day < ZODIAC_CUTOFFS[month] ? entry.before : entry.after;
   }
 
-  // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays
+  // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays and primitive date components to avoid redundant Date getter calls
   function calculateMilestones(birthDate, targetDate) {
     const birthYear = birthDate.getFullYear();
     const birthMonth = birthDate.getMonth();
     const birthDay = birthDate.getDate();
+    const shortMonth = MONTH_NAMES_SHORT[birthMonth];
 
     return MILESTONE_AGES.map(item => {
       const targetYear = birthYear + item.age;
       const day = clampBirthdayDay(targetYear, birthMonth, birthDay);
       const milestoneDate = new Date(targetYear, birthMonth, day);
-      const formattedDate = `${MONTH_NAMES_SHORT[milestoneDate.getMonth()]} ${milestoneDate.getDate()}, ${milestoneDate.getFullYear()}`;
+      const formattedDate = `${shortMonth} ${day}, ${targetYear}`;
 
       if (milestoneDate <= targetDate) {
         return {
