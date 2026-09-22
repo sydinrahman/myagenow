@@ -345,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (dayMilestoneProgressbar) {
         dayMilestoneProgressbar.setAttribute('aria-valuenow', String(result.overallPercentToTarget));
+        dayMilestoneProgressbar.setAttribute('aria-valuetext', `${result.overallPercentToTarget}% towards ${result.nextDayMilestone.toLocaleString()} days`);
       }
       if (dayMilestoneBarfill) {
         dayMilestoneBarfill.style.width = `${result.overallPercentToTarget}%`;
@@ -525,6 +526,11 @@ document.addEventListener('DOMContentLoaded', function () {
   if (todayQuickBtn) {
     todayQuickBtn.addEventListener('click', function () {
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
+      const originalText = todayQuickBtn.textContent;
+      todayQuickBtn.textContent = 'Updated! ✓';
+      setTimeout(function () {
+        todayQuickBtn.textContent = originalText;
+      }, 1200);
       if (dobInput && dobInput.value) {
         performCalculation(false);
       }
