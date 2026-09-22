@@ -382,6 +382,11 @@ label {
   background: var(--primary-soft);
 }
 
+.inline-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .form-note {
   display: block;
   margin-top: 0.35rem;
