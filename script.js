@@ -45,6 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentResultSummary = '';
 
   // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
+  const NUMBER_FORMATTER = new Intl.NumberFormat();
+  const formatNumber = (num) => typeof num === 'number' ? NUMBER_FORMATTER.format(num) : num;
+
+  // ⚡ Optimization: Guard DOM text writes to avoid unnecessary DOM mutations and layout invalidation
+  function setTextContent(element, value) {
+    if (element && element.textContent !== value) {
+      element.textContent = value;
+    }
+  }
+
   const MS_PER_DAY = 86400000; // 1000 * 60 * 60 * 24
   const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -321,92 +331,132 @@ document.addEventListener('DOMContentLoaded', function () {
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
 
-      if (resYears) resYears.textContent = result.years.toLocaleString();
-      if (resMonths) resMonths.textContent = result.months.toLocaleString();
-      if (resDays) resDays.textContent = result.days.toLocaleString();
-      if (resDaysHighlight) resDaysHighlight.textContent = `${result.totalDays.toLocaleString()} Days Lived`;
+      if (resYears) setTextContent(resYears, formatNumber(result.years));
+      if (resMonths) setTextContent(resMonths, formatNumber(result.months));
+      if (resDays) setTextContent(resDays, formatNumber(result.days));
+      if (resDaysHighlight) setTextContent(resDaysHighlight, `${formatNumber(result.totalDays)} Days Lived`);
       if (resNextCountdownHighlight) {
-        resNextCountdownHighlight.textContent = result.remainingDays === 0
+        const nextBdayText = result.remainingDays === 0
           ? 'Next birthday is TODAY! 🎉'
-          : `Next birthday in ${result.remainingDays.toLocaleString()} days`;
+          : `Next birthday in ${formatNumber(result.remainingDays)} days`;
+        setTextContent(resNextCountdownHighlight, nextBdayText);
       }
-      if (resBornDay) resBornDay.textContent = result.bornDay;
-      if (resBornFull) resBornFull.textContent = result.bornText;
-      if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
-      if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
-      if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
-      if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
-      if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
-      if (resTotalDays) resTotalDays.textContent = result.totalDays.toLocaleString();
-      if (resTotalHours) resTotalHours.textContent = result.approxHours.toLocaleString();
+      if (resBornDay) setTextContent(resBornDay, result.bornDay);
+      if (resBornFull) setTextContent(resBornFull, result.bornText);
+      if (resNextBday) setTextContent(resNextBday, result.nextBirthdayText);
+      if (resNextDayname) setTextContent(resNextDayname, result.nextBirthdayDay);
+      if (resZodiac) setTextContent(resZodiac, `${result.zodiac.name} ${result.zodiac.symbol}`);
+      if (resTotalMonths) setTextContent(resTotalMonths, formatNumber(result.totalMonths));
+      if (resTotalWeeks) setTextContent(resTotalWeeks, formatNumber(result.totalWeeks));
+      if (resTotalDays) setTextContent(resTotalDays, formatNumber(result.totalDays));
+      if (resTotalHours) setTextContent(resTotalHours, formatNumber(result.approxHours));
 
       if (dayMilestoneBadge) {
-        dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${result.nextDayMilestone.toLocaleString()} Days`;
+        setTextContent(dayMilestoneBadge, `${result.overallPercentToTarget}% to ${formatNumber(result.nextDayMilestone)} Days`);
       }
       if (dayMilestoneProgressbar) {
-        dayMilestoneProgressbar.setAttribute('aria-valuenow', String(result.overallPercentToTarget));
+        const percentStr = String(result.overallPercentToTarget);
+        if (dayMilestoneProgressbar.getAttribute('aria-valuenow') !== percentStr) {
+          dayMilestoneProgressbar.setAttribute('aria-valuenow', percentStr);
+        }
       }
       if (dayMilestoneBarfill) {
-        dayMilestoneBarfill.style.width = `${result.overallPercentToTarget}%`;
+        const widthStr = `${result.overallPercentToTarget}%`;
+        if (dayMilestoneBarfill.style.width !== widthStr) {
+          dayMilestoneBarfill.style.width = widthStr;
+        }
       }
       if (dayMilestoneSub) {
-        // 🔒 Security: Safely construct DOM elements without innerHTML to avoid XSS risks
-        dayMilestoneSub.textContent = '';
+        // 🔒 Security & ⚡ Performance: Reuse existing child nodes when possible to eliminate DOM element allocations during recalculations
         if (result.daysUntilNextDayMilestone === 0) {
-          const t1 = document.createTextNode('🎉 Congratulations! You are celebrating your ');
-          const s1 = document.createElement('strong');
-          s1.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
-          const t2 = document.createTextNode(' today!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
+          if (!dayMilestoneSub.dataset.type || dayMilestoneSub.dataset.type !== 'celebration') {
+            dayMilestoneSub.dataset.type = 'celebration';
+            dayMilestoneSub.textContent = '';
+            const t1 = document.createTextNode('🎉 Congratulations! You are celebrating your ');
+            const s1 = document.createElement('strong');
+            s1.id = 'day-milestone-strong-1';
+            s1.textContent = `${formatNumber(result.nextDayMilestone)}th day lived`;
+            const t2 = document.createTextNode(' today!');
+            dayMilestoneSub.appendChild(t1);
+            dayMilestoneSub.appendChild(s1);
+            dayMilestoneSub.appendChild(t2);
+          } else {
+            const s1 = document.getElementById('day-milestone-strong-1');
+            if (s1) setTextContent(s1, `${formatNumber(result.nextDayMilestone)}th day lived`);
+          }
         } else {
-          const t1 = document.createTextNode('You are ');
-          const s1 = document.createElement('strong');
-          s1.textContent = `${result.daysUntilNextDayMilestone.toLocaleString()} days`;
-          const t2 = document.createTextNode(' away from reaching your ');
-          const s2 = document.createElement('strong');
-          s2.textContent = `${result.nextDayMilestone.toLocaleString()}th day lived`;
-          const t3 = document.createTextNode('!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
-          dayMilestoneSub.appendChild(s2);
-          dayMilestoneSub.appendChild(t3);
+          if (!dayMilestoneSub.dataset.type || dayMilestoneSub.dataset.type !== 'countdown') {
+            dayMilestoneSub.dataset.type = 'countdown';
+            dayMilestoneSub.textContent = '';
+            const t1 = document.createTextNode('You are ');
+            const s1 = document.createElement('strong');
+            s1.id = 'day-milestone-strong-1';
+            s1.textContent = `${formatNumber(result.daysUntilNextDayMilestone)} days`;
+            const t2 = document.createTextNode(' away from reaching your ');
+            const s2 = document.createElement('strong');
+            s2.id = 'day-milestone-strong-2';
+            s2.textContent = `${formatNumber(result.nextDayMilestone)}th day lived`;
+            const t3 = document.createTextNode('!');
+            dayMilestoneSub.appendChild(t1);
+            dayMilestoneSub.appendChild(s1);
+            dayMilestoneSub.appendChild(t2);
+            dayMilestoneSub.appendChild(s2);
+            dayMilestoneSub.appendChild(t3);
+          } else {
+            const s1 = document.getElementById('day-milestone-strong-1');
+            const s2 = document.getElementById('day-milestone-strong-2');
+            if (s1) setTextContent(s1, `${formatNumber(result.daysUntilNextDayMilestone)} days`);
+            if (s2) setTextContent(s2, `${formatNumber(result.nextDayMilestone)}th day lived`);
+          }
         }
       }
 
       if (resMilestonesGrid) {
-        // Clear existing milestones safely without innerHTML
-        resMilestonesGrid.textContent = '';
-        // ⚡ Optimization: Batch milestone card insertions into a single DocumentFragment to minimize DOM reflows
-        const fragment = document.createDocumentFragment();
-        result.milestones.forEach(m => {
-          const card = document.createElement('div');
-          card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
+        // ⚡ Optimization: Reuse existing milestone card elements when available to avoid destroying and recreating DOM nodes on every calculation run
+        const existingCards = resMilestonesGrid.children;
+        if (existingCards.length === result.milestones.length) {
+          result.milestones.forEach((m, i) => {
+            const card = existingCards[i];
+            const targetClass = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
+            if (card.className !== targetClass) {
+              card.className = targetClass;
+            }
+            if (card.children.length === 3) {
+              setTextContent(card.children[0], m.label);
+              setTextContent(card.children[1], m.dateText);
+              setTextContent(card.children[2], m.status);
+            }
+          });
+        } else {
+          resMilestonesGrid.textContent = '';
+          const fragment = document.createDocumentFragment();
+          result.milestones.forEach(m => {
+            const card = document.createElement('div');
+            card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
 
-          const label = document.createElement('span');
-          label.className = 'milestone-label';
-          label.textContent = m.label;
+            const label = document.createElement('span');
+            label.className = 'milestone-label';
+            label.textContent = m.label;
 
-          const date = document.createElement('div');
-          date.className = 'milestone-date';
-          date.textContent = m.dateText;
+            const date = document.createElement('div');
+            date.className = 'milestone-date';
+            date.textContent = m.dateText;
 
-          const status = document.createElement('div');
-          status.className = 'milestone-status';
-          status.textContent = m.status;
+            const status = document.createElement('div');
+            status.className = 'milestone-status';
+            status.textContent = m.status;
 
-          card.appendChild(label);
-          card.appendChild(date);
-          card.appendChild(status);
+            card.appendChild(label);
+            card.appendChild(date);
+            card.appendChild(status);
 
-          fragment.appendChild(card);
-        });
-        resMilestonesGrid.appendChild(fragment);
+            fragment.appendChild(card);
+          });
+          resMilestonesGrid.appendChild(fragment);
+        }
       }
 
-      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
+      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -421,7 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsSection.focus({ preventScroll: true });
       }
 
-      // Sync URL query parameters
+      // ⚡ Optimization: Only trigger replaceState if the search query string has actually changed
       const params = new URLSearchParams(window.location.search);
       params.set('dob', dobValue);
       if (toggleCustomDate && toggleCustomDate.checked && targetDateInput.value) {
@@ -429,8 +479,11 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         params.delete('target');
       }
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
-      window.history.replaceState({}, '', newUrl);
+      const newQuery = params.toString() ? `?${params.toString()}` : '';
+      if (window.location.search !== newQuery) {
+        const newUrl = `${window.location.pathname}${newQuery}`;
+        window.history.replaceState({}, '', newUrl);
+      }
     } catch (error) {
       showError(error.message || 'Please choose a valid birth date in the past.');
     }
@@ -668,7 +721,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ctx.fillText('TOTAL DAYS LIVED', 90 + boxW / 2, boxY + 42);
     ctx.font = '800 38px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(res.totalDays.toLocaleString(), 90 + boxW / 2, boxY + 100);
+    ctx.fillText(formatNumber(res.totalDays), 90 + boxW / 2, boxY + 100);
 
     // Box 2: Zodiac
     drawRoundedRect(430, boxY, boxW, boxH, 16, 'rgba(30, 41, 59, 0.85)', 'rgba(234, 179, 8, 0.4)');
