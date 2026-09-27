@@ -522,12 +522,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  let todayQuickBtnTimeout = null;
   if (todayQuickBtn) {
     todayQuickBtn.addEventListener('click', function () {
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
       if (dobInput && dobInput.value) {
         performCalculation(false);
       }
+      if (todayQuickBtnTimeout) {
+        clearTimeout(todayQuickBtnTimeout);
+      }
+      todayQuickBtn.textContent = '✓ Set to Today';
+      todayQuickBtn.setAttribute('aria-label', 'Target date set to today');
+      todayQuickBtnTimeout = setTimeout(function () {
+        todayQuickBtn.textContent = 'Use Today';
+        todayQuickBtn.setAttribute('aria-label', 'Set target date to today');
+        todayQuickBtnTimeout = null;
+      }, 1500);
     });
   }
 
