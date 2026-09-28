@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Cached DOM element references
   const dobInput = document.getElementById('dob-input');
+  const dobValidationMsg = document.getElementById('dob-validation-msg');
   const targetDateInput = document.getElementById('target-date-input');
   const toggleCustomDate = document.getElementById('toggle-custom-date');
   const customTargetGroup = document.getElementById('custom-target-date-group');
@@ -119,6 +120,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function toDateInputValue(date) {
     return formatDateForInput(date);
+  }
+
+  function showInlineValidation(msg) {
+    if (dobInput) dobInput.setAttribute('aria-invalid', 'true');
+    if (dobValidationMsg) {
+      dobValidationMsg.textContent = msg;
+      dobValidationMsg.classList.remove('hidden');
+    }
+  }
+
+  function clearInlineValidation() {
+    if (dobInput) dobInput.setAttribute('aria-invalid', 'false');
+    if (dobValidationMsg) {
+      dobValidationMsg.textContent = '';
+      dobValidationMsg.classList.add('hidden');
+    }
+  }
+
+  function validateDobInput() {
+    if (!dobInput || !dobInput.value) {
+      showInlineValidation('Please enter your date of birth.');
+      return false;
+    }
+    const dobDate = parseDateInput(dobInput.value);
+    const targetValue = targetDateInput && targetDateInput.value ? targetDateInput.value : toDateInputValue(new Date());
+    const targetDate = parseDateInput(targetValue);
+
+    if (!dobDate) {
+      showInlineValidation('Please enter a valid date in YYYY-MM-DD format.');
+      return false;
+    }
+    if (targetDate && dobDate > targetDate) {
+      showInlineValidation('Birth date cannot be after the calculation target date.');
+      return false;
+    }
+    clearInlineValidation();
+    return true;
   }
 
   function showError(message) {
@@ -297,8 +335,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function performCalculation(shouldScrollToResults) {
     hideError();
 
-    if (!dobInput || !dobInput.value) {
-      showError('Please enter your date of birth.');
+    if (!validateDobInput()) {
+      showError(dobValidationMsg ? dobValidationMsg.textContent : 'Please enter a valid birth date.');
       return;
     }
 
@@ -307,13 +345,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const dobDate = parseDateInput(dobValue);
     const targetDate = parseDateInput(targetValue);
 
-    if (!dobDate || !targetDate) {
-      showError('Please select valid dates.');
-      return;
-    }
-
-    if (dobDate > targetDate) {
-      showError('Birth date cannot be after the calculation date.');
+    if (!targetDate) {
+      showError('Please select a valid target date.');
       return;
     }
 
@@ -508,6 +541,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
       if (toggleCustomDate) toggleCustomDate.checked = false;
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
+      clearInlineValidation();
       hideError();
       if (resultsSection) {
         resultsSection.hidden = true;
@@ -531,6 +565,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  if (dobInput) {
+    dobInput.addEventListener('input', function () {
+      if (dobInput.value) {
+        validateDobInput();
+      } else {
+        clearInlineValidation();
+      }
+    });
+
+    dobInput.addEventListener('blur', function () {
+      if (!dobInput.value) {
+        showInlineValidation('Please enter your date of birth.');
+      } else {
+        validateDobInput();
+      }
+    });
+  }
+
   [dobInput, targetDateInput].forEach(function (input) {
     if (!input) return;
     input.addEventListener('click', function () {
@@ -544,7 +596,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     input.addEventListener('change', function () {
       if (dobInput && dobInput.value) {
-        performCalculation(false);
+        if (validateDobInput()) {
+          performCalculation(false);
+        }
       }
     });
   });

@@ -334,6 +334,28 @@ label {
   background: #ffffff;
 }
 
+.date-field input[aria-invalid="true"],
+.form-group input[aria-invalid="true"] {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.date-field input[aria-invalid="true"]:focus-visible,
+.form-group input[aria-invalid="true"]:focus-visible {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+  background: #ffffff;
+}
+
+.validation-msg {
+  display: block;
+  margin-top: 0.35rem;
+  color: #dc2626;
+  font-size: 0.8rem;
+  font-weight: 600;
+  animation: enter 180ms ease both;
+}
+
 .date-field input::-webkit-calendar-picker-indicator {
   position: absolute;
   right: 0.8rem;
