@@ -139,7 +139,7 @@
             <div class="form-group">
               <label for="dob-input">Date of Birth <span class="required">*</span></label>
               <div class="date-field">
-                <input id="dob-input" name="dob" type="date" aria-required="true" placeholder="Select your date of birth" />
+                <input id="dob-input" name="dob" type="date" aria-required="true" aria-describedby="dob-validation-msg" placeholder="Select your date of birth" />
                 <span class="field-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2"></rect>
@@ -147,6 +147,7 @@
                   </svg>
                 </span>
               </div>
+              <span id="dob-validation-msg" class="validation-msg hidden" role="status" aria-live="polite"></span>
               <span class="form-note">Calculated using your browser's local calendar dates.</span>
             </div>
 
