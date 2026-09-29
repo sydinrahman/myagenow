@@ -19,6 +19,28 @@
 
 html { scroll-behavior: smooth; }
 
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0.75rem;
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
