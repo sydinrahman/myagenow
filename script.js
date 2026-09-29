@@ -469,14 +469,18 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Restore URL parameters if present (e.g., ?dob=2000-05-15&target=2026-09-08)
+  // 🔒 Security: Validate parameter inputs and length limits before populating inputs
   const urlParams = new URLSearchParams(window.location.search);
   const paramDob = urlParams.get('dob');
   const paramTarget = urlParams.get('target');
 
-  if (paramDob && parseDateInput(paramDob)) {
-    if (dobInput) dobInput.value = paramDob;
-    if (paramTarget && parseDateInput(paramTarget)) {
-      if (targetDateInput) targetDateInput.value = paramTarget;
+  const validDob = paramDob && paramDob.length === 10 ? parseDateInput(paramDob) : null;
+  const validTarget = paramTarget && paramTarget.length === 10 ? parseDateInput(paramTarget) : null;
+
+  if (validDob) {
+    if (dobInput) dobInput.value = formatDateForInput(validDob);
+    if (validTarget) {
+      if (targetDateInput) targetDateInput.value = formatDateForInput(validTarget);
       if (toggleCustomDate) toggleCustomDate.checked = true;
       if (customTargetGroup) customTargetGroup.classList.remove('hidden');
     }
