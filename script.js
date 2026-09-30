@@ -553,12 +553,33 @@ document.addEventListener('DOMContentLoaded', function () {
     copyBtn.addEventListener('click', function () {
       if (!currentResultSummary) return;
       navigator.clipboard.writeText(currentResultSummary).then(function () {
-        const originalText = copyBtn.innerHTML;
+        // 🔒 Security: Safely preserve original elements and manipulate DOM without innerHTML to prevent XSS risks
+        const originalChildren = Array.from(copyBtn.childNodes).map(node => node.cloneNode(true));
         const originalLabel = copyBtn.getAttribute('aria-label') || 'Copy results to clipboard';
-        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('width', '15');
+        svg.setAttribute('height', '15');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('aria-hidden', 'true');
+
+        const polyline = document.createElementNS(svgNS, 'polyline');
+        polyline.setAttribute('points', '20 6 9 17 4 12');
+        svg.appendChild(polyline);
+
+        const textNode = document.createTextNode(' Copied!');
+
+        copyBtn.replaceChildren(svg, textNode);
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
+
         setTimeout(function () {
-          copyBtn.innerHTML = originalText;
+          copyBtn.replaceChildren(...originalChildren);
           copyBtn.setAttribute('aria-label', originalLabel);
         }, 2000);
       }).catch(function () {
