@@ -15,6 +15,29 @@
   --shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
 }
 
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 1000;
+  padding: 0.6rem 1.1rem;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+  text-decoration: none;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0.75rem;
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
