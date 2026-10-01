@@ -38,10 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const printBtn = document.getElementById('print-results-btn');
 
   let currentAgeResult = null;
-
-  const menuButton = document.getElementById('menu-button');
-  const siteNav = document.getElementById('site-nav');
-
   let currentResultSummary = '';
 
   // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
@@ -709,11 +705,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  if (menuButton && siteNav) {
-    menuButton.addEventListener('click', function () {
-      const isOpen = siteNav.classList.toggle('is-open');
-      menuButton.setAttribute('aria-expanded', String(isOpen));
-      menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
-    });
-  }
+  // ⚡ Performance Note: Mobile navigation toggle event listener is centralized in navigation.js
+  // to avoid redundant DOM queries and duplicate event listener attachments.
 });
