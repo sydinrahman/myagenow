@@ -377,52 +377,33 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (resMilestonesGrid) {
-        const existingCards = resMilestonesGrid.children;
-        if (existingCards.length === result.milestones.length) {
-          // ⚡ Optimization: In-place DOM node reconciliation to reuse existing card elements, preventing DOM destruction, reflows, and heap allocations during user date interaction
-          for (let i = 0; i < result.milestones.length; i++) {
-            const m = result.milestones[i];
-            const card = existingCards[i];
-            const targetClass = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
-            if (card.className !== targetClass) card.className = targetClass;
+        // Clear existing milestones safely without innerHTML
+        resMilestonesGrid.textContent = '';
+        // ⚡ Optimization: Batch milestone card insertions into a single DocumentFragment to minimize DOM reflows
+        const fragment = document.createDocumentFragment();
+        result.milestones.forEach(m => {
+          const card = document.createElement('div');
+          card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
 
-            const label = card.children[0];
-            if (label && label.textContent !== m.label) label.textContent = m.label;
+          const label = document.createElement('span');
+          label.className = 'milestone-label';
+          label.textContent = m.label;
 
-            const date = card.children[1];
-            if (date && date.textContent !== m.dateText) date.textContent = m.dateText;
+          const date = document.createElement('div');
+          date.className = 'milestone-date';
+          date.textContent = m.dateText;
 
-            const status = card.children[2];
-            if (status && status.textContent !== m.status) status.textContent = m.status;
-          }
-        } else {
-          // Initial render: Clear & batch milestone card insertions into a single DocumentFragment
-          resMilestonesGrid.textContent = '';
-          const fragment = document.createDocumentFragment();
-          result.milestones.forEach(m => {
-            const card = document.createElement('div');
-            card.className = `milestone-card ${m.reached ? 'reached' : 'upcoming'}`;
+          const status = document.createElement('div');
+          status.className = 'milestone-status';
+          status.textContent = m.status;
 
-            const label = document.createElement('span');
-            label.className = 'milestone-label';
-            label.textContent = m.label;
+          card.appendChild(label);
+          card.appendChild(date);
+          card.appendChild(status);
 
-            const date = document.createElement('div');
-            date.className = 'milestone-date';
-            date.textContent = m.dateText;
-
-            const status = document.createElement('div');
-            status.className = 'milestone-status';
-            status.textContent = m.status;
-
-            card.appendChild(label);
-            card.appendChild(date);
-            card.appendChild(status);
-
-            fragment.appendChild(card);
-          });
-          resMilestonesGrid.appendChild(fragment);
-        }
+          fragment.appendChild(card);
+        });
+        resMilestonesGrid.appendChild(fragment);
       }
 
       currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${result.totalDays.toLocaleString()} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
