@@ -376,10 +376,16 @@ label {
   border-radius: 0.5rem;
 }
 
-.inline-action:hover,
+.inline-action:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
 .inline-action:focus-visible {
   border-color: var(--primary);
   background: var(--primary-soft);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-note {
