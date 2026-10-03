@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { before: { name: 'Sagittarius', symbol: '♐' }, after: { name: 'Capricorn', symbol: '♑' } }
   ];
 
-  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict date component validation
+  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict date component validation and bounds checking (1900–2100)
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
 
@@ -87,7 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const month = Number(trimmed.slice(5, 7));
       const day = Number(trimmed.slice(8, 10));
 
-      if (year >= 1 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      // 🔒 Security: Enforce strict year boundaries (1900-2100) to reject out-of-bounds inputs from URL parameters or form tampering
+      if (year >= 1900 && year <= 2100 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
         const parsed = new Date(year, month - 1, day);
         if (
           !Number.isNaN(parsed.getTime()) &&
