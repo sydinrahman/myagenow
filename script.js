@@ -464,14 +464,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (toggleCustomDate && customTargetGroup) {
     toggleCustomDate.addEventListener('change', function () {
-      const isChecked = toggleCustomDate.checked;
-      toggleCustomDate.setAttribute('aria-expanded', String(isChecked));
-      if (isChecked) {
+      if (toggleCustomDate.checked) {
         customTargetGroup.classList.remove('hidden');
         if (!targetDateInput.value) {
           targetDateInput.value = todayFormatted;
         }
-        if (targetDateInput) targetDateInput.focus();
       } else {
         customTargetGroup.classList.add('hidden');
         targetDateInput.value = todayFormatted;
@@ -503,10 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dobInput) dobInput.value = paramDob;
     if (paramTarget && parseDateInput(paramTarget)) {
       if (targetDateInput) targetDateInput.value = paramTarget;
-      if (toggleCustomDate) {
-        toggleCustomDate.checked = true;
-        toggleCustomDate.setAttribute('aria-expanded', 'true');
-      }
+      if (toggleCustomDate) toggleCustomDate.checked = true;
       if (customTargetGroup) customTargetGroup.classList.remove('hidden');
     }
     performCalculation(false);
@@ -535,10 +529,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resetBtn.addEventListener('click', function () {
       if (dobInput) dobInput.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
-      if (toggleCustomDate) {
-        toggleCustomDate.checked = false;
-        toggleCustomDate.setAttribute('aria-expanded', 'false');
-      }
+      if (toggleCustomDate) toggleCustomDate.checked = false;
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
       if (resultsSection) {
