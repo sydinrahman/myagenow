@@ -1365,15 +1365,6 @@ label {
   color: var(--primary-dark);
 }
 
-.legal-section a.primary-btn {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.legal-section a.primary-btn:hover {
-  color: #ffffff;
-}
-
 /* Contact Details Layout */
 .contact-details-wrap {
   max-width: 36rem;
