@@ -25,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
+  const resNextBdayDate = document.getElementById('res-next-bday-date');
+  const resBirthdayCountdownMain = document.getElementById('res-birthday-countdown-main');
+  const resBirthdayCountdownBreakdown = document.getElementById('res-birthday-countdown-breakdown');
+
+  const resNextMilestoneHeadline = document.getElementById('res-next-milestone-headline');
+  const resNextMilestoneCountdown = document.getElementById('res-next-milestone-countdown');
   const dayMilestoneBadge = document.getElementById('day-milestone-badge');
   const dayMilestoneProgressbar = document.getElementById('day-milestone-progressbar');
   const dayMilestoneBarfill = document.getElementById('day-milestone-barfill');
@@ -162,15 +168,39 @@ document.addEventListener('DOMContentLoaded', function () {
     return day < ZODIAC_CUTOFFS[month] ? entry.before : entry.after;
   }
 
-  // ⚡ Optimization: Reuses static MILESTONE_AGES and MONTH_NAMES_SHORT arrays, calculating milestone UTC timestamps and string formatting directly to avoid redundant Date allocations (~3.5x faster)
   function calculateMilestones(birthDate, targetDate) {
     const birthYear = birthDate.getFullYear();
     const birthMonth = birthDate.getMonth();
     const birthDay = birthDate.getDate();
 
     const targetUtc = Date.UTC(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+    const birthUtc = Date.UTC(birthYear, birthMonth, birthDay);
 
-    return MILESTONE_AGES.map(item => {
+    // Combine day milestones (10,000, 20,000, 25,000, 30,000 days old) and age milestones (18th, 21st, 30th, 50th)
+    const dayMilestones = [10000, 20000, 25000, 30000].map(d => {
+      const mUtc = birthUtc + d * MS_PER_DAY;
+      const mDate = new Date(mUtc);
+      const formattedDate = `${MONTH_NAMES_SHORT[mDate.getUTCMonth()]} ${mDate.getUTCDate()}, ${mDate.getUTCFullYear()}`;
+
+      if (mUtc <= targetUtc) {
+        return {
+          label: `${d.toLocaleString()} Days Old`,
+          dateText: formattedDate,
+          status: 'Reached ✓',
+          reached: true
+        };
+      } else {
+        const diffDays = Math.floor((mUtc - targetUtc) / MS_PER_DAY);
+        return {
+          label: `${d.toLocaleString()} Days Old`,
+          dateText: formattedDate,
+          status: `${diffDays.toLocaleString()} days to go`,
+          reached: false
+        };
+      }
+    });
+
+    const ageMilestones = MILESTONE_AGES.map(item => {
       const targetYear = birthYear + item.age;
       const day = clampBirthdayDay(targetYear, birthMonth, birthDay);
       const formattedDate = `${MONTH_NAMES_SHORT[birthMonth]} ${day}, ${targetYear}`;
@@ -186,15 +216,16 @@ document.addEventListener('DOMContentLoaded', function () {
         };
       } else {
         const diffDays = Math.floor((milestoneUtc - targetUtc) / MS_PER_DAY);
-        const diffYears = (diffDays / 365.25).toFixed(1);
         return {
           label: item.label,
           dateText: formattedDate,
-          status: `In ~${diffYears} yrs`,
+          status: `${diffDays.toLocaleString()} days to go`,
           reached: false
         };
       }
     });
+
+    return [...dayMilestones, ...ageMilestones];
   }
 
   // ⚡ Optimization: Uses input Date objects directly without re-instantiating duplicate Date objects
@@ -252,20 +283,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const zodiac = getZodiacSign(birthMonth, birthDay);
     const milestones = calculateMilestones(birthDate, targetDate);
 
-    // Day-Count Milestone calculation (e.g., 5,000, 10,000, 15,000, 20,000, 25,000, 30,000, 40,000 days)
-    // ⚡ Optimization: Reuses top-level DAY_MILESTONE_INTERVALS lookup array to prevent garbage collection allocations on every calculation run
-    let nextDayMilestone = 1000;
+    // Day-Count Milestone calculation (e.g., 10,000, 20,000, 25,000, 30,000, etc.)
+    const STANDARD_DAY_MILESTONES = [1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000];
+    let nextDayMilestone = 10000;
     let prevDayMilestone = 0;
 
-    for (let i = 0; i < DAY_MILESTONE_INTERVALS.length; i++) {
-      if (totalDays < DAY_MILESTONE_INTERVALS[i]) {
-        nextDayMilestone = DAY_MILESTONE_INTERVALS[i];
-        prevDayMilestone = i > 0 ? DAY_MILESTONE_INTERVALS[i - 1] : 0;
+    for (let i = 0; i < STANDARD_DAY_MILESTONES.length; i++) {
+      if (totalDays < STANDARD_DAY_MILESTONES[i]) {
+        nextDayMilestone = STANDARD_DAY_MILESTONES[i];
+        prevDayMilestone = i > 0 ? STANDARD_DAY_MILESTONES[i - 1] : 0;
         break;
       }
-      if (i === DAY_MILESTONE_INTERVALS.length - 1) {
-        prevDayMilestone = DAY_MILESTONE_INTERVALS[i];
-        nextDayMilestone = totalDays + 10000;
+      if (i === STANDARD_DAY_MILESTONES.length - 1) {
+        prevDayMilestone = STANDARD_DAY_MILESTONES[i];
+        nextDayMilestone = totalDays + 5000;
       }
     }
 
@@ -338,6 +369,31 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resBornFull) resBornFull.textContent = result.bornText;
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
       if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
+
+      // Birthday Countdown elements
+      if (resNextBdayDate) {
+        resNextBdayDate.textContent = `${result.nextBirthdayText} (${result.nextBirthdayDay})`;
+      }
+      if (resBirthdayCountdownMain) {
+        resBirthdayCountdownMain.textContent = result.remainingDays === 0
+          ? '🎉 Today is your Birthday!'
+          : `Your next birthday is in ${result.remainingDays.toLocaleString()} days.`;
+      }
+      if (resBirthdayCountdownBreakdown) {
+        const hours = (result.remainingDays * 24).toLocaleString();
+        const mins = (result.remainingDays * 24 * 60).toLocaleString();
+        resBirthdayCountdownBreakdown.textContent = `${result.remainingDays.toLocaleString()} days · ${hours} hours · ${mins} minutes`;
+      }
+
+      // Life Milestones elements
+      if (resNextMilestoneHeadline) {
+        resNextMilestoneHeadline.innerHTML = `<strong>Your next milestone:</strong> ${result.nextDayMilestone.toLocaleString()} days old`;
+      }
+      if (resNextMilestoneCountdown) {
+        resNextMilestoneCountdown.textContent = result.daysUntilNextDayMilestone === 0
+          ? '🎉 Reached today!'
+          : `Only ${result.daysUntilNextDayMilestone.toLocaleString()} days to go`;
+      }
       if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
       if (resTotalMonths) resTotalMonths.textContent = result.totalMonths.toLocaleString();
       if (resTotalWeeks) resTotalWeeks.textContent = result.totalWeeks.toLocaleString();
