@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f8fafc"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="120" y="120" width="80" height="80" rx="24" fill="#2563eb"/>
+  <text x="160" y="178" font-family="'Plus Jakarta Sans', sans-serif" font-size="48" font-weight="800" fill="#ffffff" text-anchor="middle">M</text>
+  <text x="220" y="172" font-family="'Plus Jakarta Sans', sans-serif" font-size="42" font-weight="800" fill="#0f172a">myagenow</text>
+  <text x="120" y="290" font-family="'Plus Jakarta Sans', sans-serif" font-size="52" font-weight="800" fill="#0f172a">Calculate Your Exact Age</text>
+  <text x="120" y="350" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="600" fill="#475569">Years, Months, Days &amp; Birthday Countdown</text>
+  <rect x="120" y="410" width="220" height="60" rx="30" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="230" y="448" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="700" fill="#2563eb" text-anchor="middle">100% Private</text>
+  <rect x="360" y="410" width="220" height="60" rx="30" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="470" y="448" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="700" fill="#16a34a" text-anchor="middle">Instant Math</text>
+</svg>
