@@ -1,45 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://myagenow.com/</loc>
+    <loc>https://myagenow.vercel.app/</loc>
   </url>
   <url>
-    <loc>https://myagenow.com/blog.html</loc>
+    <loc>https://myagenow.vercel.app/privacy.html</loc>
   </url>
   <url>
-    <loc>https://myagenow.com/blog/how-to-calculate-age.html</loc>
+    <loc>https://myagenow.vercel.app/terms.html</loc>
   </url>
   <url>
-    <loc>https://myagenow.com/blog/how-old-am-i.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/how-many-days-until-my-birthday.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/calculate-age-between-two-dates.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/how-many-months-old-am-i.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/age-in-days.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/what-day-was-i-born.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/zodiac-by-birthday.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/blog/leap-year-birthday.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/privacy.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/terms.html</loc>
-  </url>
-  <url>
-    <loc>https://myagenow.com/contact.html</loc>
+    <loc>https://myagenow.vercel.app/contact.html</loc>
   </url>
 </urlset>
