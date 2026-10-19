@@ -85,6 +85,52 @@
             Helpful guides, calendar math insights, and answers about exact age, birthdays, dates, and time.
           </p>
         </header>
+        <!-- Featured / Latest Article Hero Section -->
+        <section class="featured-hero-card" aria-label="Featured article">
+          <div class="featured-hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            Featured Article
+          </div>
+          <div class="featured-hero-content">
+            <div class="featured-hero-main">
+              <span class="blog-card-badge">Age Calculator Guide</span>
+              <h2><a href="blog/how-to-calculate-age.html">How to Calculate Your Exact Age</a></h2>
+              <p>
+                Learn step-by-step how to calculate your exact age in completed years, months, and remainder days using standard Gregorian calendar math rules and leap year adjustments.
+              </p>
+              <div class="featured-hero-meta">
+                <span class="blog-card-date">October 3, 2026 • 3 min read</span>
+                <a href="blog/how-to-calculate-age.html" class="primary-btn inline-btn hero-read-btn">Read full article &rarr;</a>
+              </div>
+            </div>
+            <div class="featured-hero-graphic" aria-hidden="true">
+              <div class="hero-graphic-circle">
+                <span class="hero-graphic-icon">🗓️</span>
+                <span class="hero-graphic-label">Exact Age Math</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Search & Category Filters -->
+        <section class="blog-filter-bar" aria-label="Filter and search blog posts">
+          <div class="search-box-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="blog-search-input" placeholder="Search guides & topics..." aria-label="Search articles" />
+            <button type="button" id="clear-search-btn" class="clear-search-btn hidden" aria-label="Clear search">&times;</button>
+          </div>
+          <div class="category-pills" role="tablist" aria-label="Filter by category">
+            <button type="button" class="category-pill active" data-category="all" role="tab" aria-selected="true">All Topics</button>
+            <button type="button" class="category-pill" data-category="Age Calculator Guide" role="tab" aria-selected="false">Age Calculator Guide</button>
+            <button type="button" class="category-pill" data-category="Birthday Countdown" role="tab" aria-selected="false">Birthday Countdown</button>
+            <button type="button" class="category-pill" data-category="Calendar Math" role="tab" aria-selected="false">Calendar Math</button>
+            <button type="button" class="category-pill" data-category="Lifetime Metrics" role="tab" aria-selected="false">Lifetime Metrics</button>
+            <button type="button" class="category-pill" data-category="Astrology & Dates" role="tab" aria-selected="false">Astrology & Dates</button>
+          </div>
+        </section>
 
         <section class="blog-grid" aria-label="Blog posts">
           <article class="blog-card">
@@ -214,5 +260,71 @@
         </div>
       </div>
     </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('blog-search-input');
+        const clearBtn = document.getElementById('clear-search-btn');
+        const pills = document.querySelectorAll('.category-pill');
+        const cards = document.querySelectorAll('.blog-card');
+        let currentCategory = 'all';
+
+        // Make entire card clickable
+        cards.forEach(card => {
+          card.style.cursor = 'pointer';
+          card.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A') {
+              const link = card.querySelector('h2 a');
+              if (link) link.click();
+            }
+          });
+        });
+
+        function filterArticles() {
+          const query = searchInput.value.toLowerCase().trim();
+          if (query.length > 0) {
+            clearBtn.classList.remove('hidden');
+          } else {
+            clearBtn.classList.add('hidden');
+          }
+
+          cards.forEach(card => {
+            const badge = card.querySelector('.blog-card-badge');
+            const category = badge ? badge.textContent.trim() : '';
+            const title = card.querySelector('h2').textContent.toLowerCase();
+            const desc = card.querySelector('p').textContent.toLowerCase();
+
+            const matchesCategory = (currentCategory === 'all' || category.toLowerCase() === currentCategory.toLowerCase());
+            const matchesQuery = !query || title.includes(query) || desc.includes(query) || category.toLowerCase().includes(query);
+
+            if (matchesCategory && matchesQuery) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        }
+
+        pills.forEach(pill => {
+          pill.addEventListener('click', function() {
+            pills.forEach(p => {
+              p.classList.remove('active');
+              p.setAttribute('aria-selected', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-selected', 'true');
+            currentCategory = this.getAttribute('data-category');
+            filterArticles();
+          });
+        });
+
+        searchInput.addEventListener('input', filterArticles);
+
+        clearBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          filterArticles();
+          searchInput.focus();
+        });
+      });
+    </script>
   </body>
 </html>
