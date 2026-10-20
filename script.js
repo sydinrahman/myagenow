@@ -36,6 +36,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const shareBtn = document.getElementById('share-results-btn');
   const downloadCardBtn = document.getElementById('download-card-btn');
   const printBtn = document.getElementById('print-results-btn');
+  const statusAnnounce = document.getElementById('action-status-announce');
+
+  function announceStatus(message) {
+    if (!statusAnnounce) return;
+    statusAnnounce.textContent = '';
+    window.requestAnimationFrame(function () {
+      statusAnnounce.textContent = message;
+    });
+  }
 
   let currentAgeResult = null;
 
@@ -592,6 +601,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const originalLabel = copyBtn.getAttribute('aria-label') || 'Copy results to clipboard';
         copyBtn.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
+        announceStatus('Age calculation results copied to clipboard');
         setTimeout(function () {
           copyBtn.innerHTML = originalText;
           copyBtn.setAttribute('aria-label', originalLabel);
@@ -606,6 +616,7 @@ document.addEventListener('DOMContentLoaded', function () {
     shareBtn.addEventListener('click', function () {
       if (!currentResultSummary) return;
       if (navigator.share) {
+        announceStatus('Opening system share dialog');
         navigator.share({
           title: 'My Age Calculation - myagenow',
           text: currentResultSummary,
