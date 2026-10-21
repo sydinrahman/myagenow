@@ -916,13 +916,10 @@ label {
   letter-spacing: -0.02em;
 }
 
-/* ⚡ Optimization: content-visibility: auto defers rendering and layout calculations for below-the-fold landing page sections during initial page load */
 .features-section {
   padding: 4.75rem 0 4rem;
   background: #ffffff;
   border-top: 1px solid rgba(226, 232, 240, 0.8);
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 400px;
 }
 
 .features-wrap {
@@ -1013,8 +1010,6 @@ label {
   padding: 3.25rem 0 3.5rem;
   background: var(--surface-muted);
   border-top: 1px solid rgba(226, 232, 240, 0.8);
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 300px;
 }
 
 .trust-wrap {
@@ -1072,8 +1067,6 @@ label {
   padding: 3.5rem 0 3.75rem;
   background: #ffffff;
   border-top: 1px solid rgba(226, 232, 240, 0.8);
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 350px;
 }
 
 .how-it-works-wrap {
@@ -1145,8 +1138,6 @@ label {
   padding: 3.5rem 0 3.5rem;
   background: #ffffff;
   border-top: 1px solid rgba(226, 232, 240, 0.8);
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 500px;
 }
 
 .faq-wrap {
