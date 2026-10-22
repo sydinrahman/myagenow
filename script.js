@@ -32,10 +32,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
 
+  const actionToast = document.getElementById('action-toast');
   const copyBtn = document.getElementById('copy-results-btn');
   const shareBtn = document.getElementById('share-results-btn');
   const downloadCardBtn = document.getElementById('download-card-btn');
   const printBtn = document.getElementById('print-results-btn');
+
+  let toastTimer = null;
+  function showToast(message) {
+    if (!actionToast) return;
+    actionToast.textContent = message;
+    actionToast.classList.remove('hidden');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      actionToast.classList.add('hidden');
+    }, 2500);
+  }
 
   let currentAgeResult = null;
 
@@ -592,6 +604,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const originalLabel = copyBtn.getAttribute('aria-label') || 'Copy results to clipboard';
         copyBtn.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
+        showToast('✓ Results copied to clipboard!');
         setTimeout(function () {
           copyBtn.innerHTML = originalText;
           copyBtn.setAttribute('aria-label', originalLabel);
@@ -610,6 +623,8 @@ document.addEventListener('DOMContentLoaded', function () {
           title: 'My Age Calculation - myagenow',
           text: currentResultSummary,
           url: window.location.href
+        }).then(function () {
+          showToast('✓ Age calculation shared!');
         }).catch(function () {});
       } else {
         if (copyBtn) copyBtn.click();
@@ -621,6 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
     downloadCardBtn.addEventListener('click', function () {
       if (!currentAgeResult) return;
       generateShareableImageCard(currentAgeResult);
+      showToast('✓ Result card downloaded!');
     });
   }
 

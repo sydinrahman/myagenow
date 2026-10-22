@@ -645,6 +645,22 @@ label {
   border-color: rgba(22, 163, 74, 0.2);
 }
 
+.action-toast {
+  width: max-content;
+  max-width: 100%;
+  margin: 0.75rem auto 0;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.12);
+  animation: enter 200ms ease both;
+}
+
 .result-actions {
   display: flex;
   align-items: center;
