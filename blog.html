@@ -265,60 +265,48 @@
         const searchInput = document.getElementById('blog-search-input');
         const clearBtn = document.getElementById('clear-search-btn');
         const pills = document.querySelectorAll('.category-pill');
-        const blogGrid = document.querySelector('.blog-grid');
-        const cardElements = document.querySelectorAll('.blog-card');
+        const cards = document.querySelectorAll('.blog-card');
         let currentCategory = 'all';
 
-        // ⚡ Optimization: Pre-index blog card metadata once on DOM load to eliminate repeated DOM querySelector calls, text extraction, and lowercasing on every search keypress
-        const cards = Array.from(cardElements).map(function(card) {
+        // Make entire card clickable
+        cards.forEach(card => {
           card.style.cursor = 'pointer';
-          const badge = card.querySelector('.blog-card-badge');
-          const h2 = card.querySelector('h2');
-          const p = card.querySelector('p');
-          const link = h2 ? h2.querySelector('a') : null;
-          return {
-            element: card,
-            link: link,
-            category: badge ? badge.textContent.trim().toLowerCase() : '',
-            title: h2 ? h2.textContent.toLowerCase() : '',
-            desc: p ? p.textContent.toLowerCase() : ''
-          };
+          card.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A') {
+              const link = card.querySelector('h2 a');
+              if (link) link.click();
+            }
+          });
         });
 
-        // ⚡ Optimization: Event delegation on .blog-grid container instead of individual click listeners per card
-        if (blogGrid) {
-          blogGrid.addEventListener('click', function(e) {
-            if (e.target.tagName !== 'A') {
-              const cardElement = e.target.closest('.blog-card');
-              if (cardElement) {
-                const item = cards.find(function(c) { return c.element === cardElement; });
-                if (item && item.link) item.link.click();
-              }
+        function filterArticles() {
+          const query = searchInput.value.toLowerCase().trim();
+          if (query.length > 0) {
+            clearBtn.classList.remove('hidden');
+          } else {
+            clearBtn.classList.add('hidden');
+          }
+
+          cards.forEach(card => {
+            const badge = card.querySelector('.blog-card-badge');
+            const category = badge ? badge.textContent.trim() : '';
+            const title = card.querySelector('h2').textContent.toLowerCase();
+            const desc = card.querySelector('p').textContent.toLowerCase();
+
+            const matchesCategory = (currentCategory === 'all' || category.toLowerCase() === currentCategory.toLowerCase());
+            const matchesQuery = !query || title.includes(query) || desc.includes(query) || category.toLowerCase().includes(query);
+
+            if (matchesCategory && matchesQuery) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
             }
           });
         }
 
-        function filterArticles() {
-          const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-          if (clearBtn) {
-            clearBtn.classList.toggle('hidden', query.length === 0);
-          }
-
-          const catLower = currentCategory.toLowerCase();
-
-          for (let i = 0; i < cards.length; i++) {
-            const item = cards[i];
-            const matchesCategory = catLower === 'all' || item.category === catLower;
-            const matchesQuery = !query || item.title.includes(query) || item.desc.includes(query) || item.category.includes(query);
-
-            const show = matchesCategory && matchesQuery;
-            item.element.style.display = show ? 'flex' : 'none';
-          }
-        }
-
-        pills.forEach(function(pill) {
+        pills.forEach(pill => {
           pill.addEventListener('click', function() {
-            pills.forEach(function(p) {
+            pills.forEach(p => {
               p.classList.remove('active');
               p.setAttribute('aria-selected', 'false');
             });
@@ -329,17 +317,13 @@
           });
         });
 
-        if (searchInput) {
-          searchInput.addEventListener('input', filterArticles);
-        }
+        searchInput.addEventListener('input', filterArticles);
 
-        if (clearBtn) {
-          clearBtn.addEventListener('click', function() {
-            if (searchInput) searchInput.value = '';
-            filterArticles();
-            if (searchInput) searchInput.focus();
-          });
-        }
+        clearBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          filterArticles();
+          searchInput.focus();
+        });
       });
     </script>
   </body>

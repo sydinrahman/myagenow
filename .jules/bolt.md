@@ -1,7 +1,3 @@
-## 2026-10-22 - Pre-indexing Card Metadata for In-Memory Search & Filtering
-**Learning:** Performing `querySelector` DOM lookups and text extractions inside high-frequency event handlers (like search input keypresses) creates redundant DOM reads and string garbage collection churn. Pre-indexing static DOM card metadata once during `DOMContentLoaded` into an array of plain JavaScript objects enables instant, zero-DOM-query in-memory search operations on every keypress.
-**Action:** Always pre-index static UI element metadata on page load when building client-side search or filtering features, and delegate event handlers to parent container elements.
-
 ## 2026-10-21 - Deferring Below-The-Fold Layout and Rendering via content-visibility
 **Learning:** Applying CSS `content-visibility: auto` with `contain-intrinsic-size` to static below-the-fold sections (`.features-section`, `.trust-section`, `.how-it-works-section`, `.faq-section`) enables browser rendering engines to bypass initial layout and paint operations for off-screen DOM subtrees, improving initial page load time and responsiveness without JavaScript runtime overhead.
 **Action:** Use CSS `content-visibility: auto` on non-critical below-the-fold content sections to boost page load performance.
