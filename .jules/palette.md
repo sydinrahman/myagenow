@@ -9,3 +9,7 @@
 ## 2026-10-21 - Mobile Navigation Keyboard Dismissal & Focus Visible
 **Learning:** When building responsive mobile navigation drawers in vanilla JS, handling the `Escape` key to close the menu and returning focus to the toggle button (`menuButton.focus()`) ensures WCAG 2.1 compliance for keyboard navigation, while outside-click and link-click event listeners provide intuitive UI dismissal behavior.
 **Action:** Always bind `Escape` key press listeners and focus return logic on expandable mobile navigation menus alongside explicit `:focus-visible` outline styles for the hamburger toggle.
+
+## 2026-10-22 - Action Confirmation Toasts with ARIA Live Status
+**Learning:** For asynchronous or browser API user actions (copy to clipboard, Web Share API, image generation download), displaying an `aria-live="polite"` status badge above the action buttons provides immediate visual and screen reader confirmation without altering focus state or disrupting keyboard navigation.
+**Action:** Include a dedicated `<div role="status" aria-live="polite">` container for action feedback toasts and style with high contrast text (e.g., `#15803d` on `#f0fdf4`).
