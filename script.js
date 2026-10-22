@@ -588,31 +588,12 @@ document.addEventListener('DOMContentLoaded', function () {
     copyBtn.addEventListener('click', function () {
       if (!currentResultSummary) return;
       navigator.clipboard.writeText(currentResultSummary).then(function () {
-        const originalNodes = Array.from(copyBtn.childNodes).map(node => node.cloneNode(true));
+        const originalText = copyBtn.innerHTML;
         const originalLabel = copyBtn.getAttribute('aria-label') || 'Copy results to clipboard';
-
-        // 🔒 Security: Safely construct DOM elements without innerHTML to prevent DOM XSS risks
-        const svgNs = 'http://www.w3.org/2000/svg';
-        const svg = document.createElementNS(svgNs, 'svg');
-        svg.setAttribute('viewBox', '0 0 24 24');
-        svg.setAttribute('width', '15');
-        svg.setAttribute('height', '15');
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('stroke', 'currentColor');
-        svg.setAttribute('stroke-width', '2');
-        svg.setAttribute('stroke-linecap', 'round');
-        svg.setAttribute('stroke-linejoin', 'round');
-        svg.setAttribute('aria-hidden', 'true');
-
-        const polyline = document.createElementNS(svgNs, 'polyline');
-        polyline.setAttribute('points', '20 6 9 17 4 12');
-        svg.appendChild(polyline);
-
-        copyBtn.replaceChildren(svg, document.createTextNode(' Copied!'));
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
-
         setTimeout(function () {
-          copyBtn.replaceChildren(...originalNodes);
+          copyBtn.innerHTML = originalText;
           copyBtn.setAttribute('aria-label', originalLabel);
         }, 2000);
       }).catch(function () {
