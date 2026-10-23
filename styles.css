@@ -1508,40 +1508,6 @@ label {
   margin-top: 2rem;
 }
 
-.no-results-card {
-  grid-column: 1 / -1;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 1.25rem;
-  padding: 3rem 1.5rem;
-  text-align: center;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.no-results-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.no-results-card h3 {
-  font-size: 1.25rem;
-  font-weight: 800;
-  margin: 0 0 0.5rem;
-  color: var(--text);
-}
-
-.no-results-card p {
-  font-size: 0.95rem;
-  color: var(--text-soft);
-  max-width: 28rem;
-  margin: 0 0 1.25rem;
-  line-height: 1.5;
-}
-
 .blog-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
