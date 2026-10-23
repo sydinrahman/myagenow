@@ -1698,12 +1698,9 @@ label {
   }
 }
 
-/* ⚡ Optimization: content-visibility: auto defers initial layout and paint operations for off-screen footer content until scrolled into view */
 .site-footer {
   background: rgba(255, 255, 255, 0.96);
   border-top: 1px solid rgba(148, 163, 184, 0.25);
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 80px;
 }
 
 .site-footer .container {
