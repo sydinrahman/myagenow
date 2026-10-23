@@ -133,6 +133,15 @@
         </section>
 
         <section class="blog-grid" aria-label="Blog posts">
+          <div id="no-results-message" class="no-results-card hidden" role="status" aria-live="polite">
+            <div class="no-results-icon" aria-hidden="true">🔍</div>
+            <h3>No guides found</h3>
+            <p>We couldn't find any articles matching your search query or selected topic.</p>
+            <button type="button" id="reset-filters-btn" class="primary-btn inline-btn">
+              Reset search &amp; filters
+            </button>
+          </div>
+
           <article class="blog-card">
             <div class="blog-card-badge">Age Calculator Guide</div>
             <h2><a href="blog/how-to-calculate-age.html">How to Calculate Your Exact Age</a></h2>
@@ -298,6 +307,9 @@
           });
         }
 
+        const noResultsMsg = document.getElementById('no-results-message');
+        const resetFiltersBtn = document.getElementById('reset-filters-btn');
+
         function filterArticles() {
           const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
           if (clearBtn) {
@@ -305,6 +317,7 @@
           }
 
           const catLower = currentCategory.toLowerCase();
+          let visibleCount = 0;
 
           for (let i = 0; i < cards.length; i++) {
             const item = cards[i];
@@ -313,7 +326,26 @@
 
             const show = matchesCategory && matchesQuery;
             item.element.style.display = show ? 'flex' : 'none';
+            if (show) visibleCount++;
           }
+
+          if (noResultsMsg) {
+            noResultsMsg.classList.toggle('hidden', visibleCount > 0);
+          }
+        }
+
+        if (resetFiltersBtn) {
+          resetFiltersBtn.addEventListener('click', function() {
+            if (searchInput) searchInput.value = '';
+            currentCategory = 'all';
+            pills.forEach(function(p) {
+              const isAll = p.getAttribute('data-category') === 'all';
+              p.classList.toggle('active', isAll);
+              p.setAttribute('aria-selected', isAll ? 'true' : 'false');
+            });
+            filterArticles();
+            if (searchInput) searchInput.focus();
+          });
         }
 
         pills.forEach(function(pill) {
