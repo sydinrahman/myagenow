@@ -216,7 +216,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let years = targetYear - birthYear;
     let months = targetMonth - birthMonth;
-    let days = targetDay - birthDay;
+
+    let effectiveBirthDay = birthDay;
+    if (birthMonth === 1 && birthDay === 29 && targetMonth === 1 && targetDay === 28 && !isLeapYear(targetYear)) {
+      effectiveBirthDay = 28;
+    }
+
+    let days = targetDay - effectiveBirthDay;
 
     if (days < 0) {
       const priorMonthDays = getDaysInMonth(targetYear, targetMonth - 1);
@@ -432,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
 
-      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.com/`;
+      currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.today/`;
 
       if (resultsSection) {
         resultsSection.hidden = false;
@@ -681,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#94a3b8';
     ctx.textAlign = 'right';
-    ctx.fillText('myagenow.com', 1110, 94);
+    ctx.fillText('myagenow.today', 1110, 94);
 
     // Main Age Readout
     ctx.textAlign = 'center';
@@ -748,7 +754,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Footer note
     ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#64748b';
-    ctx.fillText('Exact & Private Age Calculation — myagenow.com', 600, 560);
+    ctx.fillText('Exact & Private Age Calculation — myagenow.today', 600, 560);
 
     // Download trigger
     const link = document.createElement('a');
