@@ -9,7 +9,3 @@
 ## 2026-10-21 - Mobile Navigation Keyboard Dismissal & Focus Visible
 **Learning:** When building responsive mobile navigation drawers in vanilla JS, handling the `Escape` key to close the menu and returning focus to the toggle button (`menuButton.focus()`) ensures WCAG 2.1 compliance for keyboard navigation, while outside-click and link-click event listeners provide intuitive UI dismissal behavior.
 **Action:** Always bind `Escape` key press listeners and focus return logic on expandable mobile navigation menus alongside explicit `:focus-visible` outline styles for the hamburger toggle.
-
-## 2026-10-24 - Screen Reader Live Announcements for Async Actions
-**Learning:** In single-page vanilla JS applications where visual feedback (like button text changing to "Copied!") occurs without page navigation, adding a visually hidden element (`.sr-only`) with `aria-live="polite"` and updating its text via `requestAnimationFrame` allows screen reader users to receive immediate, non-intrusive audible confirmation.
-**Action:** Include a polite `.sr-only` `aria-live` region and trigger text updates on dynamic user actions such as copy, download, or print triggers.

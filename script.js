@@ -36,17 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const shareBtn = document.getElementById('share-results-btn');
   const downloadCardBtn = document.getElementById('download-card-btn');
   const printBtn = document.getElementById('print-results-btn');
-  const actionAnnouncer = document.getElementById('action-announcer');
 
   let currentAgeResult = null;
-
-  function announceAction(message) {
-    if (!actionAnnouncer) return;
-    actionAnnouncer.textContent = '';
-    window.requestAnimationFrame(function () {
-      actionAnnouncer.textContent = message;
-    });
-  }
 
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
@@ -619,7 +610,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         copyBtn.replaceChildren(svg, document.createTextNode(' Copied!'));
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
-        announceAction('Results copied to clipboard');
 
         setTimeout(function () {
           copyBtn.replaceChildren(...originalNodes);
@@ -650,7 +640,6 @@ document.addEventListener('DOMContentLoaded', function () {
     downloadCardBtn.addEventListener('click', function () {
       if (!currentAgeResult) return;
       generateShareableImageCard(currentAgeResult);
-      announceAction('Downloading shareable result card image');
     });
   }
 
@@ -770,7 +759,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (printBtn) {
     printBtn.addEventListener('click', function () {
-      announceAction('Opening print view for result card');
       window.print();
     });
   }
