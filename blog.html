@@ -342,8 +342,17 @@
           });
         });
 
+        // ⚡ Optimization: Lightweight debounce helper prevents layout re-calculations & array iterations on every rapid keystroke
+        function debounce(func, wait) {
+          let timeout;
+          return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(function() { func.apply(this, args); }, wait);
+          };
+        }
+
         if (searchInput) {
-          searchInput.addEventListener('input', filterArticles);
+          searchInput.addEventListener('input', debounce(filterArticles, 150));
         }
 
         if (clearBtn) {
