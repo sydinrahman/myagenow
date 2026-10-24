@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://images.unsplash.com https://plus.unsplash.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
@@ -104,8 +104,11 @@
                 <a href="blog/how-to-calculate-age.html" class="primary-btn inline-btn hero-read-btn">Read full article &rarr;</a>
               </div>
             </div>
-            <div class="featured-hero-graphic">
-              <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80" alt="Desk with calendar and notebook for calculating exact age" class="featured-hero-img" loading="eager" width="1200" height="675" />
+            <div class="featured-hero-graphic" aria-hidden="true">
+              <div class="hero-graphic-circle">
+                <span class="hero-graphic-icon">🗓️</span>
+                <span class="hero-graphic-label">Exact Age Math</span>
+              </div>
             </div>
           </div>
         </section>
@@ -132,9 +135,6 @@
 
         <section class="blog-grid" aria-label="Blog posts">
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80" alt="Desk with calendar and notebook for calculating exact age" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Age Calculator Guide</div>
             <h2><a href="blog/how-to-calculate-age.html">How to Calculate Your Exact Age</a></h2>
             <p>
@@ -147,9 +147,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Festive party lights representing exact age celebration" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Age Calculator Guide</div>
             <h2><a href="blog/how-old-am-i.html">How Old Am I? Calculate Your Exact Age</a></h2>
             <p>
@@ -162,9 +159,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Colorful party balloons for birthday countdown" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Birthday Countdown</div>
             <h2><a href="blog/how-many-days-until-my-birthday.html">How Many Days Until My Birthday?</a></h2>
             <p>
@@ -177,9 +171,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1435527173128-983b87201f4d?auto=format&fit=crop&w=600&q=80" alt="Classic pocket watch and calendar for calculating time between dates" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Calendar Math</div>
             <h2><a href="blog/calculate-age-between-two-dates.html">How to Calculate Age Between Two Dates</a></h2>
             <p>
@@ -192,9 +183,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80" alt="Calendar and growth chart tracking age in months" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Lifetime Metrics</div>
             <h2><a href="blog/how-many-months-old-am-i.html">How Many Months Old Am I?</a></h2>
             <p>
@@ -207,9 +195,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&w=600&q=80" alt="Hourglass with flowing sand measuring seconds lived" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Lifetime Metrics</div>
             <h2><a href="blog/how-many-seconds-have-you-been-alive.html">How Many Seconds Have You Been Alive?</a></h2>
             <p>
@@ -222,9 +207,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80" alt="Scenic sunrise representing total days lived" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Lifetime Metrics</div>
             <h2><a href="blog/age-in-days.html">How Many Days Have You Been Alive?</a></h2>
             <p>
@@ -237,9 +219,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Weekly calendar planner page for finding day of the week born" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Calendar Math</div>
             <h2><a href="blog/what-day-was-i-born.html">What Day of the Week Was I Born?</a></h2>
             <p>
@@ -252,9 +231,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80" alt="Starlit night sky representing astrological zodiac signs" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Astrology &amp; Dates</div>
             <h2><a href="blog/zodiac-by-birthday.html">What Is Your Zodiac Sign Based on Your Birthday?</a></h2>
             <p>
@@ -267,9 +243,6 @@
           </article>
 
           <article class="blog-card">
-            <div class="blog-card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=600&q=80" alt="February calendar page highlighting leap year birthday" class="blog-card-img" loading="lazy" width="600" height="338" />
-            </div>
             <div class="blog-card-badge">Calendar Math</div>
             <h2><a href="blog/leap-year-birthday.html">How Does a Leap Year Affect Your Birthday?</a></h2>
             <p>
