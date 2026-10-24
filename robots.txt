@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://myagenow.vercel.app/sitemap.xml
+Sitemap: https://myagenow.today/sitemap.xml
