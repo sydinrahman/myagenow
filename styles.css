@@ -1342,22 +1342,6 @@ label {
   box-shadow: var(--shadow);
 }
 
-.legal-hero-media {
-  margin-bottom: 2rem;
-  border-radius: 0.875rem;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.about-hero-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  max-height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
 .legal-section {
   padding-bottom: 1.75rem;
   margin-bottom: 1.75rem;
