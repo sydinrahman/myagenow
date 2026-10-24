@@ -235,11 +235,6 @@
           if (!widgetDob || !widgetTarget || !widgetDob.value || !widgetTarget.value) return;
           const dob = new Date(widgetDob.value);
           const target = new Date(widgetTarget.value);
-          if (isNaN(dob.getTime()) || isNaN(target.getTime())) {
-            resVal.textContent = 'Please select valid dates.';
-            resSub.textContent = '';
-            return;
-          }
           if (dob > target) {
             resVal.textContent = 'Please select a birth date in the past.';
             resSub.textContent = '';
