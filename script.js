@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { age: 50, label: '50th Birthday (Golden Jubilee)' }
   ];
 
+
   const DAY_MILESTONE_INTERVALS = [1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 50000];
 
   // ⚡ Optimization: Pre-allocated static Zodiac sign lookups and cutoff thresholds to eliminate repeated object allocations and multi-branch checking
@@ -363,16 +364,13 @@ document.addEventListener('DOMContentLoaded', function () {
         dayMilestoneBarfill.style.width = `${result.overallPercentToTarget}%`;
       }
       if (dayMilestoneSub) {
-        // 🔒 Security: Safely construct DOM elements without innerHTML to avoid XSS risks
-        dayMilestoneSub.textContent = '';
+        // ⚡ Optimization: Batched node insertion with replaceChildren prevents sequential DOM reflows and improves render efficiency
         if (result.daysUntilNextDayMilestone === 0) {
           const t1 = document.createTextNode('🎉 Congratulations! You are celebrating your ');
           const s1 = document.createElement('strong');
           s1.textContent = `${formatNumber(result.nextDayMilestone)}th day lived`;
           const t2 = document.createTextNode(' today!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
+          dayMilestoneSub.replaceChildren(t1, s1, t2);
         } else {
           const t1 = document.createTextNode('You are ');
           const s1 = document.createElement('strong');
@@ -381,11 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const s2 = document.createElement('strong');
           s2.textContent = `${formatNumber(result.nextDayMilestone)}th day lived`;
           const t3 = document.createTextNode('!');
-          dayMilestoneSub.appendChild(t1);
-          dayMilestoneSub.appendChild(s1);
-          dayMilestoneSub.appendChild(t2);
-          dayMilestoneSub.appendChild(s2);
-          dayMilestoneSub.appendChild(t3);
+          dayMilestoneSub.replaceChildren(t1, s1, t2, s2, t3);
         }
       }
 
