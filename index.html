@@ -12,7 +12,7 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
@@ -31,28 +31,58 @@
     <meta property="og:description" content="Use myagenow to find your exact age in years, months, and days, see your next birthday countdown, zodiac sign, and life milestones." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://myagenow.today/" />
-    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+    <meta property="og:image" content="https://myagenow.today/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="myagenow - Exact Age Calculator" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="myagenow – Calculate Your Exact Age" />
     <meta name="twitter:description" content="Calculate your exact age in years, months, and days with zero data tracking." />
-    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.png" />
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
+        <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "WebApplication",
+          "@type": "SoftwareApplication",
           "@id": "https://myagenow.today/#webapp",
           "name": "myagenow",
           "url": "https://myagenow.today/",
           "applicationCategory": "UtilityApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires JavaScript",
-          "description": "Free, private, instant exact age calculator calculating years, months, days, zodiac sign, and milestone countdowns entirely client-side."
+          "description": "Free, private, instant exact age calculator calculating years, months, days, zodiac sign, and milestone countdowns entirely client-side.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Exact Age Calculation in Years, Months, Days",
+            "Target Date Custom Calculation",
+            "Zodiac Sign & Astrological Symbol Lookup",
+            "Milestone Tracker (18th, 21st, 30th, 50th, 10,000 days)",
+            "Lifetime Statistics (Total Months, Weeks, Days, Hours)",
+            "Next Birthday Countdown",
+            "100% Client-Side Privacy Protection"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://myagenow.today/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://myagenow.today/"
+            }
+          ]
         },
         {
           "@type": "FAQPage",
@@ -88,9 +118,6 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -183,6 +210,14 @@
                   </svg>
                 </span>
               </div>
+              <div class="target-quick-pills" id="target-quick-pills" aria-label="Quick target date presets">
+                <button class="target-pill" type="button" data-preset="today">Today</button>
+                <button class="target-pill" type="button" data-preset="end-of-year">End of Year</button>
+                <button class="target-pill" type="button" data-preset="next-birthday">Next Birthday</button>
+                <button class="target-pill" type="button" data-preset="10k-days">10,000 Days</button>
+                <button class="target-pill" type="button" data-preset="plus-1y">+1 Year</button>
+                <button class="target-pill" type="button" data-preset="plus-5y">+5 Years</button>
+              </div>
             </div>
 
             <div id="error-box" class="error-box hidden" role="alert" aria-live="polite">
@@ -212,8 +247,22 @@
         </div>
       </section>
 
-      <section id="age-results" class="results-wrapper" aria-live="polite" tabindex="-1" hidden>
-        <div class="card results-card">
+      <section id="age-results" class="results-wrapper" aria-live="polite" tabindex="-1">
+        <div id="empty-state-guidance" class="card empty-state-card">
+          <div class="empty-state-icon" aria-hidden="true">🎂</div>
+          <h2>Calculate Your Exact Age</h2>
+          <p>Enter your date of birth above to calculate your exact age in years, months, and days, zodiac sign, next birthday countdown, and life milestones.</p>
+          <div class="empty-state-examples">
+            <span class="example-label">Try a sample birth date:</span>
+            <div class="example-buttons">
+              <button type="button" class="example-btn" data-dob="2000-01-15">Jan 15, 2000</button>
+              <button type="button" class="example-btn" data-dob="1995-05-20">May 20, 1995</button>
+              <button type="button" class="example-btn" data-dob="1988-11-04">Nov 4, 1988</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="active-results-card" class="card results-card hidden">
           <div class="result-head">
             <span class="status">✓ Calculation complete</span>
             <h2>Your exact age</h2>
@@ -326,6 +375,11 @@
               </div>
             </div>
           </details>
+
+          <div id="recommended-articles-section" class="recommended-articles-section hidden">
+            <h3 class="recommended-articles-title">Recommended Reading</h3>
+            <div id="recommended-articles-grid" class="recommended-articles-grid"></div>
+          </div>
         </div>
       </section>
 

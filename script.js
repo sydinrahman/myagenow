@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const dayMilestoneSub = document.getElementById('day-milestone-sub');
   const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
+  const emptyStateGuidance = document.getElementById('empty-state-guidance');
+  const activeResultsCard = document.getElementById('active-results-card');
+  const targetQuickPills = document.getElementById('target-quick-pills');
+  const recommendedSection = document.getElementById('recommended-articles-section');
+  const recommendedGrid = document.getElementById('recommended-articles-grid');
 
   const copyBtn = document.getElementById('copy-results-btn');
   const shareBtn = document.getElementById('share-results-btn');
@@ -440,6 +445,71 @@ document.addEventListener('DOMContentLoaded', function () {
 
       currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.today/`;
 
+      if (emptyStateGuidance) emptyStateGuidance.classList.add('hidden');
+      if (activeResultsCard) activeResultsCard.classList.remove('hidden');
+
+      // Dynamic Recommended Articles Cross-Linking
+      if (recommendedSection && recommendedGrid) {
+        recommendedGrid.textContent = '';
+        const articles = [
+          {
+            title: 'How Many Days Have You Been Alive?',
+            url: 'blog/age-in-days.html',
+            tag: 'Lifetime Metrics',
+            condition: true
+          },
+          {
+            title: 'What Is Your Zodiac Sign Based on Your Birthday?',
+            url: 'blog/zodiac-by-birthday.html',
+            tag: 'Astrology & Dates',
+            condition: true
+          },
+          {
+            title: 'How Many Days Until My Birthday?',
+            url: 'blog/how-many-days-until-my-birthday.html',
+            tag: 'Birthday Countdown',
+            condition: true
+          }
+        ];
+
+        // Add Leap Year guide if Feb 29 birth
+        if (dobDate.getMonth() === 1 && dobDate.getDate() === 29) {
+          articles.unshift({
+            title: 'How Does a Leap Year Affect Your Birthday?',
+            url: 'blog/leap-year-birthday.html',
+            tag: 'Calendar Math',
+            condition: true
+          });
+        }
+
+        const fragment = document.createDocumentFragment();
+        articles.slice(0, 3).forEach(function (art) {
+          const card = document.createElement('a');
+          card.className = 'rec-article-card';
+          card.href = art.url;
+
+          const tag = document.createElement('span');
+          tag.className = 'rec-article-tag';
+          tag.textContent = art.tag;
+
+          const heading = document.createElement('h4');
+          heading.className = 'rec-article-heading';
+          heading.textContent = art.title;
+
+          const linkLabel = document.createElement('span');
+          linkLabel.className = 'rec-article-link';
+          linkLabel.textContent = 'Read guide →';
+
+          card.appendChild(tag);
+          card.appendChild(heading);
+          card.appendChild(linkLabel);
+          fragment.appendChild(card);
+        });
+
+        recommendedGrid.appendChild(fragment);
+        recommendedSection.classList.remove('hidden');
+      }
+
       if (resultsSection) {
         resultsSection.hidden = false;
         resultsSection.classList.remove('is-visible');
@@ -550,16 +620,71 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
-      if (resultsSection) {
-        resultsSection.hidden = true;
-        resultsSection.classList.remove('is-visible');
-      }
+      if (emptyStateGuidance) emptyStateGuidance.classList.remove('hidden');
+      if (activeResultsCard) activeResultsCard.classList.add('hidden');
+      if (recommendedSection) recommendedSection.classList.add('hidden');
       const params = new URLSearchParams(window.location.search);
       params.delete('dob');
       params.delete('target');
       const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
       window.history.replaceState({}, '', cleanUrl);
       if (dobInput) dobInput.focus();
+    });
+  }
+
+  // Handle Example Birth Date buttons in Empty State
+  document.querySelectorAll('.example-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const sampleDob = btn.getAttribute('data-dob');
+      if (sampleDob && dobInput) {
+        dobInput.value = sampleDob;
+        performCalculation(true);
+      }
+    });
+  });
+
+  // Handle Target Date Quick Presets
+  if (targetQuickPills && targetDateInput) {
+    targetQuickPills.addEventListener('click', function (e) {
+      const pill = e.target.closest('.target-pill');
+      if (!pill) return;
+
+      const preset = pill.getAttribute('data-preset');
+      const curTargetDate = parseDateInput(targetDateInput.value) || new Date();
+      const dobDate = parseDateInput(dobInput ? dobInput.value : '');
+
+      if (preset === 'today') {
+        targetDateInput.value = toDateInputValue(new Date());
+      } else if (preset === 'end-of-year') {
+        const year = curTargetDate.getFullYear();
+        targetDateInput.value = `${year}-12-31`;
+      } else if (preset === 'next-birthday' && dobDate) {
+        const todayUtc = Date.UTC(curTargetDate.getFullYear(), curTargetDate.getMonth(), curTargetDate.getDate());
+        let bdayYear = curTargetDate.getFullYear();
+        let bdayDay = clampBirthdayDay(bdayYear, dobDate.getMonth(), dobDate.getDate());
+        let nextBdayUtc = Date.UTC(bdayYear, dobDate.getMonth(), bdayDay);
+        if (nextBdayUtc <= todayUtc) {
+          bdayYear += 1;
+          bdayDay = clampBirthdayDay(bdayYear, dobDate.getMonth(), dobDate.getDate());
+          nextBdayUtc = Date.UTC(bdayYear, dobDate.getMonth(), bdayDay);
+        }
+        targetDateInput.value = toDateInputValue(new Date(nextBdayUtc));
+      } else if (preset === '10k-days' && dobDate) {
+        const tenKDate = new Date(dobDate.getTime() + 10000 * MS_PER_DAY);
+        targetDateInput.value = toDateInputValue(tenKDate);
+      } else if (preset === 'plus-1y') {
+        const nextYearDate = new Date(curTargetDate);
+        nextYearDate.setFullYear(nextYearDate.getFullYear() + 1);
+        targetDateInput.value = toDateInputValue(nextYearDate);
+      } else if (preset === 'plus-5y') {
+        const plus5Date = new Date(curTargetDate);
+        plus5Date.setFullYear(plus5Date.getFullYear() + 5);
+        targetDateInput.value = toDateInputValue(plus5Date);
+      }
+
+      if (dobInput && dobInput.value) {
+        performCalculation(false);
+      }
     });
   }
 
