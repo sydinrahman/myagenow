@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const resultsSection = document.getElementById('age-results');
 
   const copyBtn = document.getElementById('copy-results-btn');
+  const copyLiveStatus = document.getElementById('copy-live-status');
   const shareBtn = document.getElementById('share-results-btn');
   const downloadCardBtn = document.getElementById('download-card-btn');
   const printBtn = document.getElementById('print-results-btn');
@@ -616,10 +617,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         copyBtn.replaceChildren(svg, document.createTextNode(' Copied!'));
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
+        if (copyLiveStatus) copyLiveStatus.textContent = 'Results copied to clipboard';
 
         setTimeout(function () {
           copyBtn.replaceChildren(...originalNodes);
           copyBtn.setAttribute('aria-label', originalLabel);
+          if (copyLiveStatus) copyLiveStatus.textContent = '';
         }, 2000);
       }).catch(function () {
         showError('Could not copy to clipboard.');
