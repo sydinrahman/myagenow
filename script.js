@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', function () {
     { before: { name: 'Sagittarius', symbol: '♐' }, after: { name: 'Capricorn', symbol: '♑' } }
   ];
 
-  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict date component validation and bounds checking (1900–2100)
+  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict regex format validation and bounds checking (1900–2100)
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
 
     const trimmed = value.trim();
-    if (trimmed.length === 10 && trimmed[4] === '-' && trimmed[7] === '-') {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
       const year = Number(trimmed.slice(0, 4));
       const month = Number(trimmed.slice(5, 7));
       const day = Number(trimmed.slice(8, 10));
