@@ -15,24 +15,24 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
-    <title>How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas | myagenow</title>
-    <meta name="description" content="Learn how to accurately calculate age in years, months, and days in Excel and Google Sheets using DATEDIF, EDATE, and TODAY without leap year errors." />
+    <title>How to Accurately Calculate Someone's Age in Excel or Google Sheets | myagenow</title>
+    <meta name="description" content="Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fixes for the common errors and the leap-year trap." />
     <meta name="keywords" content="calculate age in excel, calculate age google sheets, excel datedif age formula, excel age formula leap year, google sheets age calculation" />
     <meta name="author" content="myagenow" />
     <link rel="canonical" href="https://myagenow.today/blog/calculate-age-excel-google-sheets.html" />
     <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas | myagenow" />
-    <meta property="og:description" content="Learn how to accurately calculate age in years, months, and days in Excel and Google Sheets using DATEDIF, EDATE, and TODAY without leap year errors." />
+    <meta property="og:title" content="How to Accurately Calculate Someone's Age in Excel or Google Sheets | myagenow" />
+    <meta property="og:description" content="Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fixes for the common errors and the leap-year trap." />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://myagenow.today/blog/calculate-age-excel-google-sheets.html" />
     <meta property="og:image" content="https://myagenow.today/og-image.svg" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas | myagenow" />
-    <meta name="twitter:description" content="Learn how to accurately calculate age in years, months, and days in Excel and Google Sheets using DATEDIF, EDATE, and TODAY without leap year errors." />
+    <meta name="twitter:title" content="How to Accurately Calculate Someone's Age in Excel or Google Sheets | myagenow" />
+    <meta name="twitter:description" content="Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fixes for the common errors and the leap-year trap." />
     <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
 
     <!-- Structured Data -->
@@ -42,8 +42,8 @@
       "@graph": [
         {
           "@type": "BlogPosting",
-          "headline": "How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas",
-          "description": "Learn how to accurately calculate age in years, months, and days in Excel and Google Sheets using DATEDIF, EDATE, and TODAY without leap year errors.",
+          "headline": "How to Accurately Calculate Someone's Age in Excel or Google Sheets",
+          "description": "Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fixes for the common errors and the leap-year trap.",
           "datePublished": "2026-10-27",
           "author": {
             "@type": "Organization",
@@ -60,50 +60,42 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What is the best formula to calculate age in Excel?",
+              "name": "What's the best formula to calculate age in Excel?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "For age in completed years, use =DATEDIF(A2,TODAY(),\"Y\"), where A2 holds the date of birth. It works in both Excel and Google Sheets and handles leap years correctly."
+                "text": "=DATEDIF(A2, TODAY(), \"Y\") for age in whole years. It counts completed years and only increases on the birthday."
               }
             },
             {
               "@type": "Question",
-              "name": "Why isn't DATEDIF showing up in Excel's formula suggestions?",
+              "name": "Does DATEDIF work in Google Sheets?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "It's an older function that Excel keeps for compatibility, so it doesn't appear in autocomplete. It still works if you type the full formula yourself."
+                "text": "Yes, with the same syntax as Excel."
               }
             },
             {
               "@type": "Question",
-              "name": "Is dividing the number of days by 365 accurate for age?",
+              "name": "Why is dividing by 365 wrong?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Dividing by 365 or 365.25 can be wrong by a year on or near a birthday because real years vary between 365 and 366 days. Use DATEDIF instead."
+                "text": "Leap years mean a year averages about 365.25 days, so the result drifts, and it's often off by one right around a birthday."
               }
             },
             {
               "@type": "Question",
-              "name": "How do I calculate age on a specific date instead of today?",
+              "name": "How do I calculate age on a specific date?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Replace TODAY() with a cell reference or a DATE function. For example, =DATEDIF(A2,B2,\"Y\") gives the age in years on the date stored in B2."
+                "text": "Replace TODAY() with the cell holding that date, for example =DATEDIF(A2, B2, \"Y\")."
               }
             },
             {
               "@type": "Question",
-              "name": "Why does my age formula return #VALUE! or a strange number?",
+              "name": "Can I calculate age for a whole list of people?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The date of birth is usually stored as text instead of a real date, or the day and month are swapped because of regional date settings. Check that the cell is right-aligned and re-enter the date if needed."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Do these formulas work the same in Google Sheets?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. DATEDIF, EDATE, TODAY and DATE all work in Google Sheets with the same arguments. If your locale uses semicolons as separators, swap the commas for semicolons."
+                "text": "Yes. Fill the formula down in Excel, or use ARRAYFORMULA in Google Sheets."
               }
             }
           ]
@@ -148,7 +140,7 @@
               <span class="dot" aria-hidden="true"></span>
               Calendar Math
             </div>
-            <h1>How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas</h1>
+            <h1>How to Accurately Calculate Someone's Age in Excel or Google Sheets</h1>
             <p class="blog-post-meta">
               By <strong>The My Age Now team</strong> · Published <strong>October 27, 2026</strong> · <strong>8 min read</strong>
             </p>
@@ -161,189 +153,138 @@
 
           <div class="blog-post-content">
             <p>
-              Almost everyone who has built a spreadsheet with a "Date of Birth" column has tried the same thing: subtract the birth date from today, divide by 365, and call it age. It looks right. For most rows, it even is right. Then someone's birthday lands on a Tuesday in a leap year, the cell says 24 when the person turned 25 yesterday, and you start wondering what else is quietly wrong.
+              You have a column of birth dates and you need ages. It sounds like a one-minute job, and it usually is, until you notice that half your results are off by one. Someone turning 30 tomorrow shows up as 30 today, or a person who just had a birthday is still listed a year younger.
             </p>
             <p>
-              This guide shows the formulas that actually hold up, in both Excel and Google Sheets, and explains where the popular shortcuts fall apart. I tested every formula below against awkward dates (month ends, February 29, birthdays that fall on the calculation date) before putting it here.
+              The good news is that the right formula is short. The bad news is that the most obvious formula is wrong, and one of the "official" options has a bug Microsoft itself warns about. Here's what actually works, in both Excel and Google Sheets.
             </p>
 
             <details class="blog-toc" open>
               <summary>In this article</summary>
               <ol>
-                <li><a href="#why-dividing-by-365-gives-wrong-ages">Why dividing by 365 gives wrong ages</a></li>
-                <li><a href="#the-formula-to-use-datedif">The formula to use: DATEDIF</a></li>
-                <li><a href="#age-in-years-months-and-days">Age in years, months and days</a></li>
-                <li><a href="#a-whole-years-formula-without-datedif">A whole-years formula without DATEDIF</a></li>
-                <li><a href="#age-on-a-specific-date-plus-totals">Age on a specific date, plus totals</a></li>
+                <li><a href="#the-formula-most-people-try-first">The formula most people try first (and why it fails)</a></li>
+                <li><a href="#the-reliable-way-datedif">The reliable way: DATEDIF</a></li>
+                <li><a href="#getting-years-months-and-days-together">Getting years, months and days together</a></li>
+                <li><a href="#using-a-date-other-than-today">Using a date other than today</a></li>
+                <li><a href="#age-as-a-decimal">Age as a decimal</a></li>
                 <li><a href="#next-birthday-and-days-until-it">Next birthday and days until it</a></li>
-                <li><a href="#what-happens-with-february-29-birthdays">What happens with February 29 birthdays</a></li>
+                <li><a href="#calculating-a-whole-column-at-once">Calculating a whole column at once</a></li>
+                <li><a href="#the-february-29-trap">The February 29 trap</a></li>
                 <li><a href="#common-problems-and-quick-fixes">Common problems and quick fixes</a></li>
-                <li><a href="#excel-vs-google-sheets-any-differences">Excel vs. Google Sheets: any differences?</a></li>
-                <li><a href="#dont-want-to-build-a-spreadsheet">Don't want to build a spreadsheet?</a></li>
-                <li><a href="#frequently-asked-questions">Frequently asked questions</a></li>
+                <li><a href="#quick-cheat-sheet">Quick cheat sheet</a></li>
+                <li><a href="#skip-the-spreadsheet-for-a-one-off">Skip the spreadsheet for a one-off</a></li>
+                <li><a href="#faq">FAQ</a></li>
               </ol>
             </details>
 
-            <h2 id="why-dividing-by-365-gives-wrong-ages">Why dividing by 365 gives wrong ages</h2>
-            <p>The shortcut looks like this:</p>
-            <pre><code>=INT((TODAY()-A2)/365)</code></pre>
+            <h2 id="the-formula-most-people-try-first">The formula most people try first (and why it fails)</h2>
+            <p>The instinct is to subtract the birth date from today and divide by 365:</p>
+            <pre><code>=(TODAY()-A2)/365</code></pre>
             <p>
-              The trouble is that years aren't all 365 days long. Leap years have 366, and a span of several years contains a different number of leap days depending on where you start. (If you want the full story on why, we wrote about <a href="leap-year-birthday.html" style="color: var(--primary); text-decoration: underline;">the math behind leap years</a>.) Here are two real cases:
+              This breaks because a year isn't 365 days. Leap years add an extra day every four years, so over 30 years you're already about a week off. Switching to 365.25 helps, but it still produces wrong answers for people whose birthday is within a few days of today.
+            </p>
+            <p>
+              Age is a calendar question, not a division problem. You want to know how many full birthdays have passed, and there's a function built for that.
             </p>
 
-            <div class="table-responsive">
-              <table class="benchmark-table">
-                <thead>
-                  <tr>
-                    <th>Person</th>
-                    <th>Days lived</th>
-                    <th>Formula</th>
-                    <th>Result</th>
-                    <th>Correct age</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Born March 1, 2000. Checked on March 1, 2025 (their 25th birthday)</td>
-                    <td>9,131</td>
-                    <td>days ÷ 365.25</td>
-                    <td>24.999, so 24</td>
-                    <td><strong>25</strong></td>
-                  </tr>
-                  <tr>
-                    <td>Born March 2, 2000. Checked on March 1, 2025 (one day before the 25th birthday)</td>
-                    <td>9,130</td>
-                    <td>days ÷ 365</td>
-                    <td>25.01, so 25</td>
-                    <td><strong>24</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p>
-              Swapping 365 for 365.25 helps a little, but it still misses on some birthdays. Both versions are approximations, and age is not an approximation. People notice when a form says they're a year older or younger than they really are.
-            </p>
-
-            <h2 id="the-formula-to-use-datedif">The formula to use: DATEDIF</h2>
-            <p>Both Excel and Google Sheets have a function called DATEDIF that counts complete calendar units between two dates. The syntax is:</p>
-            <pre><code>=DATEDIF(start_date, end_date, unit)</code></pre>
-            <p>For age in completed years, put the date of birth in A2 and use:</p>
+            <h2 id="the-reliable-way-datedif">The reliable way: DATEDIF</h2>
+            <p><code>DATEDIF</code> counts the complete years, months or days between two dates. With the birth date in cell A2:</p>
             <pre><code>=DATEDIF(A2, TODAY(), "Y")</code></pre>
-            <p>That's it. It counts a year only once the full birthday has passed, so there's no rounding to worry about. The unit argument controls what you get back:</p>
+            <p>That returns age in whole years, and it only goes up on the actual birthday. It works in Google Sheets and in every modern version of Excel.</p>
+            <p>One quirk: Excel doesn't list <code>DATEDIF</code> in its autocomplete or function wizard. It still works, so type it out yourself and don't assume it's broken when the suggestions don't show it.</p>
+            <p>The third argument decides what you get back:</p>
 
             <div class="table-responsive">
               <table class="benchmark-table">
                 <thead>
                   <tr>
-                    <th>Unit</th>
-                    <th>Returns</th>
-                    <th>Good to use?</th>
+                    <th>Code</th>
+                    <th>What it returns</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><code>"Y"</code></td>
-                    <td>Complete years</td>
-                    <td>Yes</td>
+                    <td>Complete years between the dates</td>
                   </tr>
                   <tr>
                     <td><code>"M"</code></td>
-                    <td>Complete months in total</td>
-                    <td>Yes</td>
+                    <td>Complete months between the dates</td>
                   </tr>
                   <tr>
                     <td><code>"D"</code></td>
-                    <td>Total days</td>
-                    <td>Yes (same as end minus start)</td>
+                    <td>Total days between the dates</td>
                   </tr>
                   <tr>
                     <td><code>"YM"</code></td>
-                    <td>Months left over after whole years</td>
-                    <td>Yes</td>
+                    <td>Months left over after complete years</td>
                   </tr>
                   <tr>
                     <td><code>"MD"</code></td>
-                    <td>Days left over after whole months</td>
-                    <td>Avoid, see below</td>
+                    <td>Days left over after complete months (see the warning below)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div class="blog-callout">
-              <p><strong>Heads up for Excel users:</strong> DATEDIF is a legacy function, so Excel won't suggest it as you type. That's normal. Type the whole formula and it works.</p>
-            </div>
+            <h2 id="getting-years-months-and-days-together">Getting years, months and days together</h2>
+            <p>To show something like "24 years, 7 months, 12 days", you can combine three calculations in one cell. This version is safe in both Excel and Google Sheets:</p>
+            <pre><code>=DATEDIF(A2, TODAY(), "Y") &amp; " years, " &amp; DATEDIF(A2, TODAY(), "YM") &amp; " months, " &amp; (TODAY() - EDATE(A2, DATEDIF(A2, TODAY(), "M"))) &amp; " days"</code></pre>
+            <p>The first two parts are straightforward. The day count needs a bit more explanation.</p>
 
-            <h2 id="age-in-years-months-and-days">Age in years, months and days</h2>
+            <h3>Don't use the "MD" option</h3>
             <p>
-              This is what most people really want: "24 years, 7 months, 24 days". The obvious move is to use "Y", "YM" and "MD" together. Don't use that last one. Microsoft's own documentation warns that "MD" can return a negative number, zero, or a wrong result, and I saw that in testing. For someone born January 31, 1995, checked on March 1, 2026, the "MD" unit returned -2 days. Negative days make no sense for an age.
+              You'll see plenty of tutorials use <code>DATEDIF(A2, TODAY(), "MD")</code> for the leftover days. Microsoft's own documentation warns that this option can return negative numbers, zero, or a wrong result in some situations.
             </p>
             <p>
-              The fix is to work out the days yourself with EDATE, which adds a number of months to a date. The idea: find the date exactly N complete months after the birth date, then count how many days are left until today.
+              The formula above avoids it. <code>EDATE</code> moves the birth date forward by the number of complete months, and subtracting that date from today leaves the exact number of days remaining. It's a few more characters, but you can trust the answer.
             </p>
 
-            <pre><code>Years:   =DATEDIF(A2, TODAY(), "Y")
-Months:  =DATEDIF(A2, TODAY(), "YM")
-Days:    =TODAY() - EDATE(A2, DATEDIF(A2, TODAY(), "M"))</code></pre>
-
-            <p>If you'd rather have it as one readable sentence in a single cell:</p>
-            <pre><code>=DATEDIF(A2,TODAY(),"Y")&amp;" years, "&amp;DATEDIF(A2,TODAY(),"YM")&amp;" months, "&amp;(TODAY()-EDATE(A2,DATEDIF(A2,TODAY(),"M")))&amp;" days"</code></pre>
-
-            <p>
-              One small thing: if you put the days formula in a cell that Excel has formatted as a date, you'll see something like "1/23/1900" instead of 24. Change the cell format to Number or General and it displays correctly.
-            </p>
-            <p>Here's how the formulas behave on a normal date and on a tricky one:</p>
-
-            <div class="table-responsive">
-              <table class="benchmark-table">
-                <thead>
-                  <tr>
-                    <th>Date of birth</th>
-                    <th>As of</th>
-                    <th>Years</th>
-                    <th>Months</th>
-                    <th>Days</th>
-                    <th>Total days</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Jan 15, 2002</td>
-                    <td>Sep 8, 2026</td>
-                    <td>24</td>
-                    <td>7</td>
-                    <td>24</td>
-                    <td>9,002</td>
-                  </tr>
-                  <tr>
-                    <td>Jan 31, 1995</td>
-                    <td>Mar 1, 2026</td>
-                    <td>31</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>11,352</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p>
-              The second row is the kind of case that breaks lazy formulas. January 31 plus one month doesn't exist in February, so EDATE lands on the last day of February (the 28th in 2026), and one more day takes you to March 1. That's the sensible answer.
-            </p>
-
-            <h2 id="a-whole-years-formula-without-datedif">A whole-years formula without DATEDIF</h2>
-            <p>If you don't like relying on a hidden function, you can get completed years with plain date math:</p>
-            <pre><code>=YEAR(TODAY()) - YEAR(A2) - (DATE(YEAR(TODAY()), MONTH(A2), DAY(A2)) > TODAY())</code></pre>
-            <p>
-              It subtracts the years, then takes away one if this year's birthday hasn't happened yet. The part in parentheses returns TRUE or FALSE, and the spreadsheet treats those as 1 or 0. It gives the same answers as DATEDIF(...,"Y") on every date I tried, with one tiny difference for February 29 birthdays, covered below.
-            </p>
-
-            <h2 id="age-on-a-specific-date-plus-totals">Age on a specific date, plus totals</h2>
-            <p>You don't always want today's age. For a school cut-off date, an insurance quote, or an anniversary, put the target date in B2 and swap it in for TODAY():</p>
+            <h2 id="using-a-date-other-than-today">Using a date other than today</h2>
+            <p>Sometimes you don't want today's age. Maybe you need someone's age on the first day of school, at the date of an event, or on a given cut-off date. Put that date in its own cell, say B2, and swap it in for <code>TODAY()</code>:</p>
             <pre><code>=DATEDIF(A2, B2, "Y")</code></pre>
-            <p>Some other numbers people ask for, all using A2 as the birth date and B2 as the end date:</p>
+            <p>
+              This also stops your results from changing every time you open the file, because <code>TODAY()</code> recalculates constantly. For reports you plan to keep, a fixed date is the safer choice.
+            </p>
 
+            <h2 id="age-as-a-decimal">Age as a decimal</h2>
+            <p>If you need a figure like 24.6 for analysis, use <code>YEARFRAC</code>:</p>
+            <pre><code>=YEARFRAC(A2, TODAY(), 1)</code></pre>
+            <p>
+              The <code>1</code> tells it to use actual days in each year. Wrap it in <code>INT()</code> if you want whole years, though <code>DATEDIF</code> is usually the cleaner choice for that. Use <code>YEARFRAC</code> when you want the decimal itself.
+            </p>
+
+            <h2 id="next-birthday-and-days-until-it">Next birthday and days until it</h2>
+            <p>Here's a handy extra. To find the next birthday:</p>
+            <pre><code>=EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1))</code></pre>
+            <p>And to count the days remaining:</p>
+            <pre><code>=EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1)) - TODAY()</code></pre>
+            <p>Format the first cell as a date and the second as a plain number.</p>
+
+            <h2 id="calculating-a-whole-column-at-once">Calculating a whole column at once</h2>
+            <p>In Excel, write the formula in the first row and drag the fill handle down, or double-click it to fill automatically.</p>
+            <p>In Google Sheets you can do the whole column with one formula and skip the dragging:</p>
+            <pre><code>=ARRAYFORMULA(IF(A2:A="", "", DATEDIF(A2:A, TODAY(), "Y")))</code></pre>
+            <p>The <code>IF</code> part keeps empty rows blank instead of throwing errors.</p>
+
+            <h2 id="the-february-29-trap">The February 29 trap</h2>
+            <p>
+              People born on February 29 are where age formulas get interesting. In a non-leap year there's no February 29, so when does their birthday happen?
+            </p>
+            <p>
+              There's no universal rule. Some places and tools treat it as February 28, others as March 1. Spreadsheet functions follow their own logic, and <code>DATEDIF</code> generally counts the new year of age on March 1 in non-leap years. If your data includes leap-day birthdays and the exact day matters, for example for legal or eligibility purposes, test a few cases in your own sheet and decide which convention you need. Don't assume the spreadsheet matches another tool.
+            </p>
+
+            <h2 id="common-problems-and-quick-fixes">Common problems and quick fixes</h2>
+            <ul>
+              <li><strong>The result shows as a date like 1/0/1900.</strong> The cell is formatted as a date. Change the format to General or Number.</li>
+              <li><strong>You get #VALUE!.</strong> The birth date is probably stored as text. Check whether it's left-aligned, which usually means text. Re-enter it, or convert it with <code>DATEVALUE</code>.</li>
+              <li><strong>You get #NUM!.</strong> The start date is later than the end date. Check for typos in the year.</li>
+              <li><strong>Days and months look swapped.</strong> This is a regional setting issue. A date like 03/04/2000 means March 4 in the US and April 3 in much of the rest of the world. If you import data from elsewhere, check how your spreadsheet reads it.</li>
+              <li><strong>Ages change when you reopen the file.</strong> That's <code>TODAY()</code> doing its job. Use a fixed date cell if you need a snapshot.</li>
+            </ul>
+
+            <h2 id="quick-cheat-sheet">Quick cheat sheet</h2>
             <div class="table-responsive">
               <table class="benchmark-table">
                 <thead>
@@ -354,67 +295,33 @@ Days:    =TODAY() - EDATE(A2, DATEDIF(A2, TODAY(), "M"))</code></pre>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Total months</td>
-                    <td><code>=DATEDIF(A2, B2, "M")</code></td>
+                    <td>Age in years</td>
+                    <td><code>=DATEDIF(A2, TODAY(), "Y")</code></td>
                   </tr>
                   <tr>
-                    <td>Total days</td>
-                    <td><code>=B2 - A2</code></td>
+                    <td>Total months lived</td>
+                    <td><code>=DATEDIF(A2, TODAY(), "M")</code></td>
                   </tr>
                   <tr>
-                    <td>Total weeks (whole)</td>
-                    <td><code>=INT((B2 - A2) / 7)</code></td>
+                    <td>Total days lived</td>
+                    <td><code>=TODAY() - A2</code></td>
                   </tr>
                   <tr>
-                    <td>Approximate hours</td>
-                    <td><code>=(B2 - A2) * 24</code></td>
+                    <td>Age as a decimal</td>
+                    <td><code>=YEARFRAC(A2, TODAY(), 1)</code></td>
+                  </tr>
+                  <tr>
+                    <td>Next birthday</td>
+                    <td><code>=EDATE(A2, 12*(DATEDIF(A2, TODAY(), "Y")+1))</code></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <p>
-              Dates in a spreadsheet are just numbers (days counted from a starting point), which is why plain subtraction works for total days. Remember that B2 - A2 counts days between the dates and not hours or minutes, so "hours" here is days times 24, not a precise figure.
-            </p>
-
-            <h2 id="next-birthday-and-days-until-it">Next birthday and days until it</h2>
-            <p>To find the next birthday, count the whole years lived, add one, and push the birth date forward by that many years:</p>
-            <pre><code>Next birthday:   =EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1))
-Days until it:   =EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1)) - TODAY()</code></pre>
-            <p>
-              For a birth date of January 15, 2002, checked on September 8, 2026, this gives January 15, 2027 and 129 days to go.
-            </p>
-            <div class="blog-callout">
-              <p>On the birthday itself this formula counts to next year, so it shows about 365 days instead of 0. If you want 0 on the day, subtract one day from today inside DATEDIF: use <code>DATEDIF(A2, TODAY()-1, "Y")</code> in place of <code>DATEDIF(A2, TODAY(), "Y")</code> in the next-birthday formulas only.</p>
-            </div>
-
-            <h2 id="what-happens-with-february-29-birthdays">What happens with February 29 birthdays</h2>
-            <p>
-              People born on February 29 are where age formulas disagree with each other, because there's no single official rule for the years without a February 29. In my tests, DATEDIF didn't count the 26th year for someone born on February 29, 2000 until March 1, 2026, so it treats March 1 as the birthday in non-leap years. The YEAR/DATE formula above agrees, since DATE(2026, 2, 29) rolls over to March 1. But EDATE goes the other way and clamps to February 28.
-            </p>
-            <p>
-              That means a sheet mixing both approaches can be off by one day for these birthdays. Pick one convention for the whole sheet and stick with it. (Our own age calculator treats February 28 as the birthday in non-leap years.) For most real uses the difference is one day in one year, but it's worth knowing before someone asks why two sheets disagree.
-            </p>
-
-            <h2 id="common-problems-and-quick-fixes">Common problems and quick fixes</h2>
-            <ul>
-              <li><strong>The date is really text.</strong> If the date sits on the left of the cell, or the formula returns <code>#VALUE!</code>, the spreadsheet doesn't see it as a date. Re-enter it, or use Data > Text to Columns in Excel to convert a whole column.</li>
-              <li><strong>Day and month swapped.</strong> 03/04/2001 means March 4 in the US and April 3 in much of the world. Check your regional settings if ages look wrong for a whole batch of rows.</li>
-              <li><strong><code>#NUM!</code> error.</strong> DATEDIF fails when the start date is later than the end date. Look for a typo in the year or a future birth date.</li>
-              <li><strong>Ages keep changing.</strong> <code>TODAY()</code> updates every time the file opens. For a report that should stay fixed, type the date into a cell (say B2) and refer to that instead.</li>
-              <li><strong>Semicolons instead of commas.</strong> In some regions, Excel and Google Sheets expect <code>;</code> between arguments. If you get a parse error on a formula that looks right, try swapping them.</li>
-              <li><strong>Copying down a column.</strong> Write the formula once in row 2, then drag the small square at the bottom right of the cell down. The reference A2 shifts to A3, A4 and so on.</li>
-            </ul>
-
-            <h2 id="excel-vs-google-sheets-any-differences">Excel vs. Google Sheets: any differences?</h2>
-            <p>
-              For everything in this article, no. DATEDIF, EDATE, TODAY, DATE, YEAR and INT behave the same in both, and the formulas can be pasted straight across. The main practical differences are cosmetic: Excel hides DATEDIF from autocomplete, and the two apps may format date results slightly differently.
-            </p>
-
             <div class="blog-callout" id="cta-callout">
-              <h2 id="dont-want-to-build-a-spreadsheet">Don't want to build a spreadsheet?</h2>
+              <h2 id="skip-the-spreadsheet-for-a-one-off">Skip the spreadsheet for a one-off</h2>
               <p>
-                Enter a date of birth and get exact age in years, months and days, total days, and your next birthday in one click. Nothing is stored or sent anywhere.
+                If you only need one person's age and don't want to set up formulas, our <a href="../index.html" style="color: var(--primary); font-weight: 600;">free age calculator</a> gives you years, months, days and the next-birthday countdown in a couple of seconds, with leap years handled for you.
               </p>
               <div class="blog-cta-wrap" style="text-align: left; margin-top: 1rem;">
                 <a href="../index.html" class="primary-btn inline-btn">
@@ -424,48 +331,32 @@ Days until it:   =EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1)) - TODAY()</cod
               </div>
             </div>
 
-            <h2 id="frequently-asked-questions">Frequently asked questions</h2>
+            <h2 id="faq">FAQ</h2>
             <div class="faq-accordion">
-              <h3>What is the best formula to calculate age in Excel?</h3>
+              <h3>What's the best formula to calculate age in Excel?</h3>
               <p>
-                For age in completed years, use <code>=DATEDIF(A2,TODAY(),"Y")</code>, where A2 holds the date of birth. It works in both Excel and Google Sheets and handles leap years correctly.
+                <code>=DATEDIF(A2, TODAY(), "Y")</code> for age in whole years. It counts completed years and only increases on the birthday.
               </p>
 
-              <h3>Why isn't DATEDIF showing up in Excel's formula suggestions?</h3>
+              <h3>Does DATEDIF work in Google Sheets?</h3>
               <p>
-                It's an older function that Excel keeps for compatibility, so it doesn't appear in autocomplete. It still works if you type the full formula yourself.
+                Yes, with the same syntax as Excel.
               </p>
 
-              <h3>Is dividing the number of days by 365 accurate for age?</h3>
+              <h3>Why is dividing by 365 wrong?</h3>
               <p>
-                No. Dividing by 365 or 365.25 can be wrong by a year on or near a birthday because real years vary between 365 and 366 days. Use DATEDIF instead.
+                Leap years mean a year averages about 365.25 days, so the result drifts, and it's often off by one right around a birthday.
               </p>
 
-              <h3>How do I calculate age on a specific date instead of today?</h3>
+              <h3>How do I calculate age on a specific date?</h3>
               <p>
-                Replace TODAY() with a cell reference or a DATE function. For example, <code>=DATEDIF(A2,B2,"Y")</code> gives the age in years on the date stored in B2.
+                Replace <code>TODAY()</code> with the cell holding that date, for example <code>=DATEDIF(A2, B2, "Y")</code>.
               </p>
 
-              <h3>Why does my age formula return #VALUE! or a strange number?</h3>
+              <h3>Can I calculate age for a whole list of people?</h3>
               <p>
-                The date of birth is usually stored as text instead of a real date, or the day and month are swapped because of regional date settings. Check that the cell is right-aligned and re-enter the date if needed.
+                Yes. Fill the formula down in Excel, or use <code>ARRAYFORMULA</code> in Google Sheets.
               </p>
-
-              <h3>Do these formulas work the same in Google Sheets?</h3>
-              <p>
-                Yes. DATEDIF, EDATE, TODAY and DATE all work in Google Sheets with the same arguments. If your locale uses semicolons as separators, swap the commas for semicolons.
-              </p>
-            </div>
-
-            <div class="blog-callout" style="background: var(--bg-alt); border-color: var(--primary);">
-              <h3>Quick recap</h3>
-              <ul>
-                <li>Skip <code>(TODAY()-A2)/365</code>. It's wrong on some birthdays.</li>
-                <li>Use <code>=DATEDIF(A2,TODAY(),"Y")</code> for age in years and <code>"YM"</code> for the leftover months.</li>
-                <li>Get the leftover days with <code>TODAY() - EDATE(A2, DATEDIF(A2,TODAY(),"M"))</code>, not with <code>"MD"</code>.</li>
-                <li>Pick one convention for February 29 birthdays and use it everywhere in the sheet.</li>
-                <li>If a formula acts strange, check the date is a real date and not text.</li>
-              </ul>
             </div>
 
             <h2>Related Articles &amp; Time Guides</h2>
@@ -522,7 +413,7 @@ Days until it:   =EDATE(A2, 12 * (DATEDIF(A2, TODAY(), "Y") + 1)) - TODAY()</cod
         if (twitterBtn) {
           twitterBtn.addEventListener('click', function() {
             const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Check out this article: How to Accurately Calculate Someone's Age Using Microsoft Excel or Google Sheets Formulas on myagenow!");
+            const text = encodeURIComponent("Check out this article: How to Accurately Calculate Someone's Age in Excel or Google Sheets on myagenow!");
             window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
           });
         }
