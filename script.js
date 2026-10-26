@@ -444,11 +444,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
       currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.today/`;
 
+      const reminderSection = document.getElementById('birthday-reminder');
       if (resultsSection) {
         resultsSection.hidden = false;
         resultsSection.classList.remove('is-visible');
         window.requestAnimationFrame(function () {
           resultsSection.classList.add('is-visible');
+        });
+      }
+      if (reminderSection) {
+        reminderSection.hidden = false;
+        reminderSection.classList.remove('is-visible');
+        window.requestAnimationFrame(function () {
+          reminderSection.classList.add('is-visible');
         });
       }
 
@@ -554,10 +562,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
+      const reminderSection = document.getElementById('birthday-reminder');
       if (resultsSection) {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
       }
+      if (reminderSection) {
+        reminderSection.hidden = true;
+        reminderSection.classList.remove('is-visible');
+      }
+      if (reminderForm) {
+        reminderForm.reset();
+        reminderBirthdayUserEdited = false;
+      }
+      hideReminderError();
+      hideReminderSuccess();
       const params = new URLSearchParams(window.location.search);
       params.delete('dob');
       params.delete('target');
