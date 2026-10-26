@@ -341,6 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     try {
+      prefillReminderBirthday(dobValue);
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
 
@@ -443,11 +444,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
       currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.today/`;
 
+      const reminderSection = document.getElementById('birthday-reminder');
       if (resultsSection) {
         resultsSection.hidden = false;
         resultsSection.classList.remove('is-visible');
         window.requestAnimationFrame(function () {
           resultsSection.classList.add('is-visible');
+        });
+      }
+      if (reminderSection) {
+        reminderSection.hidden = false;
+        reminderSection.classList.remove('is-visible');
+        window.requestAnimationFrame(function () {
+          reminderSection.classList.add('is-visible');
         });
       }
 
@@ -553,10 +562,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
+      const reminderSection = document.getElementById('birthday-reminder');
       if (resultsSection) {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
       }
+      if (reminderSection) {
+        reminderSection.hidden = true;
+        reminderSection.classList.remove('is-visible');
+      }
+      if (reminderForm) {
+        reminderForm.reset();
+        reminderBirthdayUserEdited = false;
+      }
+      hideReminderError();
+      hideReminderSuccess();
       const params = new URLSearchParams(window.location.search);
       params.delete('dob');
       params.delete('target');
@@ -835,6 +855,165 @@ document.addEventListener('DOMContentLoaded', function () {
     siteNav.addEventListener('click', function (event) {
       if (event.target.tagName === 'A') {
         closeMenu();
+      }
+    });
+  }
+
+
+  // ==========================================
+  // Birthday Reminder Signup Form Logic
+  // ==========================================
+  const reminderForm = document.getElementById('reminder-form');
+  const reminderEmail = document.getElementById('reminder-email');
+  const reminderBirthday = document.getElementById('reminder-birthday');
+  const reminderConsent = document.getElementById('reminder-consent');
+  const reminderWebsite = document.getElementById('reminder-website');
+  const reminderSubmitBtn = document.getElementById('reminder-submit-btn');
+  const reminderSuccessBox = document.getElementById('reminder-success-box');
+  const reminderSuccessMsg = document.getElementById('reminder-success-message');
+  const reminderErrorBox = document.getElementById('reminder-error-box');
+  const reminderErrorMsg = document.getElementById('reminder-error-message');
+
+  let reminderBirthdayUserEdited = false;
+
+  if (reminderBirthday) {
+    reminderBirthday.setAttribute('max', todayFormatted);
+    reminderBirthday.setAttribute('min', '1900-01-01');
+
+    reminderBirthday.addEventListener('input', function () {
+      reminderBirthdayUserEdited = true;
+    });
+
+    reminderBirthday.addEventListener('click', function () {
+      if (typeof reminderBirthday.showPicker === 'function') {
+        try {
+          reminderBirthday.showPicker();
+        } catch (e) {}
+      }
+    });
+  }
+
+  // Prefill reminder birthday if empty when main DOB changes or on main calculation
+  function prefillReminderBirthday(dobValue) {
+    if (!reminderBirthday || reminderBirthdayUserEdited) return;
+    if (!reminderBirthday.value && dobValue && parseDateInput(dobValue)) {
+      reminderBirthday.value = dobValue;
+    }
+  }
+
+  if (dobInput) {
+    dobInput.addEventListener('change', function () {
+      if (dobInput.value) {
+        prefillReminderBirthday(dobInput.value);
+      }
+    });
+  }
+
+  function showReminderError(msg) {
+    if (reminderErrorBox && reminderErrorMsg) {
+      reminderErrorMsg.textContent = msg;
+      reminderErrorBox.classList.remove('hidden');
+    }
+    if (reminderSuccessBox) {
+      reminderSuccessBox.classList.add('hidden');
+    }
+  }
+
+  function hideReminderError() {
+    if (reminderErrorBox) {
+      reminderErrorBox.classList.add('hidden');
+    }
+  }
+
+  function showReminderSuccess(msg) {
+    if (reminderSuccessBox && reminderSuccessMsg) {
+      reminderSuccessMsg.textContent = msg;
+      reminderSuccessBox.classList.remove('hidden');
+    }
+    if (reminderErrorBox) {
+      reminderErrorBox.classList.add('hidden');
+    }
+  }
+
+  function hideReminderSuccess() {
+    if (reminderSuccessBox) {
+      reminderSuccessBox.classList.add('hidden');
+    }
+  }
+
+  if (reminderForm) {
+    reminderForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      hideReminderError();
+      hideReminderSuccess();
+
+      const emailVal = reminderEmail ? reminderEmail.value.trim() : '';
+      const birthdayVal = reminderBirthday ? reminderBirthday.value.trim() : '';
+      const consentVal = reminderConsent ? reminderConsent.checked : false;
+      const websiteVal = reminderWebsite ? reminderWebsite.value : '';
+
+      // Client-side validation
+      if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        showReminderError('Please enter a valid email address.');
+        if (reminderEmail) reminderEmail.focus();
+        return;
+      }
+
+      const parsedBday = parseDateInput(birthdayVal);
+      if (!birthdayVal || !parsedBday || parsedBday > new Date()) {
+        showReminderError('Please enter a valid birthday in the past.');
+        if (reminderBirthday) reminderBirthday.focus();
+        return;
+      }
+
+      if (!consentVal) {
+        showReminderError('Please agree to receive annual birthday reminder emails.');
+        if (reminderConsent) reminderConsent.focus();
+        return;
+      }
+
+      // Prevent duplicate submission
+      if (reminderSubmitBtn && reminderSubmitBtn.disabled) {
+        return;
+      }
+
+      if (reminderSubmitBtn) {
+        reminderSubmitBtn.disabled = true;
+        reminderSubmitBtn.classList.add('loading');
+      }
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailVal,
+            birthday: birthdayVal,
+            consent: consentVal,
+            website: websiteVal
+          })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.ok) {
+          showReminderSuccess(data.message || 'Your birthday reminder signup was saved.');
+          reminderForm.reset();
+          reminderBirthdayUserEdited = false;
+        } else {
+          showReminderError(data.error || 'Failed to save signup. Please try again.');
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        showReminderError('Network error. Please check your connection and try again.');
+      } finally {
+        if (reminderSubmitBtn) {
+          reminderSubmitBtn.disabled = false;
+          reminderSubmitBtn.classList.remove('loading');
+        }
       }
     });
   }
