@@ -1,4 +1,3 @@
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -22,7 +21,7 @@ export default async function handler(req, res) {
       consent !== true
     ) {
       return res.status(400).json({
-        error: "Enter a valid email, birthday, and consent."
+        error: "Please enter a valid email, birthday, and consent."
       });
     }
 
@@ -38,18 +37,27 @@ export default async function handler(req, res) {
       date > today
     ) {
       return res.status(400).json({
-        error: "Enter a valid birthday."
+        error: "Please enter a valid birthday in the past."
+      });
+    }
+
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error("Missing Supabase environment variables: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is not set.");
+      return res.status(500).json({
+        error: "Server configuration error. Birthday reminder signups are temporarily unavailable."
       });
     }
 
     const response = await fetch(
-      `${process.env.SUPABASE_URL}/rest/v1/birthday_subscribers?on_conflict=email`,
+      `${supabaseUrl}/rest/v1/birthday_subscribers?on_conflict=email`,
       {
         method: "POST",
         headers: {
-          apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-          Authorization:
-            `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+          apikey: supabaseServiceKey,
+          Authorization: `Bearer ${supabaseServiceKey}`,
           "Content-Type": "application/json",
           Prefer: "resolution=merge-duplicates,return=minimal"
         },
@@ -63,14 +71,15 @@ export default async function handler(req, res) {
     );
 
     if (!response.ok) {
-      console.error("Supabase signup failed:", await response.text());
+      const errorText = await response.text();
+      console.error("Supabase signup failed with status", response.status, ":", errorText);
       return res.status(500).json({
-        error: "We couldn't save your signup. Please try again."
+        error: "We couldn't save your signup. Please try again later."
       });
     }
 
     return res.status(200).json({
-      message: "Your birthday reminder signup was saved."
+      message: "Your birthday reminder signup was saved!"
     });
   } catch (error) {
     console.error("Signup error:", error);
