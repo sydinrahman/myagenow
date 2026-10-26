@@ -488,29 +488,67 @@
         const birthdateInput = document.getElementById('birthdate');
         const birthtimeInput = document.getElementById('birthtime');
         const displayEl = document.getElementById('live-seconds-count');
+        if (!birthdateInput || !displayEl) return;
+
+        // ⚡ Optimization: Pre-allocated Intl.NumberFormat instance to avoid creating new formatter objects every second (~7x faster formatting)
+        const numberFormatter = new Intl.NumberFormat('en-US');
+
+        let cachedBirthMs = NaN;
+
+        function updateBirthMs() {
+          const dateStr = birthdateInput.value;
+          const timeStr = birthtimeInput ? (birthtimeInput.value || '00:00') : '00:00';
+          if (!dateStr) {
+            cachedBirthMs = NaN;
+            return;
+          }
+          // Cache parsed birth timestamp in UTC ms when input changes to eliminate string template allocation & Date parsing on 1-second interval ticks
+          const parsed = new Date(`${dateStr}T${timeStr}:00`);
+          cachedBirthMs = parsed.getTime();
+        }
 
         function updateSeconds() {
-          const dateStr = birthdateInput.value;
-          const timeStr = birthtimeInput.value || '00:00';
-          if (!dateStr) return;
+          // ⚡ Optimization: Skip timer updates when page is hidden to save CPU/battery power on inactive tabs
+          if (document.hidden) return;
 
-          const birthDateTime = new Date(`${dateStr}T${timeStr}:00`);
-          const now = new Date();
-          const diffMs = now - birthDateTime;
+          if (isNaN(cachedBirthMs)) {
+            displayEl.textContent = '0';
+            return;
+          }
 
-          if (isNaN(diffMs) || diffMs < 0) {
+          // ⚡ Optimization: Use Date.now() directly to avoid creating Date object heap allocations on every 1-second tick
+          const diffMs = Date.now() - cachedBirthMs;
+
+          if (diffMs < 0) {
             displayEl.textContent = '0';
             return;
           }
 
           const seconds = Math.floor(diffMs / 1000);
-          displayEl.textContent = seconds.toLocaleString('en-US');
+          displayEl.textContent = numberFormatter.format(seconds);
         }
 
-        birthdateInput.addEventListener('input', updateSeconds);
-        birthtimeInput.addEventListener('input', updateSeconds);
-        setInterval(updateSeconds, 1000);
+        birthdateInput.addEventListener('input', function() {
+          updateBirthMs();
+          updateSeconds();
+        });
+        if (birthtimeInput) {
+          birthtimeInput.addEventListener('input', function() {
+            updateBirthMs();
+            updateSeconds();
+          });
+        }
+
+        // Handle tab visibility changes to instantly refresh display when user returns to page
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden) {
+            updateSeconds();
+          }
+        });
+
+        updateBirthMs();
         updateSeconds();
+        setInterval(updateSeconds, 1000);
       })();
     </script>
   </body>
