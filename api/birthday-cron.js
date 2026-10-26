@@ -1,12 +1,26 @@
 
+import { timingSafeEqual } from "crypto";
+
+function safeCompare(a, b) {
+  if (typeof a !== "string" || typeof b !== "string") {
+    return false;
+  }
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) {
+    return false;
+  }
+  return timingSafeEqual(bufA, bufB);
+}
+
 export default async function handler(req, res) {
   const secret = process.env.CRON_SECRET;
 
-  // Protect the endpoint
-  if (
-    !secret ||
-    req.headers.authorization !== `Bearer ${secret}`
-  ) {
+  // Protect the endpoint using timing-safe comparison to prevent side-channel timing attacks
+  const authHeader = req.headers.authorization || "";
+  const expectedAuth = `Bearer ${secret}`;
+
+  if (!secret || !safeCompare(authHeader, expectedAuth)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
