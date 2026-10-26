@@ -2402,3 +2402,68 @@ label {
   border-top: 1px solid rgba(226, 232, 240, 0.8);
   font-style: italic;
 }
+
+
+/* Birthday Reminder Section */
+.reminder-wrap {
+  max-width: 36rem;
+  margin: 2.5rem auto 1.5rem;
+  padding: 0 1rem;
+}
+
+.reminder-card {
+  padding: 1.3rem 1.4rem 1.1rem;
+}
+
+.reminder-desc {
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+  margin: -0.5rem 0 1.25rem;
+}
+
+.website-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reminder-privacy-notice {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.reminder-privacy-notice a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.reminder-privacy-notice a:hover {
+  color: var(--primary-dark);
+}
+
+.success-box {
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: 0.85rem;
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: 0.82rem;
+  font-weight: 600;
+  animation: enter 180ms ease both;
+}
