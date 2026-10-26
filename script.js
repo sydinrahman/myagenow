@@ -134,10 +134,18 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!errorBox || !errorMessage) return;
     errorMessage.textContent = message;
     errorBox.classList.remove('hidden');
+    if (dobInput) {
+      dobInput.setAttribute('aria-invalid', 'true');
+      dobInput.setAttribute('aria-describedby', 'error-message');
+    }
   }
 
   function hideError() {
     if (errorBox) errorBox.classList.add('hidden');
+    if (dobInput) {
+      dobInput.removeAttribute('aria-invalid');
+      dobInput.removeAttribute('aria-describedby');
+    }
   }
 
   function isLeapYear(year) {
@@ -643,6 +651,35 @@ document.addEventListener('DOMContentLoaded', function () {
     downloadCardBtn.addEventListener('click', function () {
       if (!currentAgeResult) return;
       generateShareableImageCard(currentAgeResult);
+
+      const originalNodes = Array.from(downloadCardBtn.childNodes).map(node => node.cloneNode(true));
+      const originalLabel = downloadCardBtn.getAttribute('aria-label') || 'Download image card';
+
+      const svgNs = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNs, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('width', '15');
+      svg.setAttribute('height', '15');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '2');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+
+      const polyline = document.createElementNS(svgNs, 'polyline');
+      polyline.setAttribute('points', '20 6 9 17 4 12');
+      svg.appendChild(polyline);
+
+      downloadCardBtn.replaceChildren(svg, document.createTextNode(' Card Downloaded!'));
+      downloadCardBtn.setAttribute('aria-label', 'Result card image downloaded');
+      if (copyLiveStatus) copyLiveStatus.textContent = 'Result card image downloaded';
+
+      setTimeout(function () {
+        downloadCardBtn.replaceChildren(...originalNodes);
+        downloadCardBtn.setAttribute('aria-label', originalLabel);
+        if (copyLiveStatus) copyLiveStatus.textContent = '';
+      }, 2000);
     });
   }
 
