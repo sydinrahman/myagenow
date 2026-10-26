@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/birthday-cron",
-      "schedule": "15 0 * * *"
-    }
-  ]
-}
