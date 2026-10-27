@@ -1,5 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Dark Mode Theme Toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
+
+  // Mobile Menu Navigation
   const menuButton = document.getElementById('menu-button');
   const siteNav = document.getElementById('site-nav');
 
