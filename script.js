@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Cached DOM element references
   const dobInput = document.getElementById('dob-input');
+  const dobDay = document.getElementById('dob-day');
+  const dobMonth = document.getElementById('dob-month');
+  const dobYear = document.getElementById('dob-year');
+  const dobPickerTrigger = document.getElementById('dob-picker-trigger');
+
   const targetDateInput = document.getElementById('target-date-input');
   const toggleCustomDate = document.getElementById('toggle-custom-date');
   const customTargetGroup = document.getElementById('custom-target-date-group');
@@ -25,6 +30,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
+  const resTotalHeartbeats = document.getElementById('res-total-heartbeats');
+  const resTotalWeekends = document.getElementById('res-total-weekends');
+  const resTotalSleep = document.getElementById('res-total-sleep');
+  const bdayRingFill = document.getElementById('bday-ring-fill');
+  const bdayRingDays = document.getElementById('bday-ring-days');
   const dayMilestoneBadge = document.getElementById('day-milestone-badge');
   const dayMilestoneProgressbar = document.getElementById('day-milestone-progressbar');
   const dayMilestoneBarfill = document.getElementById('day-milestone-barfill');
@@ -133,10 +143,44 @@ document.addEventListener('DOMContentLoaded', function () {
     return formatDateForInput(date);
   }
 
+  function syncTypedToHidden() {
+    if (!dobDay || !dobMonth || !dobYear || !dobInput) return '';
+    const d = dobDay.value.trim().padStart(2, '0');
+    const m = dobMonth.value.trim().padStart(2, '0');
+    const y = dobYear.value.trim();
+    if (y.length === 4 && m.length === 2 && d.length === 2) {
+      const iso = `${y}-${m}-${d}`;
+      if (parseDateInput(iso)) {
+        dobInput.value = iso;
+        return iso;
+      }
+    }
+    return '';
+  }
+
+  function syncHiddenToTyped(isoValue) {
+    if (!isoValue || !dobDay || !dobMonth || !dobYear) return;
+    const parts = isoValue.split('-');
+    if (parts.length === 3) {
+      dobYear.value = parts[0];
+      dobMonth.value = parts[1];
+      dobDay.value = parts[2];
+    }
+  }
+
   function showError(message) {
     if (!errorBox || !errorMessage) return;
     errorMessage.textContent = message;
     errorBox.classList.remove('hidden');
+    const typedWrap = document.getElementById('dob-typed-wrap');
+    if (typedWrap) {
+      typedWrap.classList.remove('shake');
+      void typedWrap.offsetWidth;
+      typedWrap.classList.add('shake');
+      setTimeout(function () {
+        typedWrap.classList.remove('shake');
+      }, 500);
+    }
     if (dobInput) {
       dobInput.setAttribute('aria-invalid', 'true');
       dobInput.setAttribute('aria-describedby', 'error-message');
@@ -252,6 +296,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
     const approxHours = totalDays * 24;
+    const totalHeartbeats = totalDays * 100000;
+    const totalWeekends = Math.floor(totalDays / 7) * 2;
+    const totalSleep = Math.floor(totalDays * 8);
 
     const bornDay = DAY_NAMES[birthDate.getDay()];
     const bornText = `${MONTH_NAMES[birthMonth]} ${birthDay}, ${birthYear}`;
@@ -305,6 +352,9 @@ document.addEventListener('DOMContentLoaded', function () {
       totalWeeks,
       totalMonths,
       approxHours,
+      totalHeartbeats,
+      totalWeekends,
+      totalSleep,
       bornDay,
       bornText,
       nextBirthdayText,
@@ -318,6 +368,96 @@ document.addEventListener('DOMContentLoaded', function () {
       overallPercentToTarget,
       daysUntilNextDayMilestone
     };
+  }
+
+  function animateValue(element, start, end, duration) {
+    if (!element) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      element.textContent = formatNumber(end);
+      return;
+    }
+    const startTime = performance.now();
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentValue = Math.floor(start + (end - start) * easeOut);
+      element.textContent = formatNumber(currentValue);
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = formatNumber(end);
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  function launchConfetti() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '999999';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const pieces = [];
+    const colors = ['#2563eb', '#16a34a', '#eab308', '#ec4899', '#8b5cf6', '#3b82f6'];
+
+    for (let i = 0; i < 70; i++) {
+      pieces.push({
+        x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+        y: canvas.height / 3 + (Math.random() - 0.5) * 100,
+        vx: (Math.random() - 0.5) * 10,
+        vy: Math.random() * -12 - 4,
+        size: Math.random() * 8 + 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 10,
+        opacity: 1
+      });
+    }
+
+    const startTime = performance.now();
+    function animate(currentTime) {
+      const elapsed = currentTime - startTime;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let active = false;
+      pieces.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.35;
+        p.rotation += p.rotSpeed;
+        p.opacity = Math.max(0, 1 - elapsed / 2500);
+
+        if (p.opacity > 0) {
+          active = true;
+          ctx.save();
+          ctx.globalAlpha = p.opacity;
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        }
+      });
+
+      if (active) {
+        requestAnimationFrame(animate);
+      } else {
+        canvas.remove();
+      }
+    }
+
+    requestAnimationFrame(animate);
   }
 
   function performCalculation(shouldScrollToResults) {
@@ -347,9 +487,22 @@ document.addEventListener('DOMContentLoaded', function () {
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
 
-      if (resYears) resYears.textContent = formatNumber(result.years);
-      if (resMonths) resMonths.textContent = formatNumber(result.months);
-      if (resDays) resDays.textContent = formatNumber(result.days);
+      if (resYears) animateValue(resYears, 0, result.years, 700);
+      if (resMonths) animateValue(resMonths, 0, result.months, 700);
+      if (resDays) animateValue(resDays, 0, result.days, 700);
+
+      if (bdayRingDays) bdayRingDays.textContent = formatNumber(result.remainingDays);
+      if (bdayRingFill) {
+        const circumference = 251.32;
+        const yearDays = 365.25;
+        const progress = Math.max(0, Math.min(1, (yearDays - result.remainingDays) / yearDays));
+        const offset = circumference * (1 - progress);
+        bdayRingFill.style.strokeDashoffset = String(offset);
+      }
+
+      if (result.remainingDays <= 7) {
+        launchConfetti();
+      }
       if (resDaysHighlight) resDaysHighlight.textContent = `${formatNumber(result.totalDays)} Days Lived`;
       if (resNextCountdownHighlight) {
         resNextCountdownHighlight.textContent = result.remainingDays === 0
@@ -365,6 +518,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resTotalWeeks) resTotalWeeks.textContent = formatNumber(result.totalWeeks);
       if (resTotalDays) resTotalDays.textContent = formatNumber(result.totalDays);
       if (resTotalHours) resTotalHours.textContent = formatNumber(result.approxHours);
+      if (resTotalHeartbeats) resTotalHeartbeats.textContent = formatNumber(result.totalHeartbeats);
+      if (resTotalWeekends) resTotalWeekends.textContent = formatNumber(result.totalWeekends);
+      if (resTotalSleep) resTotalSleep.textContent = formatNumber(result.totalSleep);
 
       if (dayMilestoneBadge) {
         dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${formatNumber(result.nextDayMilestone)} Days`;
@@ -511,6 +667,77 @@ document.addEventListener('DOMContentLoaded', function () {
     dobInput.setAttribute('min', '1900-01-01');
   }
 
+  // Typed inputs auto-advance and sync listeners
+  if (dobDay) {
+    dobDay.addEventListener('input', function () {
+      let val = dobDay.value.replace(/\D/g, '');
+      if (val.length === 1 && parseInt(val, 10) > 3) {
+        val = '0' + val;
+      }
+      dobDay.value = val;
+      if (val.length >= 2) {
+        if (dobMonth) dobMonth.focus();
+      }
+      const iso = syncTypedToHidden();
+      if (iso && dobInput && dobInput.value) performCalculation(false);
+    });
+  }
+
+  if (dobMonth) {
+    dobMonth.addEventListener('input', function () {
+      let val = dobMonth.value.replace(/\D/g, '');
+      if (val.length === 1 && parseInt(val, 10) > 1) {
+        val = '0' + val;
+      }
+      dobMonth.value = val;
+      if (val.length >= 2) {
+        if (dobYear) dobYear.focus();
+      }
+      const iso = syncTypedToHidden();
+      if (iso && dobInput && dobInput.value) performCalculation(false);
+    });
+
+    dobMonth.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && dobMonth.value === '') {
+        if (dobDay) dobDay.focus();
+      }
+    });
+  }
+
+  if (dobYear) {
+    dobYear.addEventListener('input', function () {
+      let val = dobYear.value.replace(/\D/g, '');
+      dobYear.value = val;
+      const iso = syncTypedToHidden();
+      if (iso && dobInput && dobInput.value) performCalculation(false);
+    });
+
+    dobYear.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && dobYear.value === '') {
+        if (dobMonth) dobMonth.focus();
+      }
+    });
+  }
+
+  if (dobPickerTrigger && dobInput) {
+    dobPickerTrigger.addEventListener('click', function () {
+      if (typeof dobInput.showPicker === 'function') {
+        try {
+          dobInput.showPicker();
+        } catch (e) {
+          dobInput.click();
+        }
+      } else {
+        dobInput.click();
+      }
+    });
+
+    dobInput.addEventListener('change', function () {
+      syncHiddenToTyped(dobInput.value);
+      if (dobInput.value) performCalculation(false);
+    });
+  }
+
   // Restore URL parameters if present (e.g., ?dob=2000-05-15&target=2026-09-08)
   const urlParams = new URLSearchParams(window.location.search);
   const paramDob = urlParams.get('dob');
@@ -518,6 +745,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (paramDob && parseDateInput(paramDob)) {
     if (dobInput) dobInput.value = paramDob;
+    syncHiddenToTyped(paramDob);
     if (paramTarget && parseDateInput(paramTarget)) {
       if (targetDateInput) targetDateInput.value = paramTarget;
       if (toggleCustomDate) {
@@ -534,16 +762,17 @@ document.addEventListener('DOMContentLoaded', function () {
     ageForm.addEventListener('submit', function (event) {
       event.preventDefault();
 
+      syncTypedToHidden();
+
       if (!dobInput || !dobInput.value) {
-        showError('Please enter your date of birth.');
+        showError('Please enter a valid birth date (DD / MM / YYYY).');
         return;
       }
 
       if (calculateBtn && calculateBtn.classList.contains('loading')) {
-        return; // Prevent multi-clicks while loading
+        return;
       }
 
-      // ⚡ Optimization: Perform age calculation immediately on form submission without artificial 1500ms delay
       performCalculation(true);
     });
   }
@@ -551,6 +780,9 @@ document.addEventListener('DOMContentLoaded', function () {
   if (resetBtn) {
     resetBtn.addEventListener('click', function () {
       if (dobInput) dobInput.value = '';
+      if (dobDay) dobDay.value = '';
+      if (dobMonth) dobMonth.value = '';
+      if (dobYear) dobYear.value = '';
       if (targetDateInput) targetDateInput.value = toDateInputValue(new Date());
       if (toggleCustomDate) {
         toggleCustomDate.checked = false;
@@ -567,7 +799,7 @@ document.addEventListener('DOMContentLoaded', function () {
       params.delete('target');
       const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
       window.history.replaceState({}, '', cleanUrl);
-      if (dobInput) dobInput.focus();
+      if (dobDay) dobDay.focus();
     });
   }
 
@@ -866,6 +1098,24 @@ document.addEventListener('DOMContentLoaded', function () {
       if (event.target.tagName === 'A') {
         closeMenu();
       }
+    });
+  }
+
+  // Scroll reveals for Features, How It Works, Trust, and FAQ sections
+  if ('IntersectionObserver' in window) {
+    const revealElements = document.querySelectorAll('.features-section, .how-it-works-section, .trust-section, .faq-section');
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(function (el) {
+      el.classList.add('reveal-init');
+      observer.observe(el);
     });
   }
 });
