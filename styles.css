@@ -568,13 +568,52 @@ label {
   font-weight: 800;
 }
 
+.age-readout-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.7rem;
+}
+
 .age-readout {
   display: flex;
   justify-content: center;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.7rem 0.8rem;
-  margin-top: 0.7rem;
+}
+
+.birthday-emoji {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1;
+  user-select: none;
+  opacity: 0.9;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+@keyframes emoji-float-left {
+  0% { transform: scale(0.5) translateY(12px) rotate(-20deg); opacity: 0; }
+  40% { transform: scale(1.25) translateY(-8px) rotate(-10deg); opacity: 1; }
+  70% { transform: scale(0.95) translateY(2px) rotate(-15deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
+}
+
+@keyframes emoji-float-right {
+  0% { transform: scale(0.5) translateY(12px) rotate(20deg); opacity: 0; }
+  40% { transform: scale(1.25) translateY(-8px) rotate(10deg); opacity: 1; }
+  70% { transform: scale(0.95) translateY(2px) rotate(15deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); opacity: 1; }
+}
+
+.birthday-emoji.animate-left {
+  animation: emoji-float-left 700ms cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.birthday-emoji.animate-right {
+  animation: emoji-float-right 700ms cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 .age-block {
@@ -1955,6 +1994,8 @@ label {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .birthday-emoji.animate-left,
+  .birthday-emoji.animate-right { animation: none !important; }
 }
 
 /* Featured Hero Section in Blog */
