@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const errorBox = document.getElementById('error-box');
   const errorMessage = document.getElementById('error-message');
 
+  const ageReadout = document.querySelector('.age-readout');
   const resYears = document.getElementById('res-years');
   const resMonths = document.getElementById('res-months');
   const resDays = document.getElementById('res-days');
@@ -454,6 +455,13 @@ document.addEventListener('DOMContentLoaded', function () {
             resultsSection.classList.add('is-visible');
           });
         }
+      }
+
+      if (ageReadout) {
+        ageReadout.classList.remove('animate-birthday');
+        // Force DOM reflow so animation re-triggers on consecutive clicks
+        void ageReadout.offsetWidth;
+        ageReadout.classList.add('animate-birthday');
       }
 
       if (shouldScrollToResults && resultsSection) {
