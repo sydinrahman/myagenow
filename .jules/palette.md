@@ -9,3 +9,7 @@
 ## 2026-10-21 - Mobile Navigation Keyboard Dismissal & Focus Visible
 **Learning:** When building responsive mobile navigation drawers in vanilla JS, handling the `Escape` key to close the menu and returning focus to the toggle button (`menuButton.focus()`) ensures WCAG 2.1 compliance for keyboard navigation, while outside-click and link-click event listeners provide intuitive UI dismissal behavior.
 **Action:** Always bind `Escape` key press listeners and focus return logic on expandable mobile navigation menus alongside explicit `:focus-visible` outline styles for the hamburger toggle.
+
+## 2026-10-27 - Action Button Success State CSS Specificity & Cascade
+**Learning:** When applying temporary success feedback classes (e.g. `.is-success`) to UI buttons that feature variant styles (such as `.action-btn.primary-action`), ensure the success state selector has sufficient CSS specificity or appears after variant selectors in `styles.css` so green success background/border tints properly override default primary action colors.
+**Action:** Always place `.is-success` state rules after primary/secondary variant button rules or target `.primary-action.is-success` explicitly in CSS.

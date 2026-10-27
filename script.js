@@ -624,11 +624,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         copyBtn.replaceChildren(svg, document.createTextNode(' Copied!'));
         copyBtn.setAttribute('aria-label', 'Results copied to clipboard');
+        copyBtn.classList.add('is-success');
         if (copyLiveStatus) copyLiveStatus.textContent = 'Results copied to clipboard';
 
         setTimeout(function () {
           copyBtn.replaceChildren(...originalNodes);
           copyBtn.setAttribute('aria-label', originalLabel);
+          copyBtn.classList.remove('is-success');
           if (copyLiveStatus) copyLiveStatus.textContent = '';
         }, 2000);
       }).catch(function () {
@@ -678,11 +680,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       downloadCardBtn.replaceChildren(svg, document.createTextNode(' Card Downloaded!'));
       downloadCardBtn.setAttribute('aria-label', 'Result card image downloaded');
+      downloadCardBtn.classList.add('is-success');
       if (copyLiveStatus) copyLiveStatus.textContent = 'Result card image downloaded';
 
       setTimeout(function () {
         downloadCardBtn.replaceChildren(...originalNodes);
         downloadCardBtn.setAttribute('aria-label', originalLabel);
+        downloadCardBtn.classList.remove('is-success');
         if (copyLiveStatus) copyLiveStatus.textContent = '';
       }, 2000);
     });
