@@ -444,11 +444,13 @@ document.addEventListener('DOMContentLoaded', function () {
       currentResultSummary = `🎂 I am ${result.years} years, ${result.months} months, and ${result.days} days old (${formatNumber(result.totalDays)} days lived!) ✨ Zodiac: ${result.zodiac.name} ${result.zodiac.symbol}. Calculate yours at https://myagenow.today/`;
 
       if (resultsSection) {
-        resultsSection.hidden = false;
-        resultsSection.classList.remove('is-visible');
-        window.requestAnimationFrame(function () {
-          resultsSection.classList.add('is-visible');
-        });
+        // ⚡ Optimization: Avoid re-triggering CSS transitions and style recalculations when results are already visible
+        if (resultsSection.hidden) {
+          resultsSection.hidden = false;
+          window.requestAnimationFrame(function () {
+            resultsSection.classList.add('is-visible');
+          });
+        }
       }
 
       if (shouldScrollToResults && resultsSection) {
