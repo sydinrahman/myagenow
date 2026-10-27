@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const errorBox = document.getElementById('error-box');
   const errorMessage = document.getElementById('error-message');
 
-  const ageReadout = document.querySelector('.age-readout');
+  const emojiLeft = document.querySelector('.birthday-emoji.emoji-left');
+  const emojiRight = document.querySelector('.birthday-emoji.emoji-right');
   const resYears = document.getElementById('res-years');
   const resMonths = document.getElementById('res-months');
   const resDays = document.getElementById('res-days');
@@ -457,11 +458,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
 
-      if (ageReadout) {
-        ageReadout.classList.remove('animate-birthday');
+      if (emojiLeft && emojiRight) {
+        emojiLeft.classList.remove('animate-left');
+        emojiRight.classList.remove('animate-right');
         // Force DOM reflow so animation re-triggers on consecutive clicks
-        void ageReadout.offsetWidth;
-        ageReadout.classList.add('animate-birthday');
+        void emojiLeft.offsetWidth;
+        void emojiRight.offsetWidth;
+        emojiLeft.classList.add('animate-left');
+        emojiRight.classList.add('animate-right');
       }
 
       if (shouldScrollToResults && resultsSection) {
