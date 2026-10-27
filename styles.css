@@ -714,6 +714,13 @@ label {
   color: #ffffff;
 }
 
+.action-btn.is-success,
+.action-btn.primary-action.is-success {
+  border-color: rgba(22, 163, 74, 0.5);
+  color: var(--success);
+  background: var(--success-soft);
+}
+
 .action-btn.primary-action:focus-visible {
   outline: 3px solid var(--primary-dark);
   outline-offset: 2px;
