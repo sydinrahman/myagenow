@@ -85,9 +85,12 @@ document.addEventListener('DOMContentLoaded', function () {
     { before: { name: 'Sagittarius', symbol: '♐' }, after: { name: 'Capricorn', symbol: '♑' } }
   ];
 
-  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict regex format validation and bounds checking (1900–2100)
+  // ⚡ Optimization & Security: Fast string parsing for ISO YYYY-MM-DD with strict regex format validation, input length bounds (DoS protection), and range checking (1900–2100)
   function parseDateInput(value) {
     if (!value || typeof value !== 'string') return null;
+
+    // 🔒 Security: Fast input length limit to reject oversized query/input strings before regex processing (DoS prevention)
+    if (value.length > 20) return null;
 
     const trimmed = value.trim();
     if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
