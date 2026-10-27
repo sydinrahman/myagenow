@@ -18,12 +18,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const isOpen = siteNav.classList.toggle('is-open');
     menuButton.setAttribute('aria-expanded', String(isOpen));
     menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    if (isOpen) {
+      const firstLink = siteNav.querySelector('a');
+      if (firstLink) firstLink.focus();
+    }
   });
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && siteNav.classList.contains('is-open')) {
+    if (!siteNav.classList.contains('is-open')) return;
+
+    if (event.key === 'Escape') {
       closeMenu();
       menuButton.focus();
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      const focusables = [menuButton, ...siteNav.querySelectorAll('a')];
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
   });
 
