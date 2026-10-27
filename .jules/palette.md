@@ -13,3 +13,7 @@
 ## 2026-10-27 - Action Button Success State CSS Specificity & Cascade
 **Learning:** When applying temporary success feedback classes (e.g. `.is-success`) to UI buttons that feature variant styles (such as `.action-btn.primary-action`), ensure the success state selector has sufficient CSS specificity or appears after variant selectors in `styles.css` so green success background/border tints properly override default primary action colors.
 **Action:** Always place `.is-success` state rules after primary/secondary variant button rules or target `.primary-action.is-success` explicitly in CSS.
+
+## 2026-11-04 - Search & Filter Accessible Empty State Recovery
+**Learning:** In client-side filtered grids, providing a dedicated empty state container (`role="status"`, `aria-live="polite"`) that dynamically quotes the active query and includes a focused "Reset Filters" action button prevents disorientation for keyboard and screen reader users when zero matches are returned.
+**Action:** Always include live-region empty states with an inline filter reset action button for client-side search and category filtering views.

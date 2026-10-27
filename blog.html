@@ -130,6 +130,13 @@
           </div>
         </section>
 
+        <div id="no-results-box" class="no-results-box hidden" role="status" aria-live="polite">
+          <div class="no-results-icon" aria-hidden="true">🔍</div>
+          <h3>No guides found</h3>
+          <p id="no-results-text">We couldn't find any articles matching your search.</p>
+          <button type="button" id="reset-filter-btn" class="inline-action">Reset Filters</button>
+        </div>
+
         <section class="blog-grid" aria-label="Blog posts">
           <article class="blog-card">
             <div class="blog-card-image-wrap">
@@ -367,6 +374,9 @@
         const pills = document.querySelectorAll('.category-pill');
         const blogGrid = document.querySelector('.blog-grid');
         const cardElements = document.querySelectorAll('.blog-card');
+        const noResultsBox = document.getElementById('no-results-box');
+        const noResultsText = document.getElementById('no-results-text');
+        const resetFilterBtn = document.getElementById('reset-filter-btn');
         let currentCategory = 'all';
 
         // ⚡ Optimization: Pre-index blog card metadata once on DOM load to eliminate repeated DOM querySelector calls, text extraction, and lowercasing on every search keypress
@@ -405,6 +415,7 @@
           }
 
           const catLower = currentCategory.toLowerCase();
+          let visibleCount = 0;
 
           for (let i = 0; i < cards.length; i++) {
             const item = cards[i];
@@ -413,7 +424,37 @@
 
             const show = matchesCategory && matchesQuery;
             item.element.style.display = show ? 'flex' : 'none';
+            if (show) visibleCount++;
           }
+
+          if (noResultsBox) {
+            if (visibleCount === 0) {
+              noResultsBox.classList.remove('hidden');
+              if (noResultsText) {
+                if (query) {
+                  noResultsText.textContent = `We couldn't find any articles matching "${searchInput.value.trim()}".`;
+                } else {
+                  noResultsText.textContent = `No articles found in the selected category.`;
+                }
+              }
+            } else {
+              noResultsBox.classList.add('hidden');
+            }
+          }
+        }
+
+        if (resetFilterBtn) {
+          resetFilterBtn.addEventListener('click', function() {
+            if (searchInput) searchInput.value = '';
+            currentCategory = 'all';
+            pills.forEach(function(p) {
+              const isAll = p.getAttribute('data-category') === 'all';
+              p.classList.toggle('active', isAll);
+              p.setAttribute('aria-selected', isAll ? 'true' : 'false');
+            });
+            filterArticles();
+            if (searchInput) searchInput.focus();
+          });
         }
 
         pills.forEach(function(pill) {
