@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://images.unsplash.com https://plus.unsplash.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <title>How to Calculate the Age Difference Between Two People | myagenow</title>
+    <meta name="description" content="Learn how to calculate the exact age difference between two people in years, months, and days step-by-step, including date subtraction and leap year math." />
+    <meta name="keywords" content="calculate age difference between two people, age gap calculator, calculate age difference, date subtraction, age difference in years months days" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/blog/calculate-age-difference-between-two-people.html" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="How to Calculate the Age Difference Between Two People | myagenow" />
+    <meta property="og:description" content="Learn how to calculate the exact age difference between two people in years, months, and days step-by-step, including date subtraction and leap year math." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://myagenow.today/blog/calculate-age-difference-between-two-people.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Calculate the Age Difference Between Two People | myagenow" />
+    <meta name="twitter:description" content="Learn how to calculate the exact age difference between two people in years, months, and days step-by-step, including date subtraction and leap year math." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "How to Calculate the Age Difference Between Two People",
+          "description": "Learn how to calculate the exact age difference between two people in years, months, and days step-by-step, including date subtraction and leap year math.",
+          "datePublished": "2026-10-29",
+          "author": {
+            "@type": "Organization",
+            "name": "myagenow"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "myagenow",
+            "url": "https://myagenow.today/"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do you calculate the exact age difference between two birth dates?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To calculate the exact age difference, subtract the older person's birth date from the younger person's birth date, starting with days, then months, and finally years. If the days or months of the younger date are smaller, borrow 1 month (30 or 31 days) or 1 year (12 months) before subtracting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why is subtracting birth years alone inaccurate?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply subtracting birth years ignores the month and day of birth. For example, two people born in 1990 and 1995 could be 4 years apart or almost 6 years apart depending on whether their birthdays fall earlier or later in those years."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does the age gap between two people ever change?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The absolute age gap in years, months, and days stays fixed for life because time passes at the exact same rate for both individuals. However, the relative percentage difference in their ages decreases as both grow older."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do leap years affect age difference calculations?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Leap years add an extra day (February 29) to the calendar. When calculating an age difference in total days, every leap year elapsed between the two birth dates adds 1 additional day to the grand total."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I calculate age difference in total days?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Convert both birth dates into Julian Day numbers or Unix timestamps in milliseconds, subtract the older timestamp from the younger timestamp, and divide the resulting milliseconds by 86,400,000 (the number of milliseconds in a day)."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <script src="../navigation.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="../index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#how-it-works">How It Works</a>
+          <a href="../index.html#faq">FAQ</a>
+          <a href="../blog.html" class="active">Blog</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="legal-container">
+        <article class="blog-post-card">
+          <nav class="article-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span class="sep">&rsaquo;</span>
+            <a href="../blog.html">Blog</a>
+            <span class="sep">&rsaquo;</span>
+            <span aria-current="page">Calculate Age Difference Between Two People</span>
+          </nav>
+
+          <header class="blog-post-header">
+            <div class="badge-pill">
+              <span class="dot" aria-hidden="true"></span>
+              Calendar Math
+            </div>
+            <h1>How to Calculate the Age Difference Between Two People</h1>
+            <p class="blog-post-meta">
+              Published on <strong>October 29, 2026</strong> • <strong>5 min read</strong> • By <strong>myagenow Team</strong>
+            </p>
+          </header>
+
+          <figure class="article-hero-media">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Two friends sitting together looking at a laptop calculating time and age differences" class="article-hero-img" loading="eager" width="1200" height="675" />
+            <figcaption class="article-hero-caption">Calculating the exact age gap between two individuals requires subtracting birth dates using calendar borrowing rules.</figcaption>
+          </figure>
+
+          <div class="blog-post-content">
+            <details class="toc-box" open>
+              <summary>
+                <span>On This Page (Table of Contents)</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <ol class="toc-list">
+                <li><a href="#quick-answer">The quick answer: how to calculate an age gap</a></li>
+                <li><a href="#step-by-step-method">The step-by-step calendar math method</a></li>
+                <li><a href="#practical-example">Practical step-by-step calculation example</a></li>
+                <li><a href="#common-pitfall">Common pitfall: subtracting birth years only</a></li>
+                <li><a href="#total-days-and-months">Calculating the age difference in total days or months</a></li>
+                <li><a href="#leap-years">How leap years affect age gap calculations</a></li>
+                <li><a href="#perceived-age-gap">Why age gaps feel smaller as people grow older</a></li>
+                <li><a href="#faq">Frequently Asked Questions</a></li>
+              </ol>
+            </details>
+
+            <h2 id="quick-answer">The quick answer: how to calculate an age gap</h2>
+            <p>
+              To calculate the exact age difference between two people, subtract the older person's date of birth (Year, Month, Day) from the younger person's date of birth. Start by subtracting the days, then the months, and finally the years.
+            </p>
+            <p>
+              If the younger person's birth day or month is smaller than the older person's, you must borrow 1 month (converting it into 28–31 days depending on the preceding month) or 1 year (converting it into 12 months) before performing the subtraction.
+            </p>
+            <p>
+              If you want an instant, zero-effort answer down to the exact number of years, months, and days, you can use our <a href="../index.html">free age calculator</a> or calculate the exact duration using our <a href="calculate-age-between-two-dates.html">date difference calculator guide</a>.
+            </p>
+
+            <h2 id="step-by-step-method">The step-by-step calendar math method</h2>
+            <p>
+              Calculating the time difference between two birth dates follows arithmetic subtraction, but because calendar units have varying sizes (1 year = 12 months, and 1 month = 28 to 31 days), standard base-10 borrowing does not apply.
+            </p>
+            <p>
+              Here are the three rules to follow when subtracting Person A (older) from Person B (younger):
+            </p>
+            <ol>
+              <li><strong>Step 1: Subtract Days.</strong> If Person B's birth day is less than Person A's birth day, subtract 1 from Person B's month column and add the number of days in the month prior to Person B's birth date to Person B's day column.</li>
+              <li><strong>Step 2: Subtract Months.</strong> If Person B's remaining month value is less than Person A's birth month, subtract 1 from Person B's year column and add 12 to Person B's month column.</li>
+              <li><strong>Step 3: Subtract Years.</strong> Subtract Person A's birth year from Person B's remaining birth year.</li>
+            </ol>
+
+            <h2 id="practical-example">Practical step-by-step calculation example</h2>
+            <p>
+              Let's walk through a real-world example step-by-step.
+            </p>
+            <p>
+              Suppose <strong>Person A (Older)</strong> was born on <strong>May 14, 1992</strong> (1992-05-14), and <strong>Person B (Younger)</strong> was born on <strong>October 28, 1998</strong> (1998-10-28).
+            </p>
+            <p>
+              We set up the subtraction with the younger birth date on top and the older birth date on the bottom:
+            </p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
+                    <th style="padding: 10px; font-weight: 700;">Person</th>
+                    <th style="padding: 10px; font-weight: 700;">Year</th>
+                    <th style="padding: 10px; font-weight: 700;">Month</th>
+                    <th style="padding: 10px; font-weight: 700;">Day</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">Person B (Younger)</td>
+                    <td style="padding: 10px;">1998</td>
+                    <td style="padding: 10px;">10 (October)</td>
+                    <td style="padding: 10px;">28</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">Person A (Older)</td>
+                    <td style="padding: 10px;">1992</td>
+                    <td style="padding: 10px;">5 (May)</td>
+                    <td style="padding: 10px;">14</td>
+                  </tr>
+                  <tr style="font-weight: 700; background-color: var(--card-bg, rgba(255, 255, 255, 0.05));">
+                    <td style="padding: 10px;">Exact Age Difference</td>
+                    <td style="padding: 10px;">6 Years</td>
+                    <td style="padding: 10px;">5 Months</td>
+                    <td style="padding: 10px;">14 Days</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Let's review the calculation steps:
+            </p>
+            <ul>
+              <li><strong>Days:</strong> 28 days − 14 days = <strong>14 days</strong>. No borrowing needed!</li>
+              <li><strong>Months:</strong> 10 months − 5 months = <strong>5 months</strong>. No borrowing needed!</li>
+              <li><strong>Years:</strong> 1998 − 1992 = <strong>6 years</strong>.</li>
+            </ul>
+            <p>
+              The exact age gap between Person A and Person B is <strong>6 years, 5 months, and 14 days</strong>.
+            </p>
+
+            <h3>What happens when borrowing is required?</h3>
+            <p>
+              Now suppose Person A was born on <strong>November 22, 1992</strong>, and Person B was born on <strong>March 10, 1998</strong>.
+            </p>
+            <ul>
+              <li><strong>Days subtraction:</strong> 10 days − 22 days is negative. We borrow 1 month from March (reducing months from 3 to 2). Since February 1998 had 28 days, we add 28 to 10 = 38 days. Now: 38 − 22 = <strong>16 days</strong>.</li>
+              <li><strong>Months subtraction:</strong> 2 remaining months − 11 months is negative. We borrow 1 year from 1998 (reducing year from 1998 to 1997) and add 12 months to 2 = 14 months. Now: 14 − 11 = <strong>3 months</strong>.</li>
+              <li><strong>Years subtraction:</strong> 1997 − 1992 = <strong>5 years</strong>.</li>
+            </ul>
+            <p>
+              The adjusted age gap is <strong>5 years, 3 months, and 16 days</strong>.
+            </p>
+
+            <h2 id="common-pitfall">Common pitfall: subtracting birth years only</h2>
+            <p>
+              A frequent mistake people make when estimating an age gap is simply subtracting birth years (e.g., 1998 − 1992 = 6 years).
+            </p>
+            <p>
+              While quick, this ignores the months and days of birth, which can lead to errors of nearly an entire year:
+            </p>
+            <ul>
+              <li>If Person A was born in January 1992 and Person B in December 1998, the gap is nearly <strong>7 full years</strong> (6 years, 11 months).</li>
+              <li>If Person A was born in December 1992 and Person B in January 1998, the gap is barely <strong>5 full years</strong> (5 years, 1 month).</li>
+            </ul>
+            <p>
+              To avoid inaccuracy in legal, medical, or analytical contexts, always account for the complete birth date. Learn more in our detailed guide on <a href="how-to-calculate-age.html">how to calculate your exact age</a>.
+            </p>
+
+            <h2 id="total-days-and-months">Calculating the age difference in total days or months</h2>
+            <p>
+              Sometimes, you may want to express an age gap purely in total days or total months rather than years, months, and days.
+            </p>
+
+            <h3>1. Total Months Gap</h3>
+            <p>
+              To find the gap in total completed months:
+            </p>
+            <p style="text-align: center; font-weight: 600; padding: 0.75rem; background: var(--card-bg, #f8fafc); border-radius: 8px;">
+              Total Months = (Years Gap &times; 12) + Months Gap
+            </p>
+            <p>
+              Using our 6 years, 5 months example: (6 &times; 12) + 5 = <strong>77 total months</strong> (plus 14 remainder days). You can read more about month calculations in our <a href="how-many-months-old-am-i.html">how many months old am I</a> guide.
+            </p>
+
+            <h3>2. Total Days Gap</h3>
+            <p>
+              To find the gap in total calendar days, convert both birth dates into total days since a fixed epoch or use standard JavaScript date math:
+            </p>
+            <pre style="background: #1e293b; color: #f8fafc; padding: 1rem; border-radius: 8px; overflow-x: auto;"><code>const birthDateA = new Date('1992-05-14');
+const birthDateB = new Date('1998-10-28');
+const diffMs = birthDateB.getTime() - birthDateA.getTime();
+const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+console.log(totalDays); // Output: 2358 days</code></pre>
+            <p>
+              Person A and Person B were born exactly <strong>2,358 days</strong> apart. For broader insights on counting days lived, explore our <a href="age-in-days.html">how many days have you been alive</a> article.
+            </p>
+
+            <h2 id="leap-years">How leap years affect age gap calculations</h2>
+            <p>
+              Because the Earth takes roughly 365.2422 days to orbit the Sun, our Gregorian calendar inserts a leap day (February 29) every four years.
+            </p>
+            <p>
+              When expressing an age gap in <strong>years, months, and days</strong>, leap years are automatically absorbed by the calendar system without altering the year count.
+            </p>
+            <p>
+              However, when expressing an age gap in <strong>total days</strong>, every leap year occurring between the two birth dates adds 1 extra day to the grand total. For a full breakdown of leap year mechanics, read <a href="the-math-behind-leap-years.html">the math behind leap years</a> or our guide on <a href="leap-year-birthday.html">leap year birthdays</a>.
+            </p>
+
+            <h2 id="perceived-age-gap">Why age gaps feel smaller as people grow older</h2>
+            <p>
+              The absolute age gap between two people never changes—it remains fixed to the exact day for life. However, the <strong>relative age ratio</strong> decreases significantly over time.
+            </p>
+            <p>
+              Consider a 6-year age gap:
+            </p>
+            <ul>
+              <li>When Person B is 6 years old, Person A is 12 years old. Person A is <strong>100% older</strong> than Person B (twice their age).</li>
+              <li>When Person B is 30 years old, Person A is 36 years old. Person A is only <strong>20% older</strong> than Person B.</li>
+              <li>When Person B is 60 years old, Person A is 66 years old. Person A is only <strong>10% older</strong> than Person B.</li>
+            </ul>
+            <p>
+              This mathematical reality explains why age gaps that feel enormous during childhood and early adolescence become virtually imperceptible in adulthood.
+            </p>
+
+            <div class="blog-callout">
+              <h3>Calculate exact age gaps instantly</h3>
+              <p>
+                Want to check your exact age or calculate the precise time between any two dates? Try our fast, privacy-first <a href="../index.html">free age calculator</a>.
+              </p>
+            </div>
+
+            <div class="blog-cta-wrap">
+              <a href="../index.html" class="primary-btn inline-btn">
+                <span>Calculate Your Exact Age Now</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <p><strong>How do you calculate the exact age difference between two birth dates?</strong><br />
+            To calculate the exact age difference, subtract the older person's birth date from the younger person's birth date, starting with days, then months, and finally years. If the days or months of the younger date are smaller, borrow 1 month (28–31 days) or 1 year (12 months) before subtracting.</p>
+
+            <p><strong>Why is subtracting birth years alone inaccurate?</strong><br />
+            Simply subtracting birth years ignores the month and day of birth. For example, two people born in 1990 and 1995 could be 4 years apart or almost 6 years apart depending on whether their birthdays fall earlier or later in those years.</p>
+
+            <p><strong>Does the age gap between two people ever change?</strong><br />
+            No. The absolute age gap in years, months, and days stays fixed for life because time passes at the exact same rate for both individuals. However, the relative percentage difference in their ages decreases as both grow older.</p>
+
+            <p><strong>How do leap years affect age difference calculations?</strong><br />
+            Leap years add an extra day (February 29) to the calendar. When calculating an age difference in total days, every leap year elapsed between the two birth dates adds 1 additional day to the grand total.</p>
+
+            <p><strong>How do I calculate age difference in total days?</strong><br />
+            Convert both birth dates into Julian Day numbers or Unix timestamps in milliseconds, subtract the older timestamp from the younger timestamp, and divide the resulting milliseconds by 86,400,000 (the number of milliseconds in a day).</p>
+
+            <!-- Read Next Related Section -->
+            <section style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border, #e2e8f0);" aria-label="Related articles">
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;">Read Next</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <article class="blog-card" style="cursor: pointer;" onclick="location.href='calculate-age-between-two-dates.html'">
+                  <div class="blog-card-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1435527173128-983b87201f4d?auto=format&fit=crop&w=600&q=80" alt="Classic pocket watch and calendar for calculating time between dates" class="blog-card-img" loading="lazy" width="600" height="338" />
+                  </div>
+                  <div class="blog-card-badge">Calendar Math</div>
+                  <h4 style="font-size: 1.1rem; margin: 0.5rem 0;"><a href="calculate-age-between-two-dates.html">How to Calculate Age Between Two Dates</a></h4>
+                  <p style="font-size: 0.9rem; color: var(--text-muted, #64748b);">Learn how to find the exact time duration between any two dates.</p>
+                </article>
+
+                <article class="blog-card" style="cursor: pointer;" onclick="location.href='how-to-calculate-age.html'">
+                  <div class="blog-card-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80" alt="Desk with calendar and notebook for calculating exact age" class="blog-card-img" loading="lazy" width="600" height="338" />
+                  </div>
+                  <div class="blog-card-badge">Age Calculator Guide</div>
+                  <h4 style="font-size: 1.1rem; margin: 0.5rem 0;"><a href="how-to-calculate-age.html">How to Calculate Your Exact Age</a></h4>
+                  <p style="font-size: 0.9rem; color: var(--text-muted, #64748b);">Learn step-by-step how to calculate your exact age in completed years, months, and days.</p>
+                </article>
+              </div>
+            </section>
+
+            <div class="article-share-bar" style="margin-top: 2.5rem;">
+              <span class="article-share-label">Share article:</span>
+              <button type="button" class="share-pill-btn" id="share-twitter">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X / Twitter
+              </button>
+              <button type="button" class="share-pill-btn" id="share-facebook">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook
+              </button>
+              <button type="button" class="share-pill-btn" id="share-copy-link">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+          <a href="../blog.html">Blog</a>
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const twitterBtn = document.getElementById('share-twitter');
+        const copyBtn = document.getElementById('share-copy-link');
+
+        if (twitterBtn) {
+          twitterBtn.addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Check out this article: How to Calculate the Age Difference Between Two People on myagenow!");
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
+          });
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              copyBtn.textContent = 'Copied!';
+              setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
