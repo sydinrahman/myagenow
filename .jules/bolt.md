@@ -1,3 +1,7 @@
+## 2026-10-28 - Guarding DOM Text Content Assignments During High-Frequency Calculation Updates
+**Learning:** Directly assigning `.textContent` on multiple DOM elements during UI calculations marks text nodes as dirty in browser engines even when the value has not changed, triggering layout invalidations and repaint churn. Guarding DOM text mutations with a `node.textContent !== newValue` check prevents unnecessary DOM node dirtying and layout thrashing.
+**Action:** Always wrap repeated `.textContent` DOM updates in a `setTextIfChanged(element, newValue)` helper that checks for value differences before assigning.
+
 ## 2026-10-27 - Guarding CSS Entrance Transition Classes on Repeated UI Calculations
 **Learning:** Forcibly toggling entrance animation classes (`classList.remove('is-visible')` followed by `requestAnimationFrame`) on every calculation trigger causes unnecessary CSS transition restarts and style recalculation thrashing when the results panel is already visible. Guarding the animation trigger with a visibility check (`resultsSection.hidden`) ensures smooth UI updates without transition re-triggering.
 **Action:** Only trigger entrance animation classes when transitioning an element from hidden to visible.

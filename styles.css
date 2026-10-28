@@ -527,6 +527,7 @@ label {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 400ms ease, transform 400ms ease;
+  will-change: opacity, transform;
 }
 
 .results-wrapper:focus {
