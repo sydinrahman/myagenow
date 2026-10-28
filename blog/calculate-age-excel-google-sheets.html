@@ -408,6 +408,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const twitterBtn = document.getElementById('share-twitter');
+        const facebookBtn = document.getElementById('share-facebook');
         const copyBtn = document.getElementById('share-copy-link');
 
         if (twitterBtn) {
@@ -415,6 +416,13 @@
             const url = encodeURIComponent(window.location.href);
             const text = encodeURIComponent("Check out this article: How to Accurately Calculate Someone's Age in Excel or Google Sheets on myagenow!");
             window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
+          });
+        }
+
+        if (facebookBtn) {
+          facebookBtn.addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'noopener,noreferrer');
           });
         }
 
