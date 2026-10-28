@@ -51,6 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
     return typeof val === 'number' ? numberFormatter.format(val) : val;
   }
 
+  // ⚡ Optimization: Guard DOM text assignments to prevent unnecessary DOM mutations & style/layout invalidations when content is unchanged
+  function setTextIfChanged(el, val) {
+    if (el && el.textContent !== val) {
+      el.textContent = val;
+    }
+  }
+
   // ⚡ Optimization: Pre-allocated lookup arrays & constants to prevent repeated array/object allocations
   const MS_PER_DAY = 86400000; // 1000 * 60 * 60 * 24
   const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -347,28 +354,30 @@ document.addEventListener('DOMContentLoaded', function () {
       const result = calculateAge(dobDate, targetDate);
       currentAgeResult = result;
 
-      if (resYears) resYears.textContent = formatNumber(result.years);
-      if (resMonths) resMonths.textContent = formatNumber(result.months);
-      if (resDays) resDays.textContent = formatNumber(result.days);
-      if (resDaysHighlight) resDaysHighlight.textContent = `${formatNumber(result.totalDays)} Days Lived`;
-      if (resNextCountdownHighlight) {
-        resNextCountdownHighlight.textContent = result.remainingDays === 0
+      setTextIfChanged(resYears, formatNumber(result.years));
+      setTextIfChanged(resMonths, formatNumber(result.months));
+      setTextIfChanged(resDays, formatNumber(result.days));
+      setTextIfChanged(resDaysHighlight, `${formatNumber(result.totalDays)} Days Lived`);
+      setTextIfChanged(
+        resNextCountdownHighlight,
+        result.remainingDays === 0
           ? 'Next birthday is TODAY! 🎉'
-          : `Next birthday in ${formatNumber(result.remainingDays)} days`;
-      }
-      if (resBornDay) resBornDay.textContent = result.bornDay;
-      if (resBornFull) resBornFull.textContent = result.bornText;
-      if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
-      if (resNextDayname) resNextDayname.textContent = result.nextBirthdayDay;
-      if (resZodiac) resZodiac.textContent = `${result.zodiac.name} ${result.zodiac.symbol}`;
-      if (resTotalMonths) resTotalMonths.textContent = formatNumber(result.totalMonths);
-      if (resTotalWeeks) resTotalWeeks.textContent = formatNumber(result.totalWeeks);
-      if (resTotalDays) resTotalDays.textContent = formatNumber(result.totalDays);
-      if (resTotalHours) resTotalHours.textContent = formatNumber(result.approxHours);
+          : `Next birthday in ${formatNumber(result.remainingDays)} days`
+      );
+      setTextIfChanged(resBornDay, result.bornDay);
+      setTextIfChanged(resBornFull, result.bornText);
+      setTextIfChanged(resNextBday, result.nextBirthdayText);
+      setTextIfChanged(resNextDayname, result.nextBirthdayDay);
+      setTextIfChanged(resZodiac, `${result.zodiac.name} ${result.zodiac.symbol}`);
+      setTextIfChanged(resTotalMonths, formatNumber(result.totalMonths));
+      setTextIfChanged(resTotalWeeks, formatNumber(result.totalWeeks));
+      setTextIfChanged(resTotalDays, formatNumber(result.totalDays));
+      setTextIfChanged(resTotalHours, formatNumber(result.approxHours));
 
-      if (dayMilestoneBadge) {
-        dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${formatNumber(result.nextDayMilestone)} Days`;
-      }
+      setTextIfChanged(
+        dayMilestoneBadge,
+        `${result.overallPercentToTarget}% to ${formatNumber(result.nextDayMilestone)} Days`
+      );
       if (dayMilestoneProgressbar) {
         dayMilestoneProgressbar.setAttribute('aria-valuenow', String(result.overallPercentToTarget));
       }
