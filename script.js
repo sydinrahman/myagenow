@@ -462,15 +462,13 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsSection.focus({ preventScroll: true });
       }
 
-      // Sync URL query parameters
-      const params = new URLSearchParams(window.location.search);
-      params.set('dob', dobValue);
-      if (toggleCustomDate && toggleCustomDate.checked && targetDateInput.value) {
-        params.set('target', targetDateInput.value);
-      } else {
-        params.delete('target');
+      // 🔒 Security: Sanitize URL query state by constructing a clean URLSearchParams instance with strictly allowed fields ('dob' and optionally 'target') to prevent URL parameter pollution
+      const cleanParams = new URLSearchParams();
+      cleanParams.set('dob', dobValue);
+      if (toggleCustomDate && toggleCustomDate.checked && targetDateInput.value && parseDateInput(targetDateInput.value)) {
+        cleanParams.set('target', targetDateInput.value);
       }
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      const newUrl = `${window.location.pathname}?${cleanParams.toString()}`;
       window.history.replaceState({}, '', newUrl);
     } catch (error) {
       showError(error.message || 'Please choose a valid birth date in the past.');
@@ -563,11 +561,8 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
       }
-      const params = new URLSearchParams(window.location.search);
-      params.delete('dob');
-      params.delete('target');
-      const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-      window.history.replaceState({}, '', cleanUrl);
+      // 🔒 Security: Reset URL state strictly to the canonical pathname without preserving extraneous or untrusted query parameters
+      window.history.replaceState({}, '', window.location.pathname);
       if (dobInput) dobInput.focus();
     });
   }
