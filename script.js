@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (dobInput) {
       dobInput.setAttribute('aria-invalid', 'true');
       dobInput.setAttribute('aria-describedby', 'error-message');
+      dobInput.focus();
     }
   }
 
