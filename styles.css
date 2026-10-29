@@ -163,6 +163,19 @@ button, input, select, textarea {
   animation: enter 500ms ease both;
 }
 
+.producthunt-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.producthunt-badge img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 .hero-badge {
   display: inline-flex;
   align-items: center;
