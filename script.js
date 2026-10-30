@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const resYears = document.getElementById('res-years');
   const resMonths = document.getElementById('res-months');
   const resDays = document.getElementById('res-days');
-  const resDaysHighlight = document.getElementById('res-days-highlight');
-  const resNextCountdownHighlight = document.getElementById('res-next-countdown-highlight');
   const resBornDay = document.getElementById('res-born-day');
   const resBornFull = document.getElementById('res-born-full');
   const resNextBday = document.getElementById('res-next-bday');
@@ -25,12 +23,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const resTotalWeeks = document.getElementById('res-total-weeks');
   const resTotalDays = document.getElementById('res-total-days');
   const resTotalHours = document.getElementById('res-total-hours');
+  const resTotalMinutes = document.getElementById('res-total-minutes');
+  const resTotalSeconds = document.getElementById('res-total-seconds');
+
+  const countdownDays = document.getElementById('countdown-days');
+  const countdownHours = document.getElementById('countdown-hours');
+  const countdownMinutes = document.getElementById('countdown-minutes');
+  const countdownSeconds = document.getElementById('countdown-seconds');
+  const bdayMessagePill = document.getElementById('bday-message-pill');
+  const bdayFriendlyMsg = document.getElementById('bday-friendly-msg');
+
   const dayMilestoneBadge = document.getElementById('day-milestone-badge');
   const dayMilestoneProgressbar = document.getElementById('day-milestone-progressbar');
   const dayMilestoneBarfill = document.getElementById('day-milestone-barfill');
   const dayMilestoneSub = document.getElementById('day-milestone-sub');
   const resMilestonesGrid = document.getElementById('res-milestones-grid');
   const resultsSection = document.getElementById('age-results');
+
+  let countdownInterval = null;
 
   const copyBtn = document.getElementById('copy-results-btn');
   const copyLiveStatus = document.getElementById('copy-live-status');
@@ -253,6 +263,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
     const approxHours = totalDays * 24;
+    const approxMinutes = approxHours * 60;
+    const approxSeconds = approxMinutes * 60;
 
     const bornDay = DAY_NAMES[birthDate.getDay()];
     const bornText = `${MONTH_NAMES[birthMonth]} ${birthDay}, ${birthYear}`;
@@ -266,6 +278,8 @@ document.addEventListener('DOMContentLoaded', function () {
       birthdayDay = clampBirthdayDay(birthdayYear, birthMonth, birthdayDay);
       nextBirthdayUtc = Date.UTC(birthdayYear, birthMonth, birthdayDay);
     }
+
+    const nextBirthdayTargetDate = new Date(birthdayYear, birthMonth, birthdayDay, 0, 0, 0);
 
     const remainingDays = Math.floor((nextBirthdayUtc - targetUtc) / MS_PER_DAY);
     const nextBirthdayText = `${MONTH_NAMES[birthMonth]} ${birthdayDay}, ${birthdayYear}`;
@@ -306,10 +320,13 @@ document.addEventListener('DOMContentLoaded', function () {
       totalWeeks,
       totalMonths,
       approxHours,
+      approxMinutes,
+      approxSeconds,
       bornDay,
       bornText,
       nextBirthdayText,
       nextBirthdayDay,
+      nextBirthdayTargetDate,
       remainingDays,
       zodiac,
       milestones,
@@ -319,6 +336,72 @@ document.addEventListener('DOMContentLoaded', function () {
       overallPercentToTarget,
       daysUntilNextDayMilestone
     };
+  }
+
+  function startLiveCountdown(nextBdayDate, remainingDaysCount, birthDate) {
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+
+    function updateTick() {
+      const now = new Date();
+      let diffMs = nextBdayDate.getTime() - now.getTime();
+
+      if (diffMs <= 0) {
+        if (countdownDays) countdownDays.textContent = '0';
+        if (countdownHours) countdownHours.textContent = '00';
+        if (countdownMinutes) countdownMinutes.textContent = '00';
+        if (countdownSeconds) countdownSeconds.textContent = '00';
+        if (bdayMessagePill) bdayMessagePill.textContent = 'Happy Birthday! 🎉';
+        if (bdayFriendlyMsg) bdayFriendlyMsg.textContent = 'Today is your special day! Enjoy every moment! 🎂✨';
+        return;
+      }
+
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      diffMs -= days * (1000 * 60 * 60 * 24);
+
+      const hours = Math.floor(diffMs / (1000 * 60 * 60));
+      diffMs -= hours * (1000 * 60 * 60);
+
+      const minutes = Math.floor(diffMs / (1000 * 60));
+      diffMs -= minutes * (1000 * 60);
+
+      const seconds = Math.floor(diffMs / 1000);
+
+      if (countdownDays) countdownDays.textContent = formatNumber(days);
+      if (countdownHours) countdownHours.textContent = String(hours).padStart(2, '0');
+      if (countdownMinutes) countdownMinutes.textContent = String(minutes).padStart(2, '0');
+      if (countdownSeconds) countdownSeconds.textContent = String(seconds).padStart(2, '0');
+
+      if (bdayMessagePill) {
+        if (days === 0) {
+          bdayMessagePill.textContent = 'Tomorrow! 🎉';
+        } else if (days < 30) {
+          bdayMessagePill.textContent = 'Coming Soon! 🎈';
+        } else {
+          bdayMessagePill.textContent = 'Getting Closer!';
+        }
+      }
+
+      if (bdayFriendlyMsg) {
+        if (days === 0) {
+          bdayFriendlyMsg.textContent = 'Get ready! Your birthday is almost here!';
+        } else {
+          bdayFriendlyMsg.textContent = 'Your next birthday is getting closer!';
+        }
+      }
+
+      if (resTotalSeconds && birthDate) {
+        const liveTotalSecs = Math.floor((now.getTime() - birthDate.getTime()) / 1000);
+        if (liveTotalSecs > 0) {
+          resTotalSeconds.textContent = formatNumber(liveTotalSecs);
+        }
+      }
+    }
+
+    updateTick();
+    countdownInterval = setInterval(updateTick, 1000);
   }
 
   function performCalculation(shouldScrollToResults) {
@@ -351,12 +434,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resYears) resYears.textContent = formatNumber(result.years);
       if (resMonths) resMonths.textContent = formatNumber(result.months);
       if (resDays) resDays.textContent = formatNumber(result.days);
-      if (resDaysHighlight) resDaysHighlight.textContent = `${formatNumber(result.totalDays)} Days Lived`;
-      if (resNextCountdownHighlight) {
-        resNextCountdownHighlight.textContent = result.remainingDays === 0
-          ? 'Next birthday is TODAY! 🎉'
-          : `Next birthday in ${formatNumber(result.remainingDays)} days`;
-      }
       if (resBornDay) resBornDay.textContent = result.bornDay;
       if (resBornFull) resBornFull.textContent = result.bornText;
       if (resNextBday) resNextBday.textContent = result.nextBirthdayText;
@@ -366,6 +443,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (resTotalWeeks) resTotalWeeks.textContent = formatNumber(result.totalWeeks);
       if (resTotalDays) resTotalDays.textContent = formatNumber(result.totalDays);
       if (resTotalHours) resTotalHours.textContent = formatNumber(result.approxHours);
+      if (resTotalMinutes) resTotalMinutes.textContent = formatNumber(result.approxMinutes);
+      if (resTotalSeconds) resTotalSeconds.textContent = formatNumber(result.approxSeconds);
+
+      startLiveCountdown(result.nextBirthdayTargetDate, result.remainingDays, dobDate);
 
       if (dayMilestoneBadge) {
         dayMilestoneBadge.textContent = `${result.overallPercentToTarget}% to ${formatNumber(result.nextDayMilestone)} Days`;
@@ -557,6 +638,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       if (customTargetGroup) customTargetGroup.classList.add('hidden');
       hideError();
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+      }
       if (resultsSection) {
         resultsSection.hidden = true;
         resultsSection.classList.remove('is-visible');
