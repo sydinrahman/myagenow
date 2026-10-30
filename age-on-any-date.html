@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <title>Age on Any Date Calculator – Calculate Exact Age on Specific Date | MyAgeNow</title>
+    <meta
+      name="description"
+      content="Calculate exactly how old you were or will be on any selected date in history or the future. Free, private, and instant age calculator with exact years, months, days, total days, and weekday."
+    />
+    <meta name="keywords" content="age on any date, age on date calculator, how old was i on this date, age on specific date, exact age calculator, date of birth to date calculator, calendar calculator" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/age-on-any-date.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Age on Any Date Calculator – Exact Age on Specific Date | MyAgeNow" />
+    <meta property="og:description" content="Find out exactly how old you were or will be on any selected past, present, or future date with complete leap year accuracy and zero data tracking." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myagenow.today/age-on-any-date.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Age on Any Date Calculator – Exact Age on Specific Date | MyAgeNow" />
+    <meta name="twitter:description" content="Calculate your exact age in years, months, and days on any selected past or future date." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://myagenow.today/age-on-any-date.html#webapp",
+          "name": "Age on Any Date Calculator",
+          "url": "https://myagenow.today/age-on-any-date.html",
+          "applicationCategory": "UtilityApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript",
+          "description": "Free client-side calculator determining exact age in years, months, and days, total days, and weekday of any target date."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://myagenow.today/age-on-any-date.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I calculate my age on a specific date?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply enter your date of birth, select the specific date you want to check (past or future), and click Calculate. The tool immediately provides your exact age in completed years, months, and days along with the day of the week and total days lived."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I calculate my age on a future date?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! You can choose any future date—such as a retirement date, graduation, wedding, or milestone anniversary—to see exactly how old you will be on that day."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does the calculator handle leap years and February 29th?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The calculator implements Gregorian calendar math, correctly accounting for 365 or 366 days in each year. If born on February 29th, calculations on non-leap years adjust to February 28th."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is my birth date kept private?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100%. All calculations are processed locally inside your web browser. Neither your birth date nor the target date is ever stored, transmitted, or logged on any server."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="navigation.js" defer></script>
+    <script src="age-on-any-date.js" defer></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <div class="container">
+        <a href="index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="index.html#features">Features</a>
+          <a href="index.html#how-it-works">How It Works</a>
+          <a href="age-on-any-date.html" class="active">Age on Any Date</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main" id="main-content" tabindex="-1">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Date &amp; Milestone Calculator</span>
+          </div>
+          <h1>Age on Any Date Calculator</h1>
+          <p>
+            Find out exactly how old you were or will be on any specific day in the past or future.
+          </p>
+        </div>
+      </section>
+
+      <section class="calculator-wrap" aria-labelledby="age-on-date-title">
+        <div class="card calculator-card">
+          <div class="card-header">
+            <div class="card-title" id="age-on-date-title">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Calculate Age on Any Date</span>
+            </div>
+            <button class="reset-button" id="reset-btn" type="button" aria-label="Reset calculator" title="Reset calculator inputs and results">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                <path d="M3 4v5h5"></path>
+              </svg>
+              Reset
+            </button>
+          </div>
+
+          <form id="age-on-date-form" novalidate>
+            <div class="form-group">
+              <label for="dob-input">Date of Birth <span class="required">*</span></label>
+              <div class="date-field">
+                <input id="dob-input" name="dob" type="date" aria-required="true" placeholder="Select your date of birth" />
+                <span class="field-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M8 2v4M16 2v4M3 10h18"></path>
+                  </svg>
+                </span>
+              </div>
+              <span class="form-note">Select the date you were born.</span>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="target-date-input">Calculate age on <span class="required">*</span></label>
+                <button class="inline-action" id="today-quick-select" type="button" aria-label="Set target date to today" title="Set target date to today">Use Today</button>
+              </div>
+              <div class="date-field">
+                <input id="target-date-input" name="target-date" type="date" aria-required="true" />
+                <span class="field-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M8 2v4M16 2v4M3 10h18"></path>
+                  </svg>
+                </span>
+              </div>
+              <span class="form-note">Select any past or future date (e.g., anniversary, milestone, graduation).</span>
+            </div>
+
+            <div id="error-box" class="error-box hidden" role="alert" aria-live="polite">
+              <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span id="error-message">Date of birth cannot be after the selected calculation date.</span>
+            </div>
+
+            <button class="primary-btn" id="calculate-btn" type="submit">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                <path d="M8 2v4M16 2v4M3 10h18"></path>
+              </svg>
+              <span>Calculate Age on Date</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+            <span>100% Client-Side &amp; Private — your dates never leave your device</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Card Section -->
+      <section id="age-results" class="results-wrapper" aria-live="polite" tabindex="-1" hidden>
+        <div class="card results-card">
+          <!-- Main Hero Age Section -->
+          <div class="hero-result-card">
+            <div class="result-status-badge">
+              <span class="status-dot"></span>
+              <span>Calculation Complete</span>
+            </div>
+
+            <p class="hero-result-label" id="res-tense-lead">On that date, you are</p>
+
+            <div class="hero-age-display" aria-label="Exact age readout">
+              <div class="age-unit-card primary-unit">
+                <span id="res-years" class="unit-val">0</span>
+                <span class="unit-label">Years</span>
+              </div>
+              <div class="unit-separator" aria-hidden="true">,</div>
+              <div class="age-unit-card secondary-unit">
+                <span id="res-months" class="unit-val">0</span>
+                <span class="unit-label">Months</span>
+              </div>
+              <div class="unit-separator" aria-hidden="true">,</div>
+              <div class="age-unit-card secondary-unit">
+                <span id="res-days" class="unit-val">0</span>
+                <span class="unit-label">Days</span>
+              </div>
+            </div>
+
+            <p class="hero-result-tagline" id="res-summary-sentence">
+              Calculated precisely down to years, months, and days.
+            </p>
+          </div>
+
+          <!-- Secondary Focused Metrics: Total Days & Selected Date Weekday -->
+          <div class="result-cards">
+            <div class="metric-card primary">
+              <span class="metric-label">Total Days Between Dates</span>
+              <div id="res-total-days" class="metric-value">0</div>
+              <div class="metric-sub">Full calendar days lived</div>
+            </div>
+
+            <div class="metric-card accent">
+              <span class="metric-label">Weekday of Selected Date</span>
+              <div id="res-weekday" class="metric-value">Monday</div>
+              <div class="metric-sub" id="res-weekday-desc">Day of the week</div>
+            </div>
+          </div>
+
+          <!-- Result Actions -->
+          <div class="result-actions">
+            <span id="copy-live-status" class="sr-only" role="status" aria-live="polite"></span>
+            <button class="action-btn" id="copy-results-btn" type="button" aria-label="Copy results to clipboard" title="Copy age calculation to clipboard">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy results
+            </button>
+            <button class="action-btn" id="share-results-btn" type="button" aria-label="Share this age calculation" title="Share your calculation">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              Share calculation
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Introduction & Informative Article Content -->
+      <section class="trust-section" aria-labelledby="intro-heading">
+        <div class="trust-wrap">
+          <div class="trust-header">
+            <span class="kicker">Accurate Date Intelligence</span>
+            <h2 id="intro-heading">Why Calculate Age on a Specific Date?</h2>
+          </div>
+
+          <div class="trust-grid">
+            <div class="trust-card">
+              <div class="trust-icon" aria-hidden="true">📜</div>
+              <h3>Historical Milestones</h3>
+              <p>Find out exactly how old you or a family member was during historical events, graduations, or career milestones.</p>
+            </div>
+            <div class="trust-card">
+              <div class="trust-icon" aria-hidden="true">🚀</div>
+              <h3>Future Planning</h3>
+              <p>Plan retirement, legal milestones, or upcoming 30th, 50th, or 65th birthday celebrations down to the exact day.</p>
+            </div>
+            <div class="trust-card">
+              <div class="trust-icon" aria-hidden="true">🗓️</div>
+              <h3>Weekday Discovery</h3>
+              <p>Instantly discover what day of the week your chosen target date falls on (e.g. Saturday wedding or Tuesday birthday).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Use Step-by-Step Instructions -->
+      <section class="how-it-works-section" aria-labelledby="how-to-use-title">
+        <div class="how-it-works-wrap">
+          <div class="how-it-works-header">
+            <span class="kicker">Simple Step-by-Step Guide</span>
+            <h2 id="how-to-use-title">How to Use the Age on Any Date Calculator</h2>
+            <p>Calculate exact time intervals between your date of birth and any target date in seconds.</p>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <h3>Enter Your Date of Birth</h3>
+              <p>Select your birth year, month, and day in the first date input field.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <h3>Choose "Calculate age on" Date</h3>
+              <p>Pick any past, present, or future date, or click the "Use Today" quick-action button.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <h3>View Instant Exact Results</h3>
+              <p>Get your exact age in years, months, and days, total days elapsed, and the day of the week.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section" aria-labelledby="faq-title">
+        <div class="faq-wrap">
+          <div class="faq-header">
+            <span class="kicker">Frequently Asked Questions</span>
+            <h2 id="faq-title">Questions About Calculating Age on Any Date</h2>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>
+                <span>How do I calculate my age on a specific date?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Simply enter your date of birth in the first field, select the target date you want to measure against (in the past or future) in the second field, and click "Calculate Age on Date". The calculator instantly yields your exact age in completed years, months, and remainder days, alongside the total number of days between both dates and the target date's day of the week.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Can I calculate my age on a future date?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes! You can choose any future date—such as a planned retirement date, milestone anniversary, or future event—to see exactly how old you will be on that day. The tool dynamically phrases the results in future tense ("you will be").
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>How does the calculator handle leap years and February 29th?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                The algorithm follows the Gregorian calendar rules, taking into account differing month lengths and leap years (366 days). For individuals born on February 29th, calculations evaluated on non-leap target years seamlessly account for February 28th.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Can the date of birth be after the calculation date?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                No. You cannot calculate an age prior to birth. If a date of birth is selected that occurs after the target date, a friendly error message will guide you to choose a target date that is equal to or after the birth date.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Is my birth date kept private and safe?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes, 100%. All calculations are processed locally inside your web browser. Neither your birth date nor the target date is ever stored, transmitted, or logged on any server.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related Guides & Internal Links -->
+      <section class="features-section" aria-labelledby="related-tools-title">
+        <div class="features-wrap">
+          <div class="features-header">
+            <span class="kicker">Explore More Tools</span>
+            <h2 id="related-tools-title">Related Date &amp; Age Guides</h2>
+            <p>Discover more helpful calculators and guides on MyAgeNow.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">🎂</div>
+              <h3>Current Age Calculator</h3>
+              <p>Calculate your exact age today with zodiac signs, birthday countdown, and life milestones.</p>
+              <a href="index.html" class="feature-pill">Open Calculator →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">📅</div>
+              <h3>Calculate Age Between Two Dates</h3>
+              <p>Read our in-depth step-by-step guide explaining how calendar differences and leap years work.</p>
+              <a href="blog/calculate-age-between-two-dates.html" class="feature-pill">Read Article →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">☀️</div>
+              <h3>Age in Days Calculator</h3>
+              <p>Discover how many total days, hours, and minutes you have been alive on planet Earth.</p>
+              <a href="blog/age-in-days.html" class="feature-pill">Read Article →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+
+        <div class="footer-links" aria-label="Footer links">
+          <a href="age-on-any-date.html">Age on Any Date</a>
+          <a href="blog.html">Blog</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
