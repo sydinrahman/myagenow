@@ -351,14 +351,17 @@ label {
   background: rgba(248, 250, 252, 0.9);
   color: var(--text);
   padding: 0.75rem 0.9rem;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 600;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .date-field input {
-  height: 3.1rem;
+  min-height: 48px;
+  height: 3.2rem;
   padding-right: 3rem;
+  -webkit-appearance: none;
+  font-size: 1rem;
 }
 
 .form-group select {
@@ -535,7 +538,7 @@ label {
 .results-wrapper {
   max-width: 48rem;
   margin: 2rem auto 0;
-  padding: 0 1rem;
+  padding: 0 1rem 2.5rem;
   scroll-margin-top: 5.5rem;
   opacity: 0;
   transform: translateY(16px);
@@ -869,7 +872,7 @@ label {
   line-height: 1.2;
   margin: 0.2rem 0 0.1rem;
   letter-spacing: -0.02em;
-  word-break: break-all;
+  white-space: nowrap;
 }
 
 .stat-desc {
@@ -943,10 +946,9 @@ label {
 
 .result-actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.65rem;
-  flex-wrap: wrap;
   margin: 1.25rem 0 1.5rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
@@ -955,17 +957,51 @@ label {
 .action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 0.95rem;
-  border-radius: 0.75rem;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0.85rem;
   border: 1px solid var(--border);
   background: #ffffff;
   color: var(--text);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  user-select: none;
+}
+
+.action-btn.primary-action.download-btn {
+  width: 100%;
+  min-height: 2.85rem;
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary-dark);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.2);
+  font-size: 0.92rem;
+}
+
+.action-btn.primary-action.download-btn:hover {
+  background: var(--primary-dark);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+}
+
+.secondary-actions-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.action-btn.secondary-btn {
+  padding: 0.55rem 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  background: #ffffff;
+  border: 1px solid var(--border);
 }
 
 .action-btn:hover {
@@ -987,13 +1023,9 @@ label {
   background: var(--primary-soft);
 }
 
-.action-btn.primary-action {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary-dark);
-}
-
-.action-btn.primary-action:hover {
+.action-btn.primary-action:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
   background: var(--primary-dark);
   color: #ffffff;
 }
@@ -1003,17 +1035,6 @@ label {
   border-color: rgba(22, 163, 74, 0.5);
   color: var(--success);
   background: var(--success-soft);
-}
-
-.action-btn.primary-action:focus-visible {
-  outline: 3px solid var(--primary-dark);
-  outline-offset: 2px;
-  background: var(--primary-dark);
-  color: #ffffff;
-}
-
-.action-btn.secondary {
-  color: var(--text-soft);
 }
 
 .day-milestone-card {
@@ -2115,15 +2136,37 @@ label {
   .site-nav a:hover, .site-nav a:focus-visible { background: var(--primary-soft); }
 
   .hero {
-    padding-top: 2.5rem;
+    padding-top: 2rem;
+    padding-bottom: 1.25rem;
   }
 
   .hero p {
     font-size: 0.96rem;
   }
 
+  .calculator-wrap {
+    padding: 0 0.85rem 1.5rem;
+  }
+
   .calculator-card {
-    padding: 1.1rem 1rem 0.8rem;
+    padding: 1.2rem 1.1rem 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .results-wrapper {
+    margin-top: 1.5rem;
+    padding: 0 0.85rem 2.25rem;
+  }
+
+  .results-card {
+    padding: 1.15rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.09);
+  }
+
+  .features-section {
+    padding: 3.5rem 0 3rem;
   }
 
   .legal-card {
@@ -2139,7 +2182,20 @@ label {
   }
 
   .result-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .metric-card {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .metric-value {
+    font-size: 0.98rem;
+  }
+
+  .metric-sub {
+    font-size: 0.74rem;
   }
 
   .stats-grid {
@@ -2148,17 +2204,18 @@ label {
   }
 
   .stat-card {
-    padding: 0.75rem 0.65rem;
-    gap: 0.55rem;
+    padding: 0.75rem 0.5rem;
+    gap: 0.45rem;
   }
 
   .stat-icon {
-    font-size: 1.15rem;
-    padding: 0.3rem;
+    font-size: 1.05rem;
+    padding: 0.25rem;
   }
 
   .stat-value {
-    font-size: 1.05rem;
+    font-size: clamp(0.85rem, 3.4vw, 1.02rem);
+    letter-spacing: -0.03em;
   }
 
   .stat-label, .stat-desc {
