@@ -13,14 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ⚡ Optimization: Pre-cache navigation link DOM elements using getElementsByTagName once on init to eliminate repeated DOM querySelector/querySelectorAll parsing during mobile menu toggle and keyboard Tab focus trapping
+  const navLinks = Array.from(siteNav.getElementsByTagName('a'));
+
   menuButton.addEventListener('click', function (event) {
     event.stopPropagation();
     const isOpen = siteNav.classList.toggle('is-open');
     menuButton.setAttribute('aria-expanded', String(isOpen));
     menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
     if (isOpen) {
-      const firstLink = siteNav.querySelector('a');
-      if (firstLink) firstLink.focus();
+      if (navLinks.length > 0) navLinks[0].focus();
     }
   });
 
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (event.key === 'Tab') {
-      const focusables = [menuButton, ...siteNav.querySelectorAll('a')];
+      const focusables = [menuButton, ...navLinks];
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
 

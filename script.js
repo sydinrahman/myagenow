@@ -809,6 +809,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (menuButton && siteNav) {
+    // ⚡ Optimization: Pre-cache navigation link DOM elements using getElementsByTagName once on init to eliminate repeated DOM querySelector/querySelectorAll parsing during mobile menu toggle and keyboard Tab focus trapping
+    const navLinks = Array.from(siteNav.getElementsByTagName('a'));
+
     function closeMenu() {
       if (siteNav.classList.contains('is-open')) {
         siteNav.classList.remove('is-open');
@@ -823,8 +826,7 @@ document.addEventListener('DOMContentLoaded', function () {
       menuButton.setAttribute('aria-expanded', String(isOpen));
       menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
       if (isOpen) {
-        const firstLink = siteNav.querySelector('a');
-        if (firstLink) firstLink.focus();
+        if (navLinks.length > 0) navLinks[0].focus();
       }
     });
 
@@ -838,7 +840,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (event.key === 'Tab') {
-        const focusables = [menuButton, ...siteNav.querySelectorAll('a')];
+        const focusables = [menuButton, ...navLinks];
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
 
