@@ -96,5 +96,12 @@
     "category": "Calendar Math",
     "publishDate": "2026-10-29",
     "primaryKeyword": "calculate age difference between two people"
+  },
+  {
+    "slug": "how-to-calculate-age-sql.html",
+    "title": "How to Calculate Age in SQL Databases: MySQL, PostgreSQL & SQL Server",
+    "category": "Calendar Math",
+    "publishDate": "2026-10-30",
+    "primaryKeyword": "calculate age in sql"
   }
 ]
