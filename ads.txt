@@ -1,3 +1,2 @@
-# Google AdSense ads.txt file for myagenow
-# Replace pub-0000000000000000 with your real Google AdSense Publisher ID once approved
-google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+# Authorized Digital Sellers (ads.txt) for myagenow
+# Adsterra seller information line(s) can be added below when provided by Adsterra.
