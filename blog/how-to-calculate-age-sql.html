@@ -139,7 +139,7 @@
           <header class="blog-post-header">
             <div class="badge-pill">
               <span class="dot" aria-hidden="true"></span>
-              Calendar Math
+              Calculators &amp; Math
             </div>
             <h1>How to Calculate Age in SQL Databases: MySQL, PostgreSQL &amp; SQL Server</h1>
             <p class="blog-post-meta">
@@ -398,14 +398,20 @@ SELECT EXTRACT(EPOCH FROM (NOW() - birth_datetime))::bigint FROM users;
 -- SQL Server (DATEDIFF_BIG avoids integer overflow after ~68 years)
 SELECT DATEDIFF_BIG(SECOND, birth_datetime, GETDATE()) FROM users;</code></pre>
 
-            <div class="blog-callout" id="cta-callout">
-              <h2 id="want-a-quick-sanity-check">Want a Quick Sanity Check?</h2>
+            <!-- Standardized CTA Callout -->
+            <!-- Standardized CTA Callout -->
+            <div class="blog-cta-wrap" id="cta-callout">
+              <h3>Calculate Your Exact Age &amp; Life Milestones</h3>
               <p>
-                Enter any date of birth into myagenow and compare the exact years, months, and days against your query output. It takes seconds and catches off-by-one mistakes early.
+                Want to know your exact age down to years, months, and days? Check your lifetime stats, total days lived, and upcoming birthday countdown 100% privately in your browser.
               </p>
-              <div class="blog-cta-wrap" style="text-align: left; margin-top: 1rem;">
+              <div class="blog-cta-actions">
                 <a href="../index.html" class="primary-btn inline-btn">
-                  <span>Calculate your age on myagenow &rarr;</span>
+                  <span>Calculate Exact Age</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+                <a href="../index.html#features" class="secondary-pill-btn">
+                  <span>Date Difference &amp; Milestones &rarr;</span>
                 </a>
               </div>
             </div>
@@ -446,6 +452,54 @@ SELECT DATEDIFF_BIG(SECOND, birth_datetime, GETDATE()) FROM users;</code></pre>
               <li><a href="how-to-calculate-age.html">How to Calculate Age Manually or Programmatically</a></li>
               <li><a href="leap-year-birthday.html">How Does a Leap Year Affect Your Birthday?</a></li>
             </ul>
+
+            <!-- Related Articles Section -->
+            <section class="related-articles-section" aria-label="Related articles">
+              <div class="related-articles-header">
+                <span class="dot" aria-hidden="true"></span>
+                <h3>Related Articles</h3>
+              </div>
+              <div class="related-articles-grid">
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80" alt="Desk with calendar and notebook for calculating exact age" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="how-to-calculate-age.html">How to Calculate Your Exact Age</a></h4>
+                <p>Learn step-by-step how to calculate your exact age in years, months, and days using standard calendar math rules.</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 3, 2026</span>
+                  <a href="how-to-calculate-age.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1435527173128-983b87201f4d?auto=format&fit=crop&w=1200&q=80" alt="Classic pocket watch and calendar for calculating time between dates" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="calculate-age-between-two-dates.html">How to Calculate Age Between Two Dates</a></h4>
+                <p>Learn how to calculate the exact difference between two dates in years, months, and days.</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 8, 2026</span>
+                  <a href="calculate-age-between-two-dates.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Spreadsheet data on laptop screen showing date formulas and calculations" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="calculate-age-excel-google-sheets.html">How to Accurately Calculate Someone's Age in Excel or Google Sheets</a></h4>
+                <p>Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fi...</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 27, 2026</span>
+                  <a href="calculate-age-excel-google-sheets.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+              </div>
+            </section>
 
             <div class="article-share-bar">
               <span class="article-share-label">Share article:</span>
