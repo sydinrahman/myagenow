@@ -1,2 +1,2 @@
 # Authorized Digital Sellers (ads.txt) for myagenow
-# Adsterra seller information line(s) can be added below when provided by Adsterra.
+# myagenow is 100% free and does not display third-party advertisements or use ad networks.
