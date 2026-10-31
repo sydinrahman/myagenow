@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <title>Age Poster Generator - Create Your Personal Age Poster | MyAgeNow</title>
+    <meta
+      name="description"
+      content="Create a personalized age poster for free. Display your exact age, days lived, zodiac sign, and birthday countdown in a beautiful downloadable design."
+    />
+    <meta name="keywords" content="age poster generator, personal age poster, age milestone poster, life in numbers poster, exact age poster, birthday poster maker, download age poster" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/age-poster-generator.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Age Poster Generator - Create Your Personal Age Poster | MyAgeNow" />
+    <meta property="og:description" content="Create a personalized age poster for free. Display your exact age, days lived, zodiac sign, and birthday countdown in a beautiful downloadable design." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myagenow.today/age-poster-generator.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Age Poster Generator - Create Your Personal Age Poster | MyAgeNow" />
+    <meta name="twitter:description" content="Create a personalized age poster for free. Display your exact age, days lived, zodiac sign, and birthday countdown in a beautiful downloadable design." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://myagenow.today/age-poster-generator.html#webapp",
+          "name": "MyAgeNow Age Poster Generator",
+          "url": "https://myagenow.today/age-poster-generator.html",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript",
+          "description": "Free, private, instant client-side personal age poster creator. Calculate exact age, total days and weeks lived, zodiac sign, next birthday countdown, and upcoming milestones with high-resolution 1200x1500 PNG export."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://myagenow.today/age-poster-generator.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is an age poster?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An age poster is a personalized piece of graphic art summarizing your journey through time. It displays your exact chronological age in years, months, and days, along with fascinating life statistics like total days and weeks lived, astrological zodiac sign, countdown to your next birthday, and your next major age milestone."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is the Age Poster Generator completely free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our Age Poster Generator is 100% free with zero watermarks, no registration, and no subscriptions required. You can customize, preview, and download as many high-resolution posters as you wish."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What image resolution is the downloaded poster?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The poster exports as an ultra-high-definition 1200×1500 pixel PNG (4:5 portrait ratio). This resolution is ideal for digital sharing, phone wallpapers, and physical printing up to 16×20 or 24×30 inches."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my birth date and personal details kept private?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. All date mathematics and poster graphics are rendered entirely client-side inside your browser via HTML5 Canvas. No personal information or birth dates are ever recorded, collected, or uploaded to any server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I share my generated poster with others?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can click 'Share Poster' on mobile devices to open your native sharing sheet (WhatsApp, Messages, Instagram, AirDrop), download the high-resolution PNG file directly, or click 'Copy Shareable Link' to share a unique link that opens your customized poster automatically."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Cinzel:wght@600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="navigation.js" defer></script>
+    <script src="age-poster.js" defer></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <div class="container">
+        <a href="index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="index.html">Age Calculator</a>
+          <a href="age-poster-generator.html" class="active" aria-current="page">Age Poster</a>
+          <a href="birthday-card-generator.html">Card Generator</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main" id="main-content" tabindex="-1">
+      <section class="hero poster-hero">
+        <div class="container">
+          <div class="hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Personal Milestone Artwork</span>
+          </div>
+          <h1>Create Your Personal Age Poster</h1>
+          <p>
+            Celebrate your life story in numbers. Enter your birth date to create a personalized, print-ready age poster featuring your exact age, total days lived, zodiac sign, and birthday countdown.
+          </p>
+        </div>
+      </section>
+
+      <!-- Generator Workspace -->
+      <section class="generator-workspace" aria-label="Age Poster Generator Tool">
+        <div class="generator-container">
+
+          <!-- Column 1: Editor Form Controls -->
+          <div class="card editor-panel">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="dot" aria-hidden="true"></span>
+                <span>Poster Customization</span>
+              </div>
+              <button class="reset-button" id="poster-reset-btn" type="button" aria-label="Reset poster to sample data" title="Reset all fields to sample values">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                  <path d="M3 4v5h5"></path>
+                </svg>
+                Reset
+              </button>
+            </div>
+
+            <div class="sample-data-notice" role="note">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>Currently showing sample data for <strong>Alex</strong>. Replace with your details below!</span>
+            </div>
+
+            <form id="poster-generator-form" novalidate onsubmit="return false;">
+              <!-- 1. Name Input (Optional) -->
+              <div class="form-group">
+                <label for="poster-name">Your Name <span class="optional-label">(Optional)</span></label>
+                <input
+                  type="text"
+                  id="poster-name"
+                  name="poster-name"
+                  value="Alex"
+                  maxlength="50"
+                  placeholder="e.g., Alex, Emily, Jordan"
+                  aria-describedby="poster-name-helper"
+                />
+                <span class="form-note" id="poster-name-helper">Leave empty or enter your name to personalize the headline.</span>
+              </div>
+
+              <!-- 2. Date of Birth Input (Required) -->
+              <div class="form-group">
+                <label for="poster-dob">Date of Birth <span class="required">*</span></label>
+                <div class="date-field">
+                  <input
+                    type="date"
+                    id="poster-dob"
+                    name="poster-dob"
+                    value="1998-05-15"
+                    aria-required="true"
+                    aria-describedby="poster-dob-helper"
+                    required
+                  />
+                  <span class="field-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                      <path d="M8 2v4M16 2v4M3 10h18"></path>
+                    </svg>
+                  </span>
+                </div>
+                <span class="form-note" id="poster-dob-helper">All age statistics are computed in real-time from this date.</span>
+                <div id="poster-error-box" class="error-box hidden" role="alert" aria-live="polite">
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span id="poster-error-message">Please select a valid date of birth in the past.</span>
+                </div>
+              </div>
+
+              <!-- 3. Poster Title (Optional) -->
+              <div class="form-group">
+                <label for="poster-title-input">Poster Title <span class="optional-label">(Optional)</span></label>
+                <input
+                  type="text"
+                  id="poster-title-input"
+                  name="poster-title-input"
+                  value="LIFE IN NUMBERS"
+                  maxlength="40"
+                  placeholder="e.g., LIFE IN NUMBERS, MY JOURNEY, CHAPTER 25"
+                  aria-describedby="poster-title-helper"
+                />
+                <span class="form-note" id="poster-title-helper">Default is "LIFE IN NUMBERS". Customize it to suit your occasion.</span>
+              </div>
+
+              <!-- 4. Template Selection -->
+              <div class="form-group">
+                <label id="poster-tpl-label">Choose Poster Template <span class="required">*</span></label>
+                <div class="template-selector-grid" role="radiogroup" aria-labelledby="poster-tpl-label">
+                  <button
+                    type="button"
+                    class="template-option active"
+                    role="radio"
+                    aria-checked="true"
+                    data-template="minimal-blue"
+                    id="tpl-minimal-blue"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">💎</span>
+                    <span class="tpl-title">Minimal Blue</span>
+                    <span class="tpl-desc">Clean cobalt blue &amp; white aesthetic</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="luxury-dark"
+                    id="tpl-luxury-dark"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">✨</span>
+                    <span class="tpl-title">Luxury Dark</span>
+                    <span class="tpl-desc">Opulent black and radiant gold</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="colorful"
+                    id="tpl-colorful"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">🎨</span>
+                    <span class="tpl-title">Colorful</span>
+                    <span class="tpl-desc">Modern vibrant gradients &amp; energy</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="editorial"
+                    id="tpl-editorial"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">🏛️</span>
+                    <span class="tpl-title">Editorial</span>
+                    <span class="tpl-desc">Refined typography &amp; neutral tones</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 5. Color Palette Selection -->
+              <div class="form-group">
+                <label id="poster-palette-label">Color Theme Selection</label>
+                <div class="color-palette-grid" id="poster-color-palette-container" role="radiogroup" aria-labelledby="poster-palette-label">
+                  <!-- Populated dynamically based on chosen template -->
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Column 2: Live Preview & Action Card -->
+          <div class="preview-panel-wrap">
+            <div class="preview-sticky-box">
+              <div class="preview-header">
+                <div class="preview-title">
+                  <span class="status-dot"></span>
+                  <span>Live Poster Preview</span>
+                </div>
+                <span class="aspect-pill">Portrait 4:5 (1200×1500)</span>
+              </div>
+
+              <!-- Live Render Viewport -->
+              <div class="card-preview-viewport poster-preview-viewport" id="poster-preview-viewport" aria-label="Live preview of your customized personal age poster">
+                <div class="age-poster template-minimal-blue theme-cobalt" id="age-poster-render">
+                  <!-- Decorative Background / Frame Layers -->
+                  <div class="poster-bg-layer" aria-hidden="true"></div>
+                  <div class="poster-border-frame" aria-hidden="true"></div>
+                  <div class="poster-decorations" id="poster-decorations" aria-hidden="true"></div>
+
+                  <!-- Poster Content Hierarchy -->
+                  <div class="poster-inner-content">
+                    <!-- 1. Header Bar: Title & Subtitle -->
+                    <div class="poster-top-bar">
+                      <div class="poster-brand-kicker" aria-hidden="true">MYAGENOW • PERSONAL STATS</div>
+                      <h2 class="poster-title" id="poster-title-val">LIFE IN NUMBERS</h2>
+                      <div class="poster-subtitle" id="poster-subtitle-val">A Celebration of Alex</div>
+                    </div>
+
+                    <!-- 2. Hero Age Typography Section -->
+                    <div class="poster-hero-age-section">
+                      <span class="poster-age-eyebrow">CHRONOLOGICAL AGE</span>
+                      <div class="poster-large-age" id="poster-large-years">27</div>
+                      <div class="poster-age-units-row" id="poster-age-units-text">YEARS • 11 MONTHS • 18 DAYS</div>
+                    </div>
+
+                    <!-- 3. Key Milestone & Birthday Countdown Row -->
+                    <div class="poster-highlight-strip">
+                      <div class="poster-highlight-item">
+                        <span class="highlight-label">NEXT BIRTHDAY</span>
+                        <span class="highlight-val" id="poster-countdown-val">In 12 Days</span>
+                      </div>
+                      <div class="poster-highlight-divider" aria-hidden="true"></div>
+                      <div class="poster-highlight-item">
+                        <span class="highlight-label">NEXT MILESTONE</span>
+                        <span class="highlight-val" id="poster-milestone-val">30th Birthday</span>
+                      </div>
+                    </div>
+
+                    <!-- 4. Statistics Grid (4 Cards) -->
+                    <div class="poster-stats-grid">
+                      <div class="poster-stat-card">
+                        <span class="poster-stat-num" id="poster-total-days-val">10,215</span>
+                        <span class="poster-stat-desc">DAYS LIVED</span>
+                      </div>
+
+                      <div class="poster-stat-card">
+                        <span class="poster-stat-num" id="poster-total-weeks-val">1,459</span>
+                        <span class="poster-stat-desc">WEEKS ON EARTH</span>
+                      </div>
+
+                      <div class="poster-stat-card">
+                        <span class="poster-stat-num" id="poster-zodiac-val">Taurus ♉</span>
+                        <span class="poster-stat-desc">ZODIAC SIGN</span>
+                      </div>
+
+                      <div class="poster-stat-card">
+                        <span class="poster-stat-num" id="poster-milestone-countdown-val">In ~2.1 Yrs</span>
+                        <span class="poster-stat-desc">TO 30TH MILESTONE</span>
+                      </div>
+                    </div>
+
+                    <!-- 5. Footer Branding & Date stamp -->
+                    <div class="poster-footer">
+                      <span class="poster-date-stamp" id="poster-date-stamp-val">Born May 15, 1998 • myagenow.today</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Export & Share Actions Bar -->
+              <div class="preview-actions-bar">
+                <span id="poster-action-status" class="sr-only" role="status" aria-live="polite"></span>
+
+                <button class="action-btn primary-action download-btn" id="download-poster-png-btn" type="button" aria-label="Download high-resolution PNG age poster" title="Download crystal-clear 1200×1500 PNG poster">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Download High-Res PNG</span>
+                </button>
+
+                <div class="secondary-actions-row">
+                  <button class="action-btn secondary-btn" id="share-poster-btn" type="button" aria-label="Share poster with friends or family" title="Share poster image via device share sheet">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="18" cy="5" r="3"></circle>
+                      <circle cx="6" cy="12" r="3"></circle>
+                      <circle cx="18" cy="19" r="3"></circle>
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span>Share Poster</span>
+                  </button>
+
+                  <button class="action-btn secondary-btn" id="copy-poster-link-btn" type="button" aria-label="Copy shareable link to this customized poster" title="Copy shareable link with current poster settings">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    <span>Copy Link</span>
+                  </button>
+
+                  <button class="action-btn secondary-btn" id="print-poster-btn" type="button" aria-label="Print age poster" title="Print poster or save as PDF">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                      <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    <span>Print Poster</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="privacy-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+                <span>Zero tracking — generated 100% locally in your browser</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Educational & Practical Guide Section -->
+      <section class="how-it-works-section" aria-labelledby="poster-guide-title">
+        <div class="how-it-works-wrap">
+          <div class="how-it-works-header">
+            <span class="kicker">Visualizing Time</span>
+            <h2 id="poster-guide-title">What Is an Age Poster &amp; How Does It Work?</h2>
+            <p>Your life is a rich collection of days, weeks, and milestones. An age poster turns those chronological numbers into a meaningful keepsake.</p>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <h3>Enter Your Information</h3>
+              <p>Type your name, select your date of birth, and optionally specify a custom poster title like <em>"Life in Numbers"</em> or <em>"Turning 30"</em>.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <h3>Pick Your Design &amp; Palette</h3>
+              <p>Select from 4 distinct graphic design templates: Minimal Blue, Luxury Dark, Colorful Gradients, or Editorial. Fine-tune your look with curated color palettes.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <h3>Download, Share, or Print</h3>
+              <p>Download your poster as a crystal-clear 1200×1500 pixel PNG suitable for framing, share it directly on social apps, or copy a shareable link.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Content Section: What information it displays -->
+      <section class="features-section" aria-labelledby="poster-info-title">
+        <div class="features-wrap">
+          <div class="features-header">
+            <span class="kicker">Poster Information</span>
+            <h2 id="poster-info-title">What Your Personal Age Poster Displays</h2>
+            <p>Every poster dynamically calculates and formats six key life metrics based on the Gregorian calendar.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">🎂</div>
+              <h3>Exact Age Breakdown</h3>
+              <p>Prominent hero typography featuring your exact age in completed calendar years, accompanied by elapsed months and remainder days.</p>
+              <a href="index.html" class="feature-pill">Age Calculator →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">☀️</div>
+              <h3>Total Days &amp; Weeks Lived</h3>
+              <p>Eye-opening lifetime totals calculating every single day and week you have experienced on Earth since the day you were born.</p>
+              <a href="blog/age-in-days.html" class="feature-pill">Days Lived Guide →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✨</div>
+              <h3>Zodiac Sign &amp; Symbol</h3>
+              <p>Your astrological sun sign and celestial zodiac glyph determined precisely from your birth month and day.</p>
+              <a href="blog/zodiac-by-birthday.html" class="feature-pill">Zodiac Guide →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">⏳</div>
+              <h3>Next Birthday Countdown</h3>
+              <p>A live countdown tracking the remaining days until your next birthday celebration arrives.</p>
+              <a href="blog/how-many-days-until-my-birthday.html" class="feature-pill">Birthday Countdown →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">🏆</div>
+              <h3>Upcoming Landmark Milestone</h3>
+              <p>Tracks your next major life milestone (18, 21, 30, 40, 50, 60, 70, 80+) and calculates the countdown in years.</p>
+              <a href="index.html#features" class="feature-pill">Milestone Tracker →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">💌</div>
+              <h3>Birthday Card Generator</h3>
+              <p>Need a greeting card for someone's birthday instead? Create customizable, printable birthday cards in seconds.</p>
+              <a href="birthday-card-generator.html" class="feature-pill">Card Generator →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Frequently Asked Questions -->
+      <section id="faq" class="faq-section" aria-labelledby="faq-title">
+        <div class="faq-wrap">
+          <div class="faq-header">
+            <span class="kicker">Got Questions?</span>
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>
+                <span>What is an age poster?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                An age poster is a personalized piece of graphic art summarizing your journey through time. It displays your exact chronological age in years, months, and days, along with fascinating life statistics like total days and weeks lived, astrological zodiac sign, countdown to your next birthday, and your next major age milestone.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Is the Age Poster Generator completely free to use?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes, our Age Poster Generator is 100% free with no sign-ups, no hidden fees, and zero watermarks on your downloaded poster. You can design and export as many personalized posters as you want.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>What resolution is the downloaded poster image?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                The poster downloads as a 1200×1500 pixel PNG (standard 4:5 portrait aspect ratio). This high resolution is sharp enough for smartphone lock screens, social media sharing, and physical prints in standard frame sizes such as 8×10, 12×15, 16×20, or 24×30 inches.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Are my birth date and personal details kept private?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes. All calculations and graphics rendering are processed 100% locally inside your web browser. No dates of birth or names are transmitted to or stored on our servers.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>How does the Copy Link feature work?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Clicking "Copy Link" generates a secure, shareable URL with your selected name, birth date, title, template, and color theme encoded in the query parameters. When a friend or family member opens the link, the page automatically renders your exact poster configuration.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+
+        <div class="footer-links" aria-label="Footer links">
+          <a href="index.html">Age Calculator</a>
+          <a href="age-poster-generator.html" class="active">Age Poster</a>
+          <a href="birthday-card-generator.html">Card Generator</a>
+          <a href="blog.html">Blog</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
