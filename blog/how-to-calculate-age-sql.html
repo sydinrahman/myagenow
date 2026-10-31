@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <title>How to Calculate Age in SQL Databases: MySQL, PostgreSQL &amp; SQL Server | myagenow</title>
+    <meta name="description" content="Learn exact SQL queries to calculate age from date of birth in MySQL, PostgreSQL, and SQL Server, avoid off-by-one bugs, and optimize age filtering queries." />
+    <meta name="keywords" content="calculate age in sql, sql calculate age from date of birth, mysql age timestampdiff, postgresql age function, sql server datediff age bug, sql filter by age index" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/blog/how-to-calculate-age-sql.html" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="How to Calculate Age in SQL Databases: MySQL, PostgreSQL &amp; SQL Server | myagenow" />
+    <meta property="og:description" content="Learn exact SQL queries to calculate age from date of birth in MySQL, PostgreSQL, and SQL Server, avoid off-by-one bugs, and optimize age filtering queries." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://myagenow.today/blog/how-to-calculate-age-sql.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How to Calculate Age in SQL Databases: MySQL, PostgreSQL &amp; SQL Server | myagenow" />
+    <meta name="twitter:description" content="Learn exact SQL queries to calculate age from date of birth in MySQL, PostgreSQL, and SQL Server, avoid off-by-one bugs, and optimize age filtering queries." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "How to Calculate Age in SQL Databases: MySQL, PostgreSQL & SQL Server",
+          "description": "Learn exact SQL queries to calculate age from date of birth in MySQL, PostgreSQL, and SQL Server, avoid off-by-one bugs, and optimize age filtering queries.",
+          "datePublished": "2026-10-30",
+          "author": {
+            "@type": "Organization",
+            "name": "myagenow"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "myagenow",
+            "url": "https://myagenow.today/"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I calculate age from a date of birth in SQL?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "In MySQL, use TIMESTAMPDIFF(YEAR, birth_date, CURDATE()). In PostgreSQL, use DATE_PART('year', AGE(CURRENT_DATE, birth_date))::int. In SQL Server, use DATEDIFF(YEAR, birth_date, GETDATE()) combined with a check to see if the birthday has occurred this year."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why is DATEDIFF(YEAR, birth_date, GETDATE()) wrong in SQL Server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "In SQL Server, DATEDIFF(YEAR, ...) counts year boundary crossings (January 1) rather than completed full years. Someone born on December 31 is incorrectly reported as 1 year old on January 1."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I get age in years, months and days in PostgreSQL?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "PostgreSQL has a built-in AGE(CURRENT_DATE, birth_date) function that returns a formatted interval containing completed years, months, and days."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the fastest way to find all users who are 18 or older?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Calculate the cutoff date once and filter directly on the birth_date column (e.g. WHERE birth_date <= CURDATE() - INTERVAL 18 YEAR), allowing the database to use an index."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How are leap day birthdays handled in SQL age calculations?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Leap day (February 29) birthdays fall on February 28 or March 1 in non-leap years depending on database engine rules. Always test edge case queries for leap-year behavior before deploying to production."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <script src="../navigation.js" defer></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <div class="container">
+        <a href="../index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#how-it-works">How It Works</a>
+          <a href="../index.html#faq">FAQ</a>
+          <a href="../blog.html" class="active">Blog</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" class="page-shell">
+      <div class="legal-container">
+        <article class="blog-post-card">
+          <header class="blog-post-header">
+            <div class="badge-pill">
+              <span class="dot" aria-hidden="true"></span>
+              Calculators &amp; Math
+            </div>
+            <h1>How to Calculate Age in SQL Databases: MySQL, PostgreSQL &amp; SQL Server</h1>
+            <p class="blog-post-meta">
+              By <strong>The My Age Now team</strong> · Published <strong>October 30, 2026</strong> · <strong>8 min read</strong>
+            </p>
+          </header>
+
+          <figure class="article-hero-media">
+            <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=1200&q=80" alt="Database administration screen showing SQL query calculations and database schema" class="article-hero-img" loading="eager" width="1200" height="675" />
+            <figcaption class="article-hero-caption">Learn exact queries to calculate age accurately in MySQL, PostgreSQL, and SQL Server while avoiding dangerous off-by-one errors.</figcaption>
+          </figure>
+
+          <div class="blog-post-content">
+            <p>
+              Calculating someone’s age from a date of birth sounds like a five-minute job. Then you ship it, and a user who turns 18 tomorrow is already marked as an adult. This guide gives you queries that actually work in MySQL, PostgreSQL, and SQL Server, plus the traps that cause those off-by-one bugs.
+            </p>
+
+            <details class="blog-toc" open>
+              <summary>In this guide</summary>
+              <ol>
+                <li><a href="#the-quick-answer">The quick answer</a></li>
+                <li><a href="#why-subtracting-years-fails">Why subtracting years fails</a></li>
+                <li><a href="#calculating-age-in-mysql">MySQL</a></li>
+                <li><a href="#calculating-age-in-postgresql">PostgreSQL</a></li>
+                <li><a href="#calculating-age-in-sql-server">SQL Server</a></li>
+                <li><a href="#filtering-by-age-without-killing-performance">Filtering by age without killing performance</a></li>
+                <li><a href="#edge-cases-to-test-before-you-ship">Edge cases to test before you ship</a></li>
+                <li><a href="#bonus-age-in-seconds">Bonus: age in seconds</a></li>
+                <li><a href="#want-a-quick-sanity-check">Want a quick sanity check?</a></li>
+                <li><a href="#faq">FAQ</a></li>
+              </ol>
+            </details>
+
+            <h2 id="the-quick-answer">The Quick Answer</h2>
+            <p>
+              All the examples below assume a simple table called <code>users</code> with a <code>birth_date</code> column of type <code>DATE</code>. Here’s the short version for each database:
+            </p>
+
+            <div class="table-responsive">
+              <table class="benchmark-table">
+                <thead>
+                  <tr>
+                    <th>Database</th>
+                    <th>Age in full years</th>
+                    <th>Watch out for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>MySQL</strong></td>
+                    <td><code>TIMESTAMPDIFF(YEAR, birth_date, CURDATE())</code></td>
+                    <td>Don’t use <code>DATEDIFF(...)/365</code>; it drifts.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>PostgreSQL</strong></td>
+                    <td><code>DATE_PART('year', AGE(CURRENT_DATE, birth_date))</code></td>
+                    <td>Cast to int if you don’t want decimals.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>SQL Server</strong></td>
+                    <td><code>DATEDIFF(YEAR, ...)</code> minus a birthday check</td>
+                    <td>Plain <code>DATEDIFF(YEAR, ...)</code> is wrong.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h2 id="why-subtracting-years-fails">Why Subtracting Years Fails</h2>
+            <p>The tempting approach is to subtract the birth year from the current year:</p>
+            <pre><code>-- Looks fine. Isn't.
+SELECT YEAR(CURDATE()) - YEAR(birth_date) AS age FROM users;</code></pre>
+            <p>
+              This ignores whether the birthday has happened yet this year. Someone born on 15 December 1995 would be listed as 31 in January 2026, when they’re still 30 for almost another year. The same problem hits the “divide days by 365” shortcut: leap years pile up and the result slips by a day every four years or so.
+            </p>
+            <p>
+              Every correct method below does the same thing in spirit: count full years, and only count the current year if the birthday has already passed.
+            </p>
+
+            <h2 id="calculating-age-in-mysql">Calculating Age in MySQL</h2>
+            <h3>Age in years with TIMESTAMPDIFF</h3>
+            <p><code>TIMESTAMPDIFF</code> returns the number of complete units between two dates, which is exactly what age means.</p>
+            <pre><code>SELECT
+  id,
+  birth_date,
+  TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age
+FROM users;</code></pre>
+
+            <h3>Age in years, months, and days</h3>
+            <p>For a full breakdown, get total months first, then work out the leftover days from the last monthly anniversary:</p>
+            <pre><code>SELECT
+  id,
+  TIMESTAMPDIFF(YEAR, birth_date, CURDATE())       AS years,
+  TIMESTAMPDIFF(MONTH, birth_date, CURDATE()) % 12 AS months,
+  DATEDIFF(
+    CURDATE(),
+    DATE_ADD(birth_date, INTERVAL TIMESTAMPDIFF(MONTH, birth_date, CURDATE()) MONTH)
+  ) AS days
+FROM users;</code></pre>
+            <p>For someone born on 15 May 1990, checked on 31 October 2026, this returns 36 years, 5 months, 16 days.</p>
+
+            <h3>The no-function-magic alternative</h3>
+            <p>If you like seeing the logic spelled out, this version subtracts one year when today’s month and day come before the birthday’s:</p>
+            <pre><code>SELECT
+  YEAR(CURDATE()) - YEAR(birth_date)
+  - (DATE_FORMAT(CURDATE(), '%m%d') < DATE_FORMAT(birth_date, '%m%d')) AS age
+FROM users;</code></pre>
+
+            <h2 id="calculating-age-in-postgresql">Calculating Age in PostgreSQL</h2>
+            <p>PostgreSQL has the friendliest tool of the three: a built-in <code>AGE()</code> function that returns an interval.</p>
+
+            <h3>Full age as an interval</h3>
+            <pre><code>SELECT id, AGE(CURRENT_DATE, birth_date) AS age
+FROM users;
+-- Example result: 36 years 5 mons 16 days</code></pre>
+
+            <h3>Age in whole years</h3>
+            <pre><code>SELECT
+  id,
+  DATE_PART('year', AGE(CURRENT_DATE, birth_date))::int AS age
+FROM users;</code></pre>
+            <p>You can also use <code>EXTRACT(YEAR FROM AGE(...))</code>. Depending on your PostgreSQL version it returns double precision or numeric, so the <code>::int</code> cast keeps your output clean.</p>
+
+            <h3>Age in days</h3>
+            <p>Subtracting one <code>DATE</code> from another gives an integer number of days:</p>
+            <pre><code>SELECT id, CURRENT_DATE - birth_date AS days_alive
+FROM users;</code></pre>
+
+            <h2 id="calculating-age-in-sql-server">Calculating Age in SQL Server</h2>
+            <p>This is where most bugs come from, so slow down here.</p>
+
+            <h3>The trap: DATEDIFF counts boundaries, not years</h3>
+            <p>In SQL Server, <code>DATEDIFF(YEAR, a, b)</code> counts how many times you cross a 1 January between the two dates. Someone born on 31 December 2000 is reported as 1 year old on 1 January 2001, a single day after they were born.</p>
+            <pre><code>-- WRONG for age
+SELECT DATEDIFF(YEAR, '2000-12-31', '2001-01-01');  -- returns 1</code></pre>
+
+            <h3>The correct version</h3>
+            <p>Take the <code>DATEDIFF</code> result, then subtract 1 if this year’s birthday hasn’t arrived yet:</p>
+            <pre><code>SELECT
+  id,
+  DATEDIFF(YEAR, birth_date, CAST(GETDATE() AS date))
+  - CASE
+      WHEN DATEADD(YEAR, DATEDIFF(YEAR, birth_date, CAST(GETDATE() AS date)), birth_date)
+           > CAST(GETDATE() AS date)
+      THEN 1 ELSE 0
+    END AS age
+FROM users;</code></pre>
+
+            <h3>A compact alternative: the YYYYMMDD trick</h3>
+            <p>Convert both dates to integers like 20261031, subtract, and divide by 10,000. Integer division throws away the remainder, which leaves full years:</p>
+            <pre><code>SELECT
+  id,
+  ( CONVERT(int, CONVERT(char(8), CAST(GETDATE() AS date), 112))
+  - CONVERT(int, CONVERT(char(8), birth_date, 112)) ) / 10000 AS age
+FROM users;</code></pre>
+
+            <h3>Years, months, and days</h3>
+            <pre><code>SELECT
+  u.id,
+  m.total_months / 12 AS years,
+  m.total_months % 12 AS months,
+  DATEDIFF(DAY, DATEADD(MONTH, m.total_months, u.birth_date), CAST(GETDATE() AS date)) AS days
+FROM users u
+CROSS APPLY (
+  SELECT DATEDIFF(MONTH, u.birth_date, CAST(GETDATE() AS date))
+       - CASE
+           WHEN DATEADD(MONTH, DATEDIFF(MONTH, u.birth_date, CAST(GETDATE() AS date)), u.birth_date)
+                > CAST(GETDATE() AS date)
+           THEN 1 ELSE 0
+         END AS total_months
+) m;</code></pre>
+
+            <h2 id="filtering-by-age-without-killing-performance">Filtering by Age Without Killing Performance</h2>
+            <p>
+              A very common task: “give me everyone who’s 18 or older.” It’s tempting to calculate age for each row and filter on the result. On a big table that forces a scan, because the database can’t use an index on <code>birth_date</code> once you wrap it in a function.
+            </p>
+            <p>Flip it around. Work out the cutoff date once, then compare the raw column to it:</p>
+
+            <pre><code>-- MySQL
+SELECT * FROM users
+WHERE birth_date <= CURDATE() - INTERVAL 18 YEAR;
+
+-- PostgreSQL
+SELECT * FROM users
+WHERE birth_date <= CURRENT_DATE - INTERVAL '18 years';
+
+-- SQL Server
+SELECT * FROM users
+WHERE birth_date <= DATEADD(YEAR, -18, CAST(GETDATE() AS date));</code></pre>
+            <p>Same result, and the query can use an index.</p>
+
+            <p><strong>Tip:</strong> Store the date of birth, never the age. An age column goes stale the day after you save it. Calculate it when you read the data, as shown above.</p>
+
+            <h2 id="edge-cases-to-test-before-you-ship">Edge Cases to Test Before You Ship</h2>
+            <p>Run your query against rows like these. The table uses a fixed “today” of 31 October 2026 so the expected answers are easy to check.</p>
+
+            <div class="table-responsive">
+              <table class="benchmark-table">
+                <thead>
+                  <tr>
+                    <th>Birth date</th>
+                    <th>Expected age on 31 Oct 2026</th>
+                    <th>Why it’s a good test</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>1990-05-15</code></td>
+                    <td>36</td>
+                    <td>Birthday already passed this year</td>
+                  </tr>
+                  <tr>
+                    <td><code>1995-10-31</code></td>
+                    <td>31</td>
+                    <td>Birthday is today</td>
+                  </tr>
+                  <tr>
+                    <td><code>1995-11-01</code></td>
+                    <td>30</td>
+                    <td>Birthday is tomorrow</td>
+                  </tr>
+                  <tr>
+                    <td><code>2000-02-29</code></td>
+                    <td>26</td>
+                    <td>Leap-day birthday, already passed</td>
+                  </tr>
+                  <tr>
+                    <td><code>2000-12-31</code></td>
+                    <td>25</td>
+                    <td>Catches the SQL Server DATEDIFF bug</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Leap-day birthdays</h3>
+            <p>
+              People born on 29 February have a “birthday” on either 28 February or 1 March in non-leap years, and different engines and methods make different choices. In SQL Server, the <code>DATEADD</code> pattern above treats 28 February as the birthday, while the YYYYMMDD trick treats 1 March. Pick the rule your business needs, then test it.
+            </p>
+
+            <h3>NULLs, future dates, and time zones</h3>
+            <ul>
+              <li><strong>NULL birth dates:</strong> the result is NULL. Handle it with COALESCE or filter those rows out.</li>
+              <li><strong>Future dates:</strong> bad data can produce negative ages. Add a check constraint or a WHERE clause.</li>
+              <li><strong>Time zones:</strong> <code>CURDATE()</code>, <code>CURRENT_DATE</code>, and <code>GETDATE()</code> use the server or session clock. If your users are spread across time zones, a user can be a day “older” or “younger” than they expect around midnight.</li>
+            </ul>
+
+            <h2 id="bonus-age-in-seconds">Bonus: age in seconds</h2>
+            <p>Need more precision than years? Store a full timestamp and count seconds:</p>
+
+            <pre><code>-- MySQL
+SELECT TIMESTAMPDIFF(SECOND, birth_datetime, NOW()) FROM users;
+
+-- PostgreSQL
+SELECT EXTRACT(EPOCH FROM (NOW() - birth_datetime))::bigint FROM users;
+
+-- SQL Server (DATEDIFF_BIG avoids integer overflow after ~68 years)
+SELECT DATEDIFF_BIG(SECOND, birth_datetime, GETDATE()) FROM users;</code></pre>
+
+            <!-- Standardized CTA Callout -->
+            <!-- Standardized CTA Callout -->
+            <div class="blog-cta-wrap" id="cta-callout">
+              <h3>Calculate Your Exact Age &amp; Life Milestones</h3>
+              <p>
+                Want to know your exact age down to years, months, and days? Check your lifetime stats, total days lived, and upcoming birthday countdown 100% privately in your browser.
+              </p>
+              <div class="blog-cta-actions">
+                <a href="../index.html" class="primary-btn inline-btn">
+                  <span>Calculate Exact Age</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+                <a href="../index.html#features" class="secondary-pill-btn">
+                  <span>Date Difference &amp; Milestones &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+            <div class="faq-accordion">
+              <h3>How do I calculate age from a date of birth in SQL?</h3>
+              <p>
+                In MySQL, use <code>TIMESTAMPDIFF(YEAR, birth_date, CURDATE())</code>. In PostgreSQL, use <code>DATE_PART('year', AGE(CURRENT_DATE, birth_date))::int</code>. In SQL Server, use <code>DATEDIFF(YEAR, birth_date, GETDATE())</code> minus 1 if the birthday hasn't occurred yet this year.
+              </p>
+
+              <h3>Why is DATEDIFF(YEAR, birth_date, GETDATE()) wrong in SQL Server?</h3>
+              <p>
+                In SQL Server, <code>DATEDIFF(YEAR, ...)</code> counts the number of 1st January boundaries crossed rather than full completed years. Someone born on 31 December 2000 is reported as 1 year old on 1 January 2001, just one day later.
+              </p>
+
+              <h3>How do I get age in years, months and days in PostgreSQL?</h3>
+              <p>
+                PostgreSQL has a built-in <code>AGE(CURRENT_DATE, birth_date)</code> function that returns a formatted interval containing full years, months, and days (for example, <code>36 years 5 mons 16 days</code>).
+              </p>
+
+              <h3>What is the fastest way to find all users who are 18 or older?</h3>
+              <p>
+                Calculate the cutoff date once and compare against the raw <code>birth_date</code> column (e.g. <code>WHERE birth_date &lt;= CURDATE() - INTERVAL 18 YEAR</code>). This allows the database query planner to utilize an index on <code>birth_date</code>.
+              </p>
+
+              <h3>How are leap day birthdays handled in SQL age calculations?</h3>
+              <p>
+                Leap day (February 29) birthdays fall on February 28 or March 1 in non-leap years depending on database engine function implementations. Always test edge case queries for leap-year behavior before deploying to production.
+              </p>
+            </div>
+
+            <h2>Related Articles &amp; Time Guides</h2>
+            <p>Explore more fascinating age calculation guides on myagenow:</p>
+            <ul>
+              <li><a href="calculate-age-excel-google-sheets.html">How to Accurately Calculate Someone's Age in Excel or Google Sheets</a></li>
+              <li><a href="calculate-age-between-two-dates.html">Calculate Exact Age Between Two Dates</a></li>
+              <li><a href="how-to-calculate-age.html">How to Calculate Age Manually or Programmatically</a></li>
+              <li><a href="leap-year-birthday.html">How Does a Leap Year Affect Your Birthday?</a></li>
+            </ul>
+
+            <!-- Related Articles Section -->
+            <section class="related-articles-section" aria-label="Related articles">
+              <div class="related-articles-header">
+                <span class="dot" aria-hidden="true"></span>
+                <h3>Related Articles</h3>
+              </div>
+              <div class="related-articles-grid">
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80" alt="Desk with calendar and notebook for calculating exact age" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="how-to-calculate-age.html">How to Calculate Your Exact Age</a></h4>
+                <p>Learn step-by-step how to calculate your exact age in years, months, and days using standard calendar math rules.</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 3, 2026</span>
+                  <a href="how-to-calculate-age.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1435527173128-983b87201f4d?auto=format&fit=crop&w=1200&q=80" alt="Classic pocket watch and calendar for calculating time between dates" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="calculate-age-between-two-dates.html">How to Calculate Age Between Two Dates</a></h4>
+                <p>Learn how to calculate the exact difference between two dates in years, months, and days.</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 8, 2026</span>
+                  <a href="calculate-age-between-two-dates.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Spreadsheet data on laptop screen showing date formulas and calculations" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Calculators &amp; Math</div>
+                <h4><a href="calculate-age-excel-google-sheets.html">How to Accurately Calculate Someone's Age in Excel or Google Sheets</a></h4>
+                <p>Learn the right formulas to calculate age in Excel and Google Sheets, with exact years, months and days, plus fi...</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 27, 2026</span>
+                  <a href="calculate-age-excel-google-sheets.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+              </div>
+            </section>
+
+            <div class="article-share-bar">
+              <span class="article-share-label">Share article:</span>
+              <button type="button" class="share-pill-btn" id="share-twitter">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X / Twitter
+              </button>
+              <button type="button" class="share-pill-btn" id="share-facebook">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook
+              </button>
+              <button type="button" class="share-pill-btn" id="share-copy-link">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+          <a href="../blog.html">Blog</a>
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const twitterBtn = document.getElementById('share-twitter');
+        const copyBtn = document.getElementById('share-copy-link');
+
+        if (twitterBtn) {
+          twitterBtn.addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Check out this article: How to Calculate Age in SQL Databases: MySQL, PostgreSQL & SQL Server on myagenow!");
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
+          });
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              copyBtn.textContent = 'Copied!';
+              setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

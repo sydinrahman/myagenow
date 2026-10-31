@@ -3,8 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta name="robots" content="noindex" />
     <title>Page Not Found | myagenow</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Page Not Found | myagenow" />
+    <meta property="og:description" content="The page you are looking for does not exist on myagenow." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myagenow.today/404.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Page Not Found | myagenow" />
+    <meta name="twitter:description" content="The page you are looking for does not exist on myagenow." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,29 +29,27 @@
     <script src="navigation.js" defer></script>
   </head>
   <body class="error-page">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="site-header">
       <div class="container">
         <a href="index.html" class="brand" aria-label="myagenow home">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </span>
-          <span class="brand-name">my<span class="brand-accent">age</span>now</span>
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
         </a>
         <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
           <span></span><span></span><span></span>
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="index.html#how-it-works">How It Works</a>
-          <a href="index.html#faq">FAQ</a>
+          <a href="index.html">Age Calculator</a>
+          <a href="birthday-card-generator.html">Card Generator</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
         </nav>
       </div>
     </header>
 
-    <main class="not-found">
+    <main id="main-content" tabindex="-1" class="not-found">
       <div class="not-found-content">
         <span class="not-found-code" aria-hidden="true">404</span>
         <p class="kicker">Page not found</p>
@@ -47,18 +62,16 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-brand">
-          <span class="mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </span>
-          <span class="footer-brand-name">my<span class="brand-accent">age</span>now</span>
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
           <span>• © 2026. All rights reserved.</span>
         </div>
         <div class="footer-links" aria-label="Footer links">
+          <a href="birthday-card-generator.html">Birthday Card Generator</a>
+          <a href="blog.html">Blog</a>
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms</a>
+          <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>

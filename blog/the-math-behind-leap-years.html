@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <title>The Math Behind Leap Years: Why Our Calendar Needs Adjusting | myagenow</title>
+    <meta name="description" content="Discover the math behind leap years: tropical vs calendar years, Julian and Gregorian calendar rules, century exceptions, and how leap days affect age calculation." />
+    <meta name="keywords" content="math behind leap years, why leap years exist, tropical year vs calendar year, julian calendar vs gregorian, leap year age calculation, gregorian leap year rules" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/blog/the-math-behind-leap-years.html" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="The Math Behind Leap Years: Why Our Calendar Needs Adjusting | myagenow" />
+    <meta property="og:description" content="Discover the math behind leap years: tropical vs calendar years, Julian and Gregorian calendar rules, century exceptions, and how leap days affect age calculation." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://myagenow.today/blog/the-math-behind-leap-years.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Math Behind Leap Years: Why Our Calendar Needs Adjusting | myagenow" />
+    <meta name="twitter:description" content="Discover the math behind leap years: tropical vs calendar years, Julian and Gregorian calendar rules, century exceptions, and how leap days affect age calculation." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "The Math Behind Leap Years: Why Our Calendar Needs Adjusting",
+          "description": "Discover the math behind leap years: tropical vs calendar years, Julian and Gregorian calendar rules, century exceptions, and how leap days affect age calculation.",
+          "datePublished": "2026-10-27",
+          "author": {
+            "@type": "Organization",
+            "name": "myagenow"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "myagenow",
+            "url": "https://myagenow.today/"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why do we need leap years?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Earth needs about 365.2422 days to complete one cycle of the seasons, while a calendar year has a whole number of days. Adding a leap day roughly every four years keeps the calendar aligned with the seasons."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you know if a year is a leap year?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A year is a leap year if it is divisible by 4, except for century years, which must also be divisible by 400. So 2024 and 2000 are leap years, while 1900 and 2100 are not."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Was 1900 a leap year?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. 1900 is divisible by 4 and 100 but not by 400, so it was a common 365-day year under the Gregorian calendar."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How often does a leap day happen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually every four years. The Gregorian calendar has 97 leap years in each 400-year cycle, giving an average year of 365.2425 days."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "When is the next leap year?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "After 2024, the next leap years are 2028 and 2032. The year 2026 is not a leap year."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is age calculated for someone born on February 29?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Conventions differ: many calculators and some jurisdictions use February 28 in non-leap years, while others use March 1. Either way, age in completed years goes up by one each year."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <script src="../navigation.js" defer></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <div class="container">
+        <a href="../index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#how-it-works">How It Works</a>
+          <a href="../index.html#faq">FAQ</a>
+          <a href="../blog.html" class="active">Blog</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" class="page-shell">
+      <div class="legal-container">
+        <article class="blog-post-card">
+          <nav class="article-breadcrumbs" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span class="sep">&rsaquo;</span>
+            <a href="../blog.html">Blog</a>
+            <span class="sep">&rsaquo;</span>
+            <span aria-current="page">The Math Behind Leap Years</span>
+          </nav>
+
+          <header class="blog-post-header">
+            <div class="badge-pill">
+              <span class="dot" aria-hidden="true"></span>
+              Time &amp; Astronomy
+            </div>
+            <h1>The Math Behind Leap Years: Why Our Calendar Needs Adjusting</h1>
+            <p class="blog-post-meta">
+              Published on <strong>October 27, 2026</strong> • <strong>7 min read</strong> • By <strong>My Age Now team</strong>
+            </p>
+          </header>
+
+          <figure class="article-hero-media">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Calendar pages and pocket watch representing leap year math calculations" class="article-hero-img" loading="eager" width="1200" height="675" />
+            <figcaption class="article-hero-caption">Leap year rules keep our 365-day calendar synchronized with Earth's orbit around the sun.</figcaption>
+          </figure>
+
+          <div class="blog-post-content">
+            <details class="toc-box" open>
+              <summary>
+                <span>On This Page (Table of Contents)</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </summary>
+              <ol class="toc-list">
+                <li><a href="#problem">The problem: a year isn't a whole number of days</a></li>
+                <li><a href="#drift">How fast the calendar would drift</a></li>
+                <li><a href="#julian-fix">The Julian fix and its flaw</a></li>
+                <li><a href="#gregorian-rules">The Gregorian rules, step by step</a></li>
+                <li><a href="#century-exception">Why 1900 wasn't a leap year but 2000 was</a></li>
+                <li><a href="#age-calculation">Leap days and age calculation</a></li>
+                <li><a href="#faq">Frequently asked questions</a></li>
+                <li><a href="#key-takeaways">Key takeaways</a></li>
+              </ol>
+            </details>
+
+            <p>
+              Every four years, February gets an extra day. Most of us accept this without a second thought, but the leap day isn't a quirk or a tradition. It's a correction, and the math behind it explains why our calendar would slowly drift away from the seasons without it. In this guide you'll see exactly how big the problem is, how the Julian and Gregorian calendars tried to fix it, and why it matters when you calculate your age.
+            </p>
+
+            <h2 id="problem">The problem: a year isn't a whole number of days</h2>
+            <p>
+              A calendar year has a whole number of days, but the natural cycle it tries to follow does not. The tropical year is the time between one spring equinox and the next, and it lasts about 365.2422 days, or roughly 365 days, 5 hours, 48 minutes and 45 seconds.
+            </p>
+            <p>
+              A 365-day calendar therefore falls short by about 0.2422 days each year, close to six hours. That sounds tiny, but it adds up, and the seasons stay tied to the tropical year, not to our calendar.
+            </p>
+
+            <h2 id="drift">How fast the calendar would drift</h2>
+            <p>
+              If we never added leap days, every year would end about 0.2422 days earlier than the sun says it should. Here is how that accumulates:
+            </p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
+                    <th style="padding: 10px; font-weight: 700;">Years elapsed</th>
+                    <th style="padding: 10px; font-weight: 700;">Calculation</th>
+                    <th style="padding: 10px; font-weight: 700;">Approximate drift</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">4 years</td>
+                    <td style="padding: 10px;">4 × 0.2422</td>
+                    <td style="padding: 10px;">about 1 day</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">100 years</td>
+                    <td style="padding: 10px;">100 × 0.2422</td>
+                    <td style="padding: 10px;">about 24 days</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">400 years</td>
+                    <td style="padding: 10px;">400 × 0.2422</td>
+                    <td style="padding: 10px;">about 97 days</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px;">700 years</td>
+                    <td style="padding: 10px;">700 × 0.2422</td>
+                    <td style="padding: 10px;">about 170 days (more than five months)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              After roughly seven centuries, July in the northern hemisphere would feel like winter. That is the entire reason leap years exist: to pull the calendar back in step with the seasons.
+            </p>
+
+            <h2 id="julian-fix">The Julian fix and its flaw</h2>
+            <h3>A simple rule from 45 BCE</h3>
+            <p>
+              In 45 BCE, Julius Caesar introduced the Julian calendar. Its rule was easy: add a leap day every fourth year. Over four years that gives 365 × 3 + 366 = 1,461 days, so the average Julian year is 1,461 ÷ 4 = 365.25 days.
+            </p>
+
+            <h3>Why it still drifted</h3>
+            <p>
+              365.25 is close to 365.2422, but not close enough. The difference is 365.25 − 365.2422 = 0.0078 days per year, about 11 minutes. That error works out to roughly one extra day every 128 years. By the 1500s the calendar had slipped around ten days behind the equinox.
+            </p>
+
+            <h2 id="gregorian-rules">The Gregorian rules, step by step</h2>
+            <p>
+              In 1582, Pope Gregory XIII introduced a reformed calendar. It did two things: it skipped ten days to realign the date (in countries that adopted it first, October 4 was followed directly by October 15), and it changed the leap year rule so the drift would stop building up.
+            </p>
+            <p>
+              The modern rule has three parts. A year is a leap year if:
+            </p>
+            <ol>
+              <li>It is divisible by 4, and</li>
+              <li>It is not divisible by 100, unless</li>
+              <li>It is also divisible by 400.</li>
+            </ol>
+            <p>
+              Over a 400-year cycle this gives 100 leap years minus 3 skipped century years = 97 leap years. The total is 400 × 365 + 97 = 146,097 days, and 146,097 ÷ 400 = 365.2425 days per year on average.
+            </p>
+            <p>
+              Compare that with the real value of about 365.2422. The remaining gap is around 0.0003 days a year, so the Gregorian calendar slips by only about one day every few thousand years.
+            </p>
+
+            <h2 id="century-exception">Why 1900 wasn't a leap year but 2000 was</h2>
+            <p>
+              The century exception is what trips most people up. Use this table to test any year:
+            </p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
+                    <th style="padding: 10px; font-weight: 700;">Year</th>
+                    <th style="padding: 10px; font-weight: 700;">÷ 4?</th>
+                    <th style="padding: 10px; font-weight: 700;">÷ 100?</th>
+                    <th style="padding: 10px; font-weight: 700;">÷ 400?</th>
+                    <th style="padding: 10px; font-weight: 700;">Leap year?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">1900</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">No</td>
+                    <td style="padding: 10px;">No</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">2000</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">Yes</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">2024</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">No</td>
+                    <td style="padding: 10px;">n/a</td>
+                    <td style="padding: 10px;">Yes</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">2026</td>
+                    <td style="padding: 10px;">No</td>
+                    <td style="padding: 10px;">n/a</td>
+                    <td style="padding: 10px;">n/a</td>
+                    <td style="padding: 10px;">No</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">2028</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">No</td>
+                    <td style="padding: 10px;">n/a</td>
+                    <td style="padding: 10px;">Yes</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px;">2100</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">Yes</td>
+                    <td style="padding: 10px;">No</td>
+                    <td style="padding: 10px;">No</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Skipping three leap days every 400 years is exactly what trims the average from 365.25 down to 365.2425.
+            </p>
+
+            <h2 id="age-calculation">Leap days and age calculation</h2>
+            <p>
+              Leap years also create an interesting question for anyone born on February 29: when is your birthday in a year without one? Since 4 × 365 + 1 = 1,461 days make up a normal four-year cycle, only about 1 in 1,461 people is born on a leap day.
+            </p>
+            <p>
+              There is no single universal answer. Many calculators and some jurisdictions treat the birthday as February 28 in non-leap years, while others use March 1. Here is how the two conventions differ for someone born on February 29, 2000:
+            </p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border, #e2e8f0);">
+                    <th style="padding: 10px; font-weight: 700;">Date in 2026</th>
+                    <th style="padding: 10px; font-weight: 700;">Age if birthday = Feb 28</th>
+                    <th style="padding: 10px; font-weight: 700;">Age if birthday = Mar 1</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">February 27</td>
+                    <td style="padding: 10px;">25</td>
+                    <td style="padding: 10px;">25</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border, #e2e8f0);">
+                    <td style="padding: 10px;">February 28</td>
+                    <td style="padding: 10px;">26</td>
+                    <td style="padding: 10px;">25</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px;">March 1</td>
+                    <td style="padding: 10px;">26</td>
+                    <td style="padding: 10px;">26</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              The two rules only disagree for a single day, February 28. For everything else, the age in completed years comes out the same. Leap days also change totals: a person who has lived through several leap years has lived more days than "age × 365", which is why exact day counts should always use real calendar dates.
+            </p>
+
+            <div class="blog-callout">
+              <h3>Check your own exact age</h3>
+              <p>
+                Find out your age in years, months and days, plus the <a href="how-many-days-until-my-birthday.html">days until your next birthday</a>. Leap years are handled automatically.
+              </p>
+            </div>
+
+            <!-- Standardized CTA Callout -->
+            <div class="blog-cta-wrap" id="cta-callout">
+              <h3>Calculate Your Exact Age &amp; Life Milestones</h3>
+              <p>
+                Want to know your exact age down to years, months, and days? Check your lifetime stats, total days lived, and upcoming birthday countdown 100% privately in your browser.
+              </p>
+              <div class="blog-cta-actions">
+                <a href="../index.html" class="primary-btn inline-btn">
+                  <span>Calculate Exact Age</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+                <a href="../index.html#features" class="secondary-pill-btn">
+                  <span>Date Difference &amp; Milestones &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently asked questions</h2>
+
+            <p><strong>Why do we need leap years?</strong><br />
+            Earth needs about 365.2422 days to complete one cycle of the seasons, while a calendar year has a whole number of days. Adding a leap day roughly every four years keeps the calendar aligned with the seasons.</p>
+
+            <p><strong>How do you know if a year is a leap year?</strong><br />
+            A year is a leap year if it is divisible by 4, except for century years, which must also be divisible by 400. So 2024 and 2000 are leap years, while 1900 and 2100 are not.</p>
+
+            <p><strong>Was 1900 a leap year?</strong><br />
+            No. 1900 is divisible by 4 and 100 but not by 400, so it was a common 365-day year under the Gregorian calendar.</p>
+
+            <p><strong>How often does a leap day happen?</strong><br />
+            Usually every four years. The Gregorian calendar has 97 leap years in each 400-year cycle, giving an average year of 365.2425 days.</p>
+
+            <p><strong>When is the next leap year?</strong><br />
+            After 2024, the next leap years are 2028 and 2032. The year 2026 is not a leap year.</p>
+
+            <p><strong>How is age calculated for someone born on February 29?</strong><br />
+            Conventions differ: many calculators and some jurisdictions use February 28 in non-leap years, while others use March 1. Either way, age in completed years goes up by one each year.</p>
+
+            <h2 id="key-takeaways">Key takeaways</h2>
+            <ul>
+              <li>The tropical year is about 365.2422 days, so a 365-day calendar drifts about six hours per year.</li>
+              <li>The Julian calendar (365.25 days) overcorrected slightly and drifted about one day every 128 years.</li>
+              <li>The Gregorian rule (÷4, except centuries unless ÷400) averages 365.2425 days and stays accurate for thousands of years.</li>
+              <li>Leap days affect exact day counts and the Feb 29 birthday question, so use a calendar-aware tool for precise ages.</li>
+            </ul>
+
+
+
+            <!-- Related Articles Section -->
+            <section class="related-articles-section" aria-label="Related articles">
+              <div class="related-articles-header">
+                <span class="dot" aria-hidden="true"></span>
+                <h3>Related Articles</h3>
+              </div>
+              <div class="related-articles-grid">
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Weekly calendar planner page for finding day of the week born" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Time &amp; Astronomy</div>
+                <h4><a href="what-day-was-i-born.html">What Day of the Week Was I Born?</a></h4>
+                <p>Find out which day of the week you were born using your date of birth and learn how weekday calculation algorith...</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 10, 2026</span>
+                  <a href="what-day-was-i-born.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80" alt="Starlit night sky representing astrological zodiac signs" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Time &amp; Astronomy</div>
+                <h4><a href="zodiac-by-birthday.html">What Is Your Zodiac Sign Based on Your Birthday?</a></h4>
+                <p>Find out how your birth date determines your astrological zodiac sign, tropical zodiac date ranges, and element...</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 18, 2026</span>
+                  <a href="zodiac-by-birthday.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+
+              <article class="blog-card related-card">
+                <div class="blog-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=80" alt="February calendar page highlighting leap year birthday" class="blog-card-img" loading="lazy" width="600" height="338" />
+                </div>
+                <div class="blog-card-badge">Time &amp; Astronomy</div>
+                <h4><a href="leap-year-birthday.html">How Does a Leap Year Affect Your Birthday?</a></h4>
+                <p>Learn how leap years work, how February 29th leap year birthdays are calculated in common years, and calendar ru...</p>
+                <div class="blog-card-meta">
+                  <span class="blog-card-date">October 25, 2026</span>
+                  <a href="leap-year-birthday.html" class="blog-card-link">Read article &rarr;</a>
+                </div>
+              </article>
+              </div>
+            </section>
+
+            <div class="article-share-bar" style="margin-top: 2.5rem;">
+              <span class="article-share-label">Share article:</span>
+              <button type="button" class="share-pill-btn" id="share-twitter">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X / Twitter
+              </button>
+              <button type="button" class="share-pill-btn" id="share-facebook">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook
+              </button>
+              <button type="button" class="share-pill-btn" id="share-copy-link">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+        <div class="footer-links" aria-label="Footer links">
+          <a href="../blog.html">Blog</a>
+          <a href="../privacy.html">Privacy Policy</a>
+          <a href="../terms.html">Terms</a>
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const twitterBtn = document.getElementById('share-twitter');
+        const copyBtn = document.getElementById('share-copy-link');
+
+        if (twitterBtn) {
+          twitterBtn.addEventListener('click', function() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent("Check out this article: The Math Behind Leap Years: Why Our Calendar Needs Adjusting on myagenow!");
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'noopener,noreferrer');
+          });
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              copyBtn.textContent = 'Copied!';
+              setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
