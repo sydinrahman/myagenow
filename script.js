@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
     errorBox.classList.remove('hidden');
     if (dobInput) {
       dobInput.setAttribute('aria-invalid', 'true');
-      dobInput.setAttribute('aria-describedby', 'error-message');
+      dobInput.setAttribute('aria-describedby', 'error-message dob-helper');
       dobInput.focus();
     }
   }
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (errorBox) errorBox.classList.add('hidden');
     if (dobInput) {
       dobInput.removeAttribute('aria-invalid');
-      dobInput.removeAttribute('aria-describedby');
+      dobInput.setAttribute('aria-describedby', 'dob-helper');
     }
   }
 
@@ -663,6 +663,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   [dobInput, targetDateInput].forEach(function (input) {
     if (!input) return;
+    input.addEventListener('input', function () {
+      if (errorBox && !errorBox.classList.contains('hidden')) {
+        hideError();
+      }
+    });
     input.addEventListener('click', function () {
       if (typeof input.showPicker === 'function') {
         try {

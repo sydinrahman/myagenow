@@ -389,6 +389,18 @@ label {
   background: #ffffff;
 }
 
+.date-field input[aria-invalid="true"],
+.form-group input[aria-invalid="true"] {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.date-field input[aria-invalid="true"]:focus-visible,
+.form-group input[aria-invalid="true"]:focus-visible {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
 .date-field input::-webkit-calendar-picker-indicator {
   position: absolute;
   right: 0.8rem;
@@ -400,6 +412,10 @@ label {
 
 .date-field:focus-within .field-icon {
   color: var(--primary);
+}
+
+.date-field input[aria-invalid="true"] ~ .field-icon {
+  color: #ef4444;
 }
 
 .field-icon {
@@ -489,6 +505,11 @@ label {
   background: var(--primary-dark);
   transform: translateY(-1px);
   box-shadow: 0 16px 32px rgba(37, 99, 235, 0.32);
+}
+
+.primary-btn:focus-visible {
+  outline: 2px solid var(--primary-dark);
+  outline-offset: 3px;
 }
 
 .primary-btn:active {
