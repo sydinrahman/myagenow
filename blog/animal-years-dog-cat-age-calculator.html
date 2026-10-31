@@ -628,6 +628,14 @@
         const vetOutput = document.getElementById('res-vet-output');
         const epiOutput = document.getElementById('res-epigenetic-output');
 
+        // 🔒 Security: Helper to safely render formula label and output without innerHTML to prevent DOM XSS
+        function renderResultRow(targetElem, labelText, valueText) {
+          const strong = document.createElement('strong');
+          strong.textContent = labelText;
+          const text = document.createTextNode(` ${valueText}`);
+          targetElem.replaceChildren(strong, text);
+        }
+
         function calculatePetAge() {
           const type = petSelect.value;
           const age = parseFloat(ageInput.value);
@@ -635,7 +643,7 @@
           if (isNaN(age) || age <= 0) {
             petLabel.textContent = "Invalid age";
             petAgeVal.textContent = "-";
-            vetOutput.innerHTML = "Please enter a valid age in years.";
+            vetOutput.replaceChildren(document.createTextNode("Please enter a valid age in years."));
             epiOutput.style.display = 'none';
             return;
           }
@@ -653,7 +661,7 @@
             } else {
               vetHumanAge = 24 + (age - 2) * 4;
             }
-            vetOutput.innerHTML = `<strong>Veterinary formula:</strong> ~${Math.round(vetHumanAge * 10) / 10} human years`;
+            renderResultRow(vetOutput, 'Veterinary formula:', `~${Math.round(vetHumanAge * 10) / 10} human years`);
             epiOutput.style.display = 'none';
           } else {
             // Dog sizes
@@ -689,10 +697,10 @@
             }
 
             petLabel.textContent = sizeLabel;
-            vetOutput.innerHTML = `<strong>Vet-style formula:</strong> ~${Math.round(vetHumanAge * 10) / 10} human years`;
+            renderResultRow(vetOutput, 'Vet-style formula:', `~${Math.round(vetHumanAge * 10) / 10} human years`);
             epiOutput.style.display = 'block';
             if (epiHumanAge !== null) {
-              epiOutput.innerHTML = `<strong>Epigenetic DNA clock (Labradors study):</strong> ~${Math.round(epiHumanAge * 10) / 10} human years`;
+              renderResultRow(epiOutput, 'Epigenetic DNA clock (Labradors study):', `~${Math.round(epiHumanAge * 10) / 10} human years`);
             }
           }
         }
