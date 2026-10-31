@@ -3010,3 +3010,593 @@ code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   word-break: break-word;
 }
+
+/* ==========================================================================
+   Birthday Card Generator Layout & Components
+   ========================================================================== */
+.card-hero {
+  padding-bottom: 2rem;
+}
+
+.generator-workspace {
+  padding: 0 1rem 3.5rem;
+}
+
+.generator-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(340px, 490px) minmax(360px, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.editor-panel {
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.optional-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 0.35rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-1 { flex: 1; }
+
+.toggle-age-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 0.85rem;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+.age-calc-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: #fef08a;
+  color: #854d0e;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border: 1px solid #facc15;
+  box-shadow: 0 2px 6px rgba(234, 179, 8, 0.15);
+}
+
+/* Template Selector Grid */
+.template-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.template-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.85rem;
+  border-radius: 0.95rem;
+  border: 2px solid var(--border);
+  background: #ffffff;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.template-option:hover {
+  border-color: rgba(37, 99, 235, 0.4);
+  background: var(--primary-soft);
+  transform: translateY(-1px);
+}
+
+.template-option.active {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18), 0 8px 20px rgba(37, 99, 235, 0.08);
+}
+
+.template-option:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
+}
+
+.tpl-icon {
+  font-size: 1.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.tpl-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.tpl-desc {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+/* Color Palette Swatches */
+.color-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+}
+
+.color-swatch-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 0.85rem;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px;
+}
+
+.color-swatch-btn:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.color-swatch-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.color-swatch-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.color-preview-circle {
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.color-swatch-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Message Presets */
+.preset-pills-wrap {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.presets-intro {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.preset-buttons {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-btn:hover,
+.preset-btn:focus-visible {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.preset-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.character-count {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Sticky Preview Panel (Column 2) */
+.preview-panel-wrap {
+  position: sticky;
+  top: 5rem;
+}
+
+.preview-sticky-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.aspect-pill {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+/* 4:5 Portrait Card Viewport & Render */
+.card-preview-viewport {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #f8fafc;
+}
+
+.birthday-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  user-select: none;
+  background-color: var(--card-bg-color, #ffffff);
+  color: var(--card-text-color, #0f172a);
+}
+
+.card-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-border-frame {
+  position: absolute;
+  inset: 0.85rem;
+  z-index: 2;
+  border-radius: 0.85rem;
+  border: 2px solid var(--card-border-color, #e2e8f0);
+  pointer-events: none;
+}
+
+.card-decorations {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.card-inner-content {
+  position: relative;
+  z-index: 4;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.card-tagline-wrap {
+  margin-bottom: 0.5rem;
+}
+
+.card-tagline {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--card-accent-color, #2563eb);
+}
+
+.card-headline {
+  margin: 0.2rem 0;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--card-primary, #2563eb);
+}
+
+.card-recipient-wrap {
+  margin: 0.35rem 0 0.5rem;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.card-recipient {
+  font-size: clamp(1.4rem, 3.8vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--card-secondary, #1d4ed8);
+}
+
+.card-meta-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin: 0.4rem 0 0.75rem;
+}
+
+.card-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--card-border-color, #e2e8f0);
+  color: var(--card-text-color, #0f172a);
+}
+
+.card-message-box {
+  max-width: 90%;
+  margin: 0.5rem 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-message {
+  margin: 0;
+  font-size: clamp(0.85rem, 1.8vw, 0.98rem);
+  line-height: 1.6;
+  color: var(--card-text-color, #334155);
+  word-break: break-word;
+}
+
+.card-footer-signoff {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-sender {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--card-primary, #2563eb);
+}
+
+.card-watermark {
+  position: absolute;
+  bottom: 0.2rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  opacity: 0.5;
+  letter-spacing: 0.05em;
+}
+
+/* Template 1: Minimal Styles */
+.birthday-card.template-minimal .card-border-frame {
+  inset: 1.1rem;
+  border-width: 1px;
+}
+
+.birthday-card.template-minimal .card-inner-content {
+  border: 1px solid rgba(196, 151, 88, 0.25);
+  border-radius: 0.5rem;
+  margin: 0.65rem;
+}
+
+.botanical-wreath {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: var(--card-accent-color);
+  letter-spacing: 0.3em;
+  opacity: 0.8;
+}
+
+.top-wreath { top: 1.4rem; }
+.bottom-wreath { bottom: 1.4rem; }
+
+/* Template 2: Celebration Styles */
+.birthday-card.template-celebration .card-border-frame {
+  border-width: 3px;
+  border-radius: 1.1rem;
+}
+
+.confetti-particle {
+  position: absolute;
+  font-size: 1.15rem;
+  animation: floatConfetti 3s ease-in-out infinite alternate;
+}
+
+.confetti-1 { top: 1rem; left: 1rem; animation-delay: 0s; }
+.confetti-2 { top: 1.2rem; right: 1.2rem; animation-delay: 0.4s; }
+.confetti-3 { top: 30%; left: 0.8rem; font-size: 0.95rem; animation-delay: 0.8s; }
+.confetti-4 { top: 32%; right: 0.8rem; font-size: 0.95rem; animation-delay: 1.2s; }
+.confetti-5 { bottom: 2rem; left: 1.2rem; animation-delay: 0.6s; }
+.confetti-6 { bottom: 2.2rem; right: 1.2rem; animation-delay: 1s; }
+.confetti-7 { bottom: 3.5rem; left: 2.5rem; font-size: 0.9rem; animation-delay: 1.4s; }
+.confetti-8 { bottom: 3.5rem; right: 2.5rem; font-size: 0.9rem; animation-delay: 0.2s; }
+
+@keyframes floatConfetti {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-6px) rotate(8deg); }
+}
+
+/* Template 3: Luxury Black & Gold Styles */
+.birthday-card.template-luxury {
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.birthday-card.template-luxury .card-border-frame {
+  border-width: 2px;
+  border-color: var(--card-primary);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+.luxury-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--card-primary);
+}
+
+.luxury-corner-top-left { top: 1.2rem; left: 1.2rem; border-right: none; border-bottom: none; }
+.luxury-corner-top-right { top: 1.2rem; right: 1.2rem; border-left: none; border-bottom: none; }
+.luxury-corner-bottom-left { bottom: 1.2rem; left: 1.2rem; border-right: none; border-top: none; }
+.luxury-corner-bottom-right { bottom: 1.2rem; right: 1.2rem; border-left: none; border-top: none; }
+
+.luxury-star-burst {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--card-primary);
+  font-size: 1.2rem;
+}
+
+/* Template 4: Cute & Playful Styles */
+.birthday-card.template-playful .card-border-frame {
+  border-width: 3px;
+  border-style: dashed;
+  border-radius: 1.25rem;
+}
+
+.playful-doodle {
+  position: absolute;
+  font-size: 1.2rem;
+}
+
+.doodle-1 { top: 1rem; left: 1.2rem; }
+.doodle-2 { top: 1.1rem; right: 1.2rem; }
+.doodle-3 { bottom: 2rem; left: 1.2rem; }
+.doodle-4 { bottom: 2.1rem; right: 1.2rem; }
+.doodle-5 { top: 25%; left: 0.9rem; font-size: 0.85rem; }
+.doodle-6 { top: 25%; right: 0.9rem; font-size: 0.85rem; }
+
+/* Preview Actions Bar */
+.preview-actions-bar {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Mobile & Tablet Responsiveness for Generator */
+@media (max-width: 900px) {
+  .generator-container {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-panel-wrap {
+    position: static;
+    order: -1;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-preview-viewport {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .generator-workspace {
+    padding: 0 0.75rem 2.5rem;
+  }
+
+  .editor-panel {
+    padding: 1.1rem;
+  }
+
+  .preview-sticky-box {
+    padding: 1.1rem;
+  }
+
+  .template-selector-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .color-palette-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .secondary-actions-row {
+    grid-template-columns: 1fr;
+  }
+}

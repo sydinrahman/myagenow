@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5749BF37MP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5749BF37MP');
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.google-analytics.com https://api.producthunt.com https://images.unsplash.com https://plus.unsplash.com; frame-src 'self' https://www.google.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <title>Free Birthday Card Maker - Create Custom Birthday Cards | MyAgeNow</title>
+    <meta
+      name="description"
+      content="Create beautiful personalized birthday cards for free. Add a name, write a message, choose a design, and download or share your birthday card."
+    />
+    <meta name="keywords" content="birthday card generator, free birthday card maker, personalized birthday card, download birthday card, custom greeting card, online card maker" />
+    <meta name="author" content="myagenow" />
+    <link rel="canonical" href="https://myagenow.today/birthday-card-generator.html" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Free Birthday Card Maker - Create Custom Birthday Cards | MyAgeNow" />
+    <meta property="og:description" content="Create beautiful personalized birthday cards for free. Add a name, write a message, choose a design, and download or share your birthday card." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://myagenow.today/birthday-card-generator.html" />
+    <meta property="og:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Free Birthday Card Maker - Create Custom Birthday Cards | MyAgeNow" />
+    <meta name="twitter:description" content="Create personalized birthday cards instantly. Free, private, and high-resolution PNG download." />
+    <meta name="twitter:image" content="https://myagenow.today/og-image.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://myagenow.today/birthday-card-generator.html#webapp",
+          "name": "MyAgeNow Birthday Card Generator",
+          "url": "https://myagenow.today/birthday-card-generator.html",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript",
+          "description": "Free, private, instant client-side birthday card maker allowing users to personalize, preview, and download custom greeting cards as high-resolution PNGs."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://myagenow.today/birthday-card-generator.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is the Birthday Card Generator completely free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our Birthday Card Generator is 100% free with no sign-ups, no hidden subscriptions, and no watermarks on your downloaded cards."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I download the card as a high-resolution image?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! Clicking 'Download PNG' exports an ultra-crisp 1200x1500px portrait image directly to your device, perfect for high-quality printing or digital sharing."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does the card generator calculate the recipient's turning age?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. When you enter their birth date and enable 'Show age on card', our tool automatically calculates their upcoming turning age and displays a personalized milestone badge."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my messages or personal names stored on your servers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All card customization and image rendering happen entirely inside your local web browser using client-side JavaScript and HTML5 Canvas. No personal information is ever transmitted or stored."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does sharing work on mobile devices?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "On compatible modern smartphones and tablets, clicking 'Share Card' opens your native device share menu (WhatsApp, Messages, AirDrop, Instagram, Email). On unsupported devices, it instantly downloads the PNG card image."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Caveat:wght@600;700&family=Cinzel:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="navigation.js" defer></script>
+    <script src="birthday-card.js" defer></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+      <div class="container">
+        <a href="index.html" class="brand" aria-label="myagenow home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span class="brand-name">myagenow</span>
+        </a>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="index.html">Age Calculator</a>
+          <a href="birthday-card-generator.html" class="active" aria-current="page">Card Generator</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main" id="main-content" tabindex="-1">
+      <section class="hero card-hero">
+        <div class="container">
+          <div class="hero-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Instant &amp; 100% Free Greeting Cards</span>
+          </div>
+          <h1>Free Birthday Card Generator</h1>
+          <p>
+            Create personalized, print-ready birthday greeting cards in seconds. Customize names, thoughtful messages, and stylish themes, then download or share instantly.
+          </p>
+        </div>
+      </section>
+
+      <!-- Generator Workspace -->
+      <section class="generator-workspace" aria-label="Birthday Card Generator Tool">
+        <div class="generator-container">
+
+          <!-- Column 1: Editor Form Controls -->
+          <div class="card editor-panel">
+            <div class="card-header">
+              <div class="card-title">
+                <span class="dot" aria-hidden="true"></span>
+                <span>Customize Your Card</span>
+              </div>
+              <button class="reset-button" id="card-reset-btn" type="button" aria-label="Reset card to default" title="Reset all fields to default values">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+                  <path d="M3 4v5h5"></path>
+                </svg>
+                Reset
+              </button>
+            </div>
+
+            <form id="card-generator-form" novalidate onsubmit="return false;">
+              <!-- 1. Recipient Name -->
+              <div class="form-group">
+                <label for="recipient-name">Recipient's Name <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="recipient-name"
+                  name="recipient-name"
+                  value="Sarah"
+                  maxlength="50"
+                  placeholder="e.g., Sarah, Mom, Best Friend"
+                  aria-describedby="name-helper"
+                  required
+                />
+                <span class="form-note" id="name-helper">Enter the name or nickname to display prominently on the card.</span>
+              </div>
+
+              <!-- 2. Birthday Date & Milestone Toggle -->
+              <div class="form-row date-age-row">
+                <div class="form-group flex-1">
+                  <label for="birthday-date">Birthday Date <span class="optional-label">(Optional)</span></label>
+                  <div class="date-field">
+                    <input
+                      type="date"
+                      id="birthday-date"
+                      name="birthday-date"
+                      aria-describedby="date-helper"
+                    />
+                    <span class="field-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                        <path d="M8 2v4M16 2v4M3 10h18"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <span class="form-note" id="date-helper">Displays the formatted birthday date on the card.</span>
+                </div>
+              </div>
+
+              <div class="form-group toggle-age-wrap">
+                <label class="checkbox-label" for="show-age-toggle">
+                  <input type="checkbox" id="show-age-toggle" name="show-age-toggle" />
+                  <span>Show turning age milestone badge on card</span>
+                </label>
+                <div id="age-calc-preview" class="age-calc-badge hidden" aria-live="polite">
+                  <span id="calculated-age-text">Turning 25!</span>
+                </div>
+              </div>
+
+              <!-- 3. Template Selection -->
+              <div class="form-group">
+                <label id="template-select-label">Choose Card Template <span class="required">*</span></label>
+                <div class="template-selector-grid" role="radiogroup" aria-labelledby="template-select-label">
+                  <button
+                    type="button"
+                    class="template-option active"
+                    role="radio"
+                    aria-checked="true"
+                    data-template="minimal"
+                    id="tpl-minimal"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">🌿</span>
+                    <span class="tpl-title">Minimal &amp; Elegant</span>
+                    <span class="tpl-desc">Clean typography, delicate frames</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="celebration"
+                    id="tpl-celebration"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">🎉</span>
+                    <span class="tpl-title">Celebration</span>
+                    <span class="tpl-desc">Vibrant festive balloons &amp; confetti</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="luxury"
+                    id="tpl-luxury"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">✨</span>
+                    <span class="tpl-title">Luxury Black &amp; Gold</span>
+                    <span class="tpl-desc">Opulent dark theme, gold accents</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="template-option"
+                    role="radio"
+                    aria-checked="false"
+                    data-template="playful"
+                    id="tpl-playful"
+                  >
+                    <span class="tpl-icon" aria-hidden="true">🧁</span>
+                    <span class="tpl-title">Cute &amp; Playful</span>
+                    <span class="tpl-desc">Whimsical badges, pastel charm</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 4. Color Theme Selection -->
+              <div class="form-group">
+                <label id="color-palette-label">Card Color Palette</label>
+                <div class="color-palette-grid" id="color-palette-container" role="radiogroup" aria-labelledby="color-palette-label">
+                  <!-- Populated dynamically based on template -->
+                </div>
+              </div>
+
+              <!-- 5. Message Presets -->
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="birthday-message">Personalized Message</label>
+                  <span class="character-count" id="char-counter">0 / 280</span>
+                </div>
+
+                <div class="preset-pills-wrap" aria-label="Quick message presets">
+                  <span class="presets-intro">Example messages:</span>
+                  <div class="preset-buttons" role="group" aria-label="Birthday message ideas">
+                    <button type="button" class="preset-btn" data-preset="heartfelt">Warm &amp; Heartfelt</button>
+                    <button type="button" class="preset-btn" data-preset="short">Short &amp; Sweet</button>
+                    <button type="button" class="preset-btn" data-preset="cheerful">Fun &amp; Cheerful</button>
+                    <button type="button" class="preset-btn" data-preset="milestone">Milestone &amp; Inspiring</button>
+                    <button type="button" class="preset-btn" data-preset="poetic">Poetic &amp; Elegant</button>
+                    <button type="button" class="preset-btn" data-preset="witty">Witty &amp; Playful</button>
+                  </div>
+                </div>
+
+                <textarea
+                  id="birthday-message"
+                  name="birthday-message"
+                  rows="4"
+                  maxlength="280"
+                  aria-describedby="msg-helper"
+                  placeholder="Write your heartfelt birthday wishes..."
+                >Wishing you a year filled with wonderful adventures, endless laughter, and boundless joy. May all your dreams take flight this year! Happy Birthday!</textarea>
+                <span class="form-note" id="msg-helper">You can customize the message freely or click any example above to replace it.</span>
+              </div>
+
+              <!-- 6. Sender / Sign-off (Optional) -->
+              <div class="form-group">
+                <label for="sender-name">From / Sign-off <span class="optional-label">(Optional)</span></label>
+                <input
+                  type="text"
+                  id="sender-name"
+                  name="sender-name"
+                  value="With love, Alex"
+                  maxlength="40"
+                  placeholder="e.g., With love, Alex"
+                />
+              </div>
+            </form>
+          </div>
+
+          <!-- Column 2: Live Preview & Export Card -->
+          <div class="preview-panel-wrap">
+            <div class="preview-sticky-box">
+              <div class="preview-header">
+                <div class="preview-title">
+                  <span class="status-dot"></span>
+                  <span>Live Card Preview</span>
+                </div>
+                <span class="aspect-pill">Portrait 4:5 (1200×1500)</span>
+              </div>
+
+              <!-- The Rendered Card Preview (4:5 Aspect Ratio) -->
+              <div class="card-preview-viewport" id="card-preview-viewport" aria-label="Live preview of your customized birthday card">
+                <div class="birthday-card template-minimal theme-classic" id="birthday-card-render">
+                  <!-- Decorative Canvas / Background elements -->
+                  <div class="card-bg-layer" aria-hidden="true"></div>
+                  <div class="card-border-frame" aria-hidden="true"></div>
+                  <div class="card-decorations" id="card-decorations" aria-hidden="true"></div>
+
+                  <!-- Card Content Area -->
+                  <div class="card-inner-content">
+                    <div class="card-tagline-wrap">
+                      <span class="card-tagline" id="card-tagline-val">CELEBRATING A SPECIAL DAY</span>
+                    </div>
+
+                    <h2 class="card-headline">Happy Birthday</h2>
+
+                    <div class="card-recipient-wrap">
+                      <span class="card-recipient" id="card-recipient-val">Sarah</span>
+                    </div>
+
+                    <div class="card-meta-badges" id="card-meta-badges">
+                      <span class="card-meta-badge card-date-badge hidden" id="card-date-badge-val"></span>
+                      <span class="card-meta-badge card-age-badge hidden" id="card-age-badge-val"></span>
+                    </div>
+
+                    <div class="card-message-box">
+                      <p class="card-message" id="card-message-val">Wishing you a year filled with wonderful adventures, endless laughter, and boundless joy. May all your dreams take flight this year! Happy Birthday!</p>
+                    </div>
+
+                    <div class="card-footer-signoff">
+                      <span class="card-sender" id="card-sender-val">With love, Alex</span>
+                    </div>
+
+                    <div class="card-watermark" aria-hidden="true">
+                      <span>myagenow.today</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Export & Share Actions Bar -->
+              <div class="preview-actions-bar">
+                <span id="card-action-status" class="sr-only" role="status" aria-live="polite"></span>
+
+                <button class="action-btn primary-action download-btn" id="download-png-btn" type="button" aria-label="Download high-resolution PNG card image" title="Export card as high-resolution 1200×1500 PNG image">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Download High-Res PNG</span>
+                </button>
+
+                <div class="secondary-actions-row">
+                  <button class="action-btn secondary-btn" id="share-card-btn" type="button" aria-label="Share card with friends or family" title="Share card via device share sheet">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="18" cy="5" r="3"></circle>
+                      <circle cx="6" cy="12" r="3"></circle>
+                      <circle cx="18" cy="19" r="3"></circle>
+                      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span>Share Card</span>
+                  </button>
+
+                  <button class="action-btn secondary-btn" id="copy-card-msg-btn" type="button" aria-label="Copy message text to clipboard" title="Copy card greeting message">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy Message</span>
+                  </button>
+
+                  <button class="action-btn secondary-btn" id="print-card-btn" type="button" aria-label="Print greeting card" title="Print card or save as PDF">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                      <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    <span>Print Card</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="privacy-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+                <span>Zero tracking — generated 100% locally on your device</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Editorial / Educational Guide Section -->
+      <section class="how-it-works-section" aria-labelledby="guide-title">
+        <div class="how-it-works-wrap">
+          <div class="how-it-works-header">
+            <span class="kicker">Simple 3-Step Guide</span>
+            <h2 id="guide-title">How to Create &amp; Download Your Birthday Card</h2>
+            <p>Design a stunning, personalized greeting card in under 60 seconds with zero design experience needed.</p>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <h3>Personalize the Details</h3>
+              <p>Type the recipient's name and choose to include their birth date or upcoming turning age milestone. Pick from 6 inspiring message presets or compose your own custom wishes.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <h3>Choose Template &amp; Colors</h3>
+              <p>Switch between 4 hand-crafted designs: Minimal &amp; Elegant, Colorful Celebration, Luxury Black &amp; Gold, or Cute &amp; Playful. Select from 3 tailored color palettes per design.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <h3>Download or Share Instantly</h3>
+              <p>Watch your card render in real-time. Export a crystal-clear 1200×1500px portrait PNG with one tap, or share directly via WhatsApp, Messages, Instagram, or email.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- More Utilities / Internal Links -->
+      <section class="features-section" aria-labelledby="other-tools-title">
+        <div class="features-wrap">
+          <div class="features-header">
+            <span class="kicker">Explore More Tools</span>
+            <h2 id="other-tools-title">More Free Birthday &amp; Age Utilities</h2>
+            <p>Discover our suite of privacy-first date, milestone, and age calculators.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">🎂</div>
+              <h3>Exact Age Calculator</h3>
+              <p>Calculate exact age in years, months, and days, including a live birthday countdown, total days lived, and astrological zodiac sign.</p>
+              <a href="index.html" class="feature-pill">Try Age Calculator →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">📆</div>
+              <h3>Birthday Countdown</h3>
+              <p>Find out exactly how many days, hours, and minutes remain until your next big birthday celebration.</p>
+              <a href="blog/how-many-days-until-my-birthday.html" class="feature-pill">Read Countdown Guide →</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon" aria-hidden="true">✨</div>
+              <h3>Zodiac by Birthday</h3>
+              <p>Explore your sun sign, celestial traits, and astrological symbols based on your exact date of birth.</p>
+              <a href="blog/zodiac-by-birthday.html" class="feature-pill">Discover Zodiac Guide →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Frequently Asked Questions -->
+      <section id="faq" class="faq-section" aria-labelledby="faq-title">
+        <div class="faq-wrap">
+          <div class="faq-header">
+            <span class="kicker">Got Questions?</span>
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>
+                <span>Is the Birthday Card Generator completely free to use?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes, our Birthday Card Generator is 100% free with no sign-ups, no hidden subscriptions, and no watermarks on your downloaded cards. You can design and export as many personalized cards as you want.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Can I download the card as a high-resolution image?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes! Clicking the "Download High-Res PNG" button exports a high-definition 1200×1500px portrait image. This resolution is ideal for both crisp digital sharing (WhatsApp, Instagram, AirDrop) and standard greeting card photo printing (4×5 or 8×10 inch prints).
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Does the card generator calculate the recipient's turning age?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                Yes. When you provide the recipient's date of birth and check "Show turning age milestone badge", our algorithm calculates how old they are turning on their upcoming birthday and renders an eye-catching milestone badge (e.g., "Turning 30!").
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>Are my names, messages, or dates stored anywhere?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                No. All card generation, text formatting, and canvas image rendering take place strictly inside your browser's local sandbox. No names, messages, or dates are ever sent to or stored on any server.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                <span>How does the Share button work on phones and computers?</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
+              <div class="faq-answer">
+                On mobile devices (iOS Safari, Android Chrome) that support the Web Share API with image files, clicking Share opens your native sharing sheet so you can directly send the PNG file to WhatsApp, Messages, or social apps. On desktop or unsupported browsers, it gracefully downloads the high-res card image to your downloads folder.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-brand">
+          <span class="mark" aria-hidden="true">M</span>
+          <span>myagenow</span>
+          <span>• © 2026. All rights reserved.</span>
+        </div>
+
+        <div class="footer-links" aria-label="Footer links">
+          <a href="index.html">Age Calculator</a>
+          <a href="birthday-card-generator.html" class="active">Card Generator</a>
+          <a href="blog.html">Blog</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
