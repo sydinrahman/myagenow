@@ -21,3 +21,7 @@
 ## 2026-11-12 - Form Validation Accessible Linking & Inline Error Recovery
 **Learning:** Setting aria-invalid on input fields without matching CSS selectors leaves visual users without field-level error feedback; conversely, wiping aria-describedby on error dismissals breaks screen reader association with persistent helper notes. In addition, clearing error states on the 'input' event rather than waiting for 'change' provides immediate recovery feedback while users type or select dates.
 **Action:** Always style input[aria-invalid="true"] with clear border and icon tints, preserve helper note IDs in aria-describedby across error states, and listen to 'input' to dismiss error alerts immediately upon user correction.
+
+## 2026-11-15 - High-Resolution HTML5 Canvas 2D Export with CSS Aspect Ratio Synchronization
+**Learning:** When building printable or shareable greeting cards with instant live previews, maintaining a synchronized 4:5 aspect ratio between CSS (`aspect-ratio: 4 / 5`) and the off-screen HTML5 Canvas (1200×1500px) ensures that line wraps, typography proportions, and border ornaments look identical in both the on-screen preview and the exported high-resolution PNG download without external dependencies.
+**Action:** Design preview cards using fixed aspect ratio containers and implement high-resolution canvas text-wrapping with matching proportional line-heights and font hierarchies.
