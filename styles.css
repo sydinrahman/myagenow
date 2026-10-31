@@ -342,6 +342,7 @@ label {
 
 .date-field input,
 .form-group input[type="text"],
+.form-group input[type="number"],
 .form-group input[type="email"],
 .form-group select,
 .form-group textarea {
@@ -3455,6 +3456,19 @@ code {
   margin: 0.65rem;
 }
 
+.minimal-divider-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 1px;
+  background-color: var(--card-border-color);
+  opacity: 0.7;
+}
+
+.line-top { top: 1.8rem; }
+.line-bottom { bottom: 1.8rem; }
+
 .botanical-wreath {
   position: absolute;
   left: 50%;
@@ -3467,6 +3481,261 @@ code {
 
 .top-wreath { top: 1.4rem; }
 .bottom-wreath { bottom: 1.4rem; }
+
+/* Invitation Specific Elements */
+.invitation-inner-content {
+  justify-content: space-evenly;
+  padding: 0.5rem 0.75rem;
+}
+
+.invite-tagline-wrap {
+  margin-bottom: 0.2rem;
+}
+
+.invite-headline-wrap {
+  margin: 0.1rem 0;
+}
+
+.invite-headline {
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--card-primary);
+}
+
+.invite-person-wrap {
+  margin: 0.25rem 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.invite-prefix {
+  font-size: 0.75rem;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--card-accent-color);
+  margin-bottom: 0.15rem;
+}
+
+.invite-recipient {
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--card-secondary);
+  word-break: break-word;
+}
+
+.invite-age-banner {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--card-primary);
+  margin-top: 0.2rem;
+}
+
+.invite-details-box {
+  width: 100%;
+  max-width: 340px;
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid var(--card-border-color);
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.birthday-invitation.template-luxury .invite-details-box {
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.invite-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.detail-icon {
+  font-size: 0.85rem;
+}
+
+.detail-text {
+  font-weight: 600;
+  color: var(--card-text-color);
+  word-break: break-word;
+}
+
+#invite-date-val {
+  font-weight: 700;
+  color: var(--card-primary);
+}
+
+.invite-message-box {
+  margin: 0.35rem 0;
+  max-width: 90%;
+}
+
+.invite-message {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--card-text-color);
+  font-weight: 500;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.invite-rsvp-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid var(--card-accent-color);
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--card-primary);
+  max-width: 90%;
+  box-sizing: border-box;
+}
+
+.birthday-invitation.template-luxury .invite-rsvp-box {
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.rsvp-label {
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+}
+
+.rsvp-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* Template: Elegant Specifics */
+.birthday-invitation.template-elegant .card-border-frame {
+  inset: 1rem;
+  border-width: 2px;
+}
+
+.birthday-invitation.template-elegant .card-inner-content {
+  border: 1px solid rgba(196, 139, 113, 0.25);
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+/* Guide & Checklist Editorial Sections */
+.editorial-guide-section {
+  padding: 3rem 0;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.guide-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.guide-article-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.guide-article-card h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.guide-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guide-checklist li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.guide-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.guide-checklist strong {
+  color: var(--text);
+}
+
+.comparison-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.comparison-col {
+  background: var(--bg-alt);
+  padding: 1.25rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+}
+
+.comparison-col h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+}
+
+.comparison-col p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .guide-content-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
 
 /* Template 2: Celebration Styles */
 .birthday-card.template-celebration .card-border-frame {
