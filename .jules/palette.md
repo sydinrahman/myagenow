@@ -17,3 +17,7 @@
 ## 2026-11-04 - Search & Filter Accessible Empty State Recovery
 **Learning:** In client-side filtered grids, providing a dedicated empty state container (`role="status"`, `aria-live="polite"`) that dynamically quotes the active query and includes a focused "Reset Filters" action button prevents disorientation for keyboard and screen reader users when zero matches are returned.
 **Action:** Always include live-region empty states with an inline filter reset action button for client-side search and category filtering views.
+
+## 2026-11-12 - Form Validation Accessible Linking & Inline Error Recovery
+**Learning:** Setting aria-invalid on input fields without matching CSS selectors leaves visual users without field-level error feedback; conversely, wiping aria-describedby on error dismissals breaks screen reader association with persistent helper notes. In addition, clearing error states on the 'input' event rather than waiting for 'change' provides immediate recovery feedback while users type or select dates.
+**Action:** Always style input[aria-invalid="true"] with clear border and icon tints, preserve helper note IDs in aria-describedby across error states, and listen to 'input' to dismiss error alerts immediately upon user correction.
